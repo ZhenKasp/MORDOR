@@ -1,0 +1,26 @@
+.SignIn {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  padding: 25px;
+  margin: 0 auto;
+  color: #495057;
+  border-radius: 5px;
+  margin-top: 112px;
+}
+
+.SignIn Button {
+  width: 100%;
+  margin-top: 20px;
+  height: 45px;
+  background-color: #53346d !important;
+}
+
+.SignIn Button:hover {
+  background-color: #43265c !important;
+}
+
+.SignIn Button:hover, .SignIn Button:active {
+  background-color: #43265c !important;
+}
+

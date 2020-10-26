@@ -1,0 +1,14 @@
+.Modal {
+  position: fixed;
+  width: 349px;
+  z-index: 3;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  padding: 16px;
+  left: calc(50% - 349px /2);
+  top: 30%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  color: black;
+}

@@ -1,0 +1,24 @@
+.SignUp {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  padding: 25px;
+  margin: 0 auto;
+  color: #495057;
+  margin-top: 112px;
+}
+
+.SignUp Button {
+  width: 100%;
+  margin-top: 20px;
+  height: 45px;
+  background-color: #53346d !important;
+}
+
+.SignUp button:hover {
+  background-color: #43265c !important;
+}
+
+.SignUp button:hover, .SignUp button:active {
+  background-color: #43265c !important;
+}
