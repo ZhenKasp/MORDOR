@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-const logout = (changeView, setToken, createFlashMessage) => {
-  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "logout", { headers: { authorization: localStorage.getItem('token') }}, {})
+const logout = (viewHandler, createFlashMessage) => {
+  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "logout",
+    { headers: 
+      { authorization: localStorage.getItem('token') }
+    }, {})
   .then(res => {
-    setToken("");
-    createFlashMessage(res.data.message, res.data.variant)
+    viewHandler("signIn");
+    localStorage.clear();
+    createFlashMessage(res.data.message, res.data.variant);
   })
   .catch(error => {
+    console.log(error)
     createFlashMessage(error.message, "danger");
   });
 }

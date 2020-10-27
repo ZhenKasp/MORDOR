@@ -8,6 +8,7 @@ import IndexPage from '../IndexPage/IndexPage';
 
 const SelectorForm = () => {
   const [token, setToken] = useState("");
+  const [username, setUsername] = useState("");
   const [flashMessage, setFlashMessage] = useState("");
   const [variant, setVarian] = useState("danger");
   const [view, setView] = useState("index");
@@ -18,10 +19,12 @@ const SelectorForm = () => {
     setTimeout(() => { 
       setFlashMessage("");
       setVarian("danger")
-    }, 5000);
+  }, 5000);
   }
 
   const viewHandler = (view) => setView(view);
+
+  const isAuthenticated = () => localStorage.getItem("token"); 
 
   const tokenHandler = token => {
     if (token) {
@@ -68,9 +71,10 @@ const SelectorForm = () => {
     <Aux>
       <Toolbar
         createFlashMessage={flashMessageHandler}
-        changeView={viewHandler}
+        viewHandler={viewHandler}
         active={view}
-        setToken={setToken}
+        setToken={tokenHandler}
+        isAuthenticated={isAuthenticated}
       />
       {flashMessage &&
       <FlashMessage variant={variant}>

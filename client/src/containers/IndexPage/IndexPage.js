@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Aux from '../../hoc/Auxiliary';
 import classes from './IndexPage.module.css';
 

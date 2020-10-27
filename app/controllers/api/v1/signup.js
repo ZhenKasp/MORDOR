@@ -23,7 +23,12 @@ signup = (app) => {
         await newUser.save();
         const token = generateAccessToken(email, username, newUser.id);
 
-        res.json({ token: token, message: "Registration successful." , variant: "success"});
+        res.json({ 
+          token: token, 
+          username: username,
+          message: "Registration successful." , 
+          variant: "success"
+        });
       } catch (error) {
         res.json({ error: error.errors[0].message, variant: "danger"}).status(400); 
       }  

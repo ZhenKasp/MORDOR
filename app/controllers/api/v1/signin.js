@@ -19,6 +19,7 @@ signin = (app) => {
               if (data) {
                 res.json({ 
                   token: generateAccessToken(email, user.username, user.id), 
+                  username: user.username,
                   message: "Login successful." , 
                   variant: "success" 
                 });  

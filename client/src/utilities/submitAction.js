@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const submitAction = (event, path, createFlashMessage, setToken) => {
+const submitAction = (event, path, createFlashMessage, setToken, viewHandler) => {
   event.preventDefault();
   const data = new FormData(event.target);
   let object = {};
@@ -12,7 +12,9 @@ const submitAction = (event, path, createFlashMessage, setToken) => {
       createFlashMessage(res.data.error, res.data.variant);
     } else {
       setToken(res.data.token);
+      localStorage.setItem("username", res.data.username);
       createFlashMessage(res.data.message, res.data.variant);
+      viewHandler("index");
     }
   })
   .catch((err) => {

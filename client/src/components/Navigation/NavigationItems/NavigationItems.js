@@ -1,42 +1,45 @@
 import React from 'react';
-import classes from './NavigationItems.module.css';
-import NavigationItem from './NavigationItem/NavigationItem';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import logout from '../../../utilities/logout';
+import Nav from 'react-bootstrap/Nav';
+import Aux from '../../../hoc/Auxiliary'
 
 const navigationItems = (props) => {
-  const displayNavigationItems = () => {
-    if (localStorage.getItem('token')) {
-      return (
-        <ul className={classes.NavigationItems}>
-          <NavigationItem 
-            view="signin" 
-            changeView={props.changeView}
-            createFlashMessage={props.createFlashMessage}
-            active={props.active} 
-            setToken={props.setToken} >LogOut
-          </NavigationItem>
-        </ul>
-      )
-    } else {
-      return (
-        <ul className={classes.NavigationItems}>
-          <NavigationItem 
-            view="signup"
-            changeView={props.changeView}
-            active={props.active} >SignUp
-          </NavigationItem>
-          <NavigationItem 
-            view="signin" 
-            changeView={props.changeView} 
-            active={props.active} >SignIn
-          </NavigationItem>
-        </ul>
-      )
-    }
-  }
-
-  const NavigationItems = displayNavigationItems;
-
-  return <NavigationItems />
+  if (props.isAuthenticated()) {
+    return (
+      <Aux>
+        <Nav className="mr-auto">
+          <Nav.Link>Create</Nav.Link>       
+        </Nav>
+        <NavDropdown alignRight title={localStorage.getItem("username") || "Guest"} >
+          <NavDropdown.Item onClick={() => props.viewHandler("profile")}>
+            Profile
+          </NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item 
+            onClick={()=> logout(props.viewHandler, props.createFlashMessage)}>
+            SignOut
+          </NavDropdown.Item>
+        </NavDropdown>
+      </Aux>
+    )
+  } else {
+    return (
+      <Aux>
+        <Nav className="mr-auto">      
+          </Nav>
+        <NavDropdown alignRight title="Guest" >
+          <NavDropdown.Item onClick={() => props.viewHandler("signin")}>
+            SignIn
+          </NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item onClick={() => props.viewHandler("signup")}>
+            SignUp
+          </NavDropdown.Item>
+        </NavDropdown>
+      </Aux>
+    )
+  } 
 }
 
 export default navigationItems;
