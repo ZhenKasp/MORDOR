@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
+    "eslint-config-standard": "^15.0.1",
     "express": "~4.16.1",
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.1",
@@ -25,5 +26,9 @@
     "pug": "^3.0.0",
     "sequelize": "^6.3.5",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-plugin-react": "^7.21.5"
   }
 }
