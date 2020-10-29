@@ -1,9 +1,11 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 const CreateBook = (props) => {
   return (
     <div>
-      Create Book
+      <h2>Create Book</h2>
+      <Button></Button>
     </div>
   )
 }

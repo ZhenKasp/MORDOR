@@ -7,7 +7,7 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import IndexPage from '../IndexPage/IndexPage';
 
 const SelectorForm = () => {
-  const [token, setToken] = useState("");
+  const [ , setToken] = useState("");
   const [flashMessage, setFlashMessage] = useState("");
   const [variant, setVarian] = useState("danger");
   const [view, setView] = useState("index");
@@ -21,9 +21,7 @@ const SelectorForm = () => {
   }, 5000);
   }
 
-  const viewHandler = (view) => setView(view);
-
-  const isAuthenticated = () => localStorage.getItem("token");
+    const isAuthenticated = () => localStorage.getItem("token");
 
   const tokenHandler = token => {
     if (token) {
@@ -40,7 +38,7 @@ const SelectorForm = () => {
       return (
         <SignIn
           createFlashMessage={flashMessageHandler}
-          viewHandler={viewHandler}
+          setView={setView}
           setToken={tokenHandler}
         />
       )
@@ -48,15 +46,16 @@ const SelectorForm = () => {
       return (
         <SignUp
           createFlashMessage={flashMessageHandler}
-          viewHandler={viewHandler}
+          setView={setView}
           setToken={tokenHandler}
         />
       )
     } else {
+      console.log("IndexPage");
       return (
         <IndexPage
           createFlashMessage={flashMessageHandler}
-          viewHandler={viewHandler}
+          setView={setView}
           setToken={tokenHandler}
           view={view}
         />
@@ -69,7 +68,7 @@ const SelectorForm = () => {
     <Aux>
       <Toolbar
         createFlashMessage={flashMessageHandler}
-        viewHandler={viewHandler}
+        setView={setView}
         active={view}
         setToken={tokenHandler}
         isAuthenticated={isAuthenticated}

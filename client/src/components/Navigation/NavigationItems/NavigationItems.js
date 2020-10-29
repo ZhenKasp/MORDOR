@@ -3,19 +3,24 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import logout from '../../../utilities/logout';
 import Nav from 'react-bootstrap/Nav';
 import Aux from '../../../hoc/Auxiliary';
+import classes from './NavigationItems.module.css';
 
 const navigationItems = (props) => {
   if (props.isAuthenticated()) {
     return (
       <Aux>
         <Nav className="mr-auto">
-          <Nav.Link onClick={() => props.viewHandler("createBook")}>Create</Nav.Link>
+          <Nav.Link onClick={() => props.setView("myBooks")}>
+            My Books
+          </Nav.Link>
         </Nav>
-        <NavDropdown alignRight title={localStorage.getItem("username") || "Guest"} >
-          <NavDropdown.Item onClick={() => props.viewHandler("profile")}>
+        <NavDropdown
+          className={classes.Dropdown}
+          title={localStorage.getItem("username") || "Guest"}
+        >
+          <NavDropdown.Item onClick={() => props.setView("profile")}>
             Profile
           </NavDropdown.Item>
-          <NavDropdown.Divider />
           <NavDropdown.Item
             onClick={()=> logout(props.viewHandler, props.createFlashMessage)}>
             SignOut
@@ -28,12 +33,11 @@ const navigationItems = (props) => {
       <Aux>
         <Nav className="mr-auto">
           </Nav>
-        <NavDropdown alignRight title="Guest" >
-          <NavDropdown.Item onClick={() => props.viewHandler("signin")}>
+        <NavDropdown className={classes.Dropdown} title="Guest" >
+          <NavDropdown.Item onClick={() => props.setView("signin")}>
             SignIn
           </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item onClick={() => props.viewHandler("signup")}>
+          <NavDropdown.Item onClick={() => props.setView("signup")}>
             SignUp
           </NavDropdown.Item>
         </NavDropdown>

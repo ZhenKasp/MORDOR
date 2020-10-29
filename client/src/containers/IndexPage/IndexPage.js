@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
-import Aux from '../../hoc/Auxiliary';
+import React from 'react';
 import classes from './IndexPage.module.css';
+import MyBooks from '../MyBooks/MyBooks';
+import Profile from '../Profile/Profile';
+import CreateBook from '../CreateBook/CreateBook';
+import LastBooks from '../LastBooks/LastBooks';
+import BestBooks from '../BestBooks/BestBooks';
+import Tags from '../Tags/Tags';
+import Aux from '../../hoc/Auxiliary';
 
 const IndexPage = (props) => {
-  const [view, setView] = useState(props.view);
+  let view = props.view;
 
   const viewHandler = () => {
     if (view === "index") {
       return (
-        <div className={classes.IndexPage}>
-          <Aux>
-            MORDOR
-          </Aux>
-        </div>
+        <Aux>
+          <LastBooks />
+          <BestBooks />
+          <Tags />
+        </Aux>
       )
     } else if (view === "profile") {
       return (
-        <div className={classes.Profile}>
-          Profile
-        </div>
+        <Profile />
+      )
+    } else if (view === "myBooks") {
+      return (
+        <MyBooks setView={props.setView} />
       )
     } else if (view === "createBook") {
       return (
-        <div>
-          Create Book
-        </div>
+        <CreateBook />
       )
     } else {
       return (
@@ -36,7 +42,9 @@ const IndexPage = (props) => {
   }
   const View = viewHandler
   return (
-    <View />
+    <div className={classes.IndexPage}>
+      <View />
+    </div>
   )
 }
 

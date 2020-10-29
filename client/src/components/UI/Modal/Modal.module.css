@@ -1,14 +1,35 @@
 .Modal {
   position: fixed;
   width: 349px;
-  z-index: 3;
+  z-index: 5;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 7px;
   padding: 16px;
   left: calc(50% - 349px /2);
-  top: 30%;
+  top: 25%;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
   color: black;
+}
+
+.Close {
+  float: right;
+}
+
+.Close:hover {
+  cursor: pointer;
+}
+
+.Close:after {
+  content: "\00d7";
+  font-size: 40px;
+  position: absolute;
+  right: 7px;
+  top: -13px;
+  color: gray;
+}
+
+.Modal textarea {
+  max-height: 120px;
 }
