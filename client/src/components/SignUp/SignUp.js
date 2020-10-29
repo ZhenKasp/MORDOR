@@ -24,16 +24,16 @@ const SignUp = (props) => (
           type="email"
           required
           name="email"
-          placeholder="Enter email" 
+          placeholder="Enter email"
         />
       </Form.Group>
       <Form.Group>
         <Form.Label>Username</Form.Label>
         <Form.Control
           autoFocus
-          name="username" 
+          name="username"
           required
-          placeholder="Username" 
+          placeholder="Username"
         />
       </Form.Group>
       <Form.Group>
@@ -42,14 +42,14 @@ const SignUp = (props) => (
           autoFocus
           name="firstname"
           required
-          placeholder="First Name" 
+          placeholder="First Name"
         />
       </Form.Group>
       <Form.Group >
         <Form.Label>Last Name</Form.Label>
         <Form.Control
           autoFocus
-          name="lastname" 
+          name="lastname"
           required
           placeholder="Last Name"
         />

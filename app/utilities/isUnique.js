@@ -1,4 +1,4 @@
-isUnique = (modelName, field) => {
+const isUnique = (modelName, field) => {
   return (value, next) => {
     const Model = require("../models/" + modelName);
     const query = {};

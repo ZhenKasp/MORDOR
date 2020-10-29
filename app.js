@@ -3,7 +3,6 @@ const logger = require('morgan');
 const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
-const path = require('path');
 const socketIo = require("socket.io");
 const http = require("http");
 const cookieParser = require('cookie-parser');
@@ -11,7 +10,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 require('./app/models/sequelize');
 
-const connection = mysql.createPool({
+mysql.createPool({
   connectionLimit : 100,
   host: process.env.HOST,
   user: process.env.LOGIN,
@@ -27,13 +26,13 @@ app.use(cors({
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());  
+app.use(cookieParser());
 
 const server = http.createServer(app);
 const port = process.env.PORT;
 const io = socketIo(server);
 
-server.listen(port, ()=> console.log(`Listening on port ${port}`));
+server.listen(port, () => console.log(`Listening on port ${port}`));
 
 require('./app/routes/routes')(app, io);
 

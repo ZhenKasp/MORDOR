@@ -8,7 +8,6 @@ import IndexPage from '../IndexPage/IndexPage';
 
 const SelectorForm = () => {
   const [token, setToken] = useState("");
-  const [username, setUsername] = useState("");
   const [flashMessage, setFlashMessage] = useState("");
   const [variant, setVarian] = useState("danger");
   const [view, setView] = useState("index");
@@ -16,7 +15,7 @@ const SelectorForm = () => {
   const flashMessageHandler = (message, variant) => {
     setFlashMessage(message);
     setVarian(variant);
-    setTimeout(() => { 
+    setTimeout(() => {
       setFlashMessage("");
       setVarian("danger")
   }, 5000);
@@ -24,7 +23,7 @@ const SelectorForm = () => {
 
   const viewHandler = (view) => setView(view);
 
-  const isAuthenticated = () => localStorage.getItem("token"); 
+  const isAuthenticated = () => localStorage.getItem("token");
 
   const tokenHandler = token => {
     if (token) {
@@ -37,32 +36,31 @@ const SelectorForm = () => {
   };
 
   const chooseViewToRender = () => {
-    if (view === "index") {
+    if (view === "signin") {
+      return (
+        <SignIn
+          createFlashMessage={flashMessageHandler}
+          viewHandler={viewHandler}
+          setToken={tokenHandler}
+        />
+      )
+    } else if (view === "signup") {
+      return (
+        <SignUp
+          createFlashMessage={flashMessageHandler}
+          viewHandler={viewHandler}
+          setToken={tokenHandler}
+        />
+      )
+    } else {
       return (
         <IndexPage
           createFlashMessage={flashMessageHandler}
           viewHandler={viewHandler}
           setToken={tokenHandler}
+          view={view}
         />
-       )
-    } else {
-      if (view === "signup") {
-        return (
-          <SignUp
-            createFlashMessage={flashMessageHandler}
-            viewHandler={viewHandler}
-            setToken={tokenHandler}
-          />
-        )
-      } else {
-        return (
-          <SignIn
-            createFlashMessage={flashMessageHandler}
-            viewHandler={viewHandler}
-            setToken={tokenHandler}
-          />
-        )
-      }
+      )
     }
   }
 

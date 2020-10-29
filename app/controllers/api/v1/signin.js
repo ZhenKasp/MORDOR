@@ -2,7 +2,7 @@ const generateAccessToken = require('../../../midlware/generateAccessToken');
 const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
 
-signin = (app) => {
+const signin = (app) => {
   app.post('/api/v1/signin', (req, res) => {
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
@@ -10,35 +10,35 @@ signin = (app) => {
       try {
         await User.findOne({ where: {email: email} })
           .then(user => {
-            if (!user) return res.json({ 
-              error: "User doesn't exist.", 
-              variant: "danger" 
+            if (!user) return res.json({
+              error: "User doesn't exist.",
+              variant: "danger"
             }).status(400);
             bcrypt.compare(password, user.password, (err, data) => {
               if (err) throw err;
               if (data) {
-                res.json({ 
-                  token: generateAccessToken(email, user.username, user.id), 
+                res.json({
+                  token: generateAccessToken(email, user.username, user.id),
                   username: user.username,
-                  message: "Login successful." , 
-                  variant: "success" 
-                });  
+                  message: "Login successful." ,
+                  variant: "success"
+                });
               } else {
-                return res.json({ 
-                  error: "Invalid password.", 
-                  variant: "danger" 
+                return res.json({
+                  error: "Invalid password.",
+                  variant: "danger"
                 }).status(401);
-              };
+              }
             });
           });
       } catch (error) {
-        res.json({  
-          error: error.errors[0].message, 
+        res.json({
+          error: error.errors[0].message,
           variant: "danger"
-        }) 
-      };  
+        })
+      }
     })();
-  }); 
+  });
 };
 
 module.exports = signin;

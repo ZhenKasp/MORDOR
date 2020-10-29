@@ -1,5 +1,5 @@
 const authenticateToken = require('../../../midlware/authenticateToken');
-logout = (app) => {
+const logout = (app) => {
   app.delete('/api/v1/logout', authenticateToken, (req, res) => {
     res.json({ view: 'login', message: "Logout successful." , variant: "success"});
   });
