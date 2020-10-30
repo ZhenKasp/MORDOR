@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
-import Modal from '../../components/UI/Modal/Modal';
-import Form from 'react-bootstrap/Form';
+import CreateBookModal from '../CreateBookModal/CreateBookModal';
 
 const MyBooks = (props) => {
   const [modalIsShown, modalIsShownSet] = useState(false);
@@ -17,35 +16,17 @@ const MyBooks = (props) => {
   return (
     <div>
       <div>
-        My Books
+        <h3>My Books</h3>
       </div>
       <div>
-        <Button onClick={() => modalIsShownSet(true)}>
+        <Button onClick={() => modalIsShownHandler()}>
           Create New Book
         </Button>
       </div>
-      <Modal show={modalIsShown} modalClosed={modalIsShownCancelHandler}>
-        <h3>Create Book</h3>
-        <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form.Control required type="text" placeholder="Name" />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Short description</Form.Label>
-          <Form.Control required as="textarea" rows={3} placeholder="Short description" />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Genre</Form.Label>
-          <Form.Control required as="select">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Form.Control>
-        </Form.Group>
-        <Button>Confirm</Button>
-      </Modal>
+      <CreateBookModal
+        modalIsShownHandler={modalIsShownHandler}
+        modalIsShownCancelHandler={modalIsShownCancelHandler}
+        modalIsShown={modalIsShown} />
     </div>
   )
 }

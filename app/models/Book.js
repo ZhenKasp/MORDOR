@@ -12,7 +12,7 @@ const Book = sequelize.define('book', {
   genre:{
     type: DataTypes.STRING
   },
-  tegs:{
+  tags:{
     type: DataTypes.STRING
   },
 }, {
