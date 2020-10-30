@@ -13,7 +13,7 @@ const TagsInput = (props) => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
-          setSuggestions(res.data.suggestions);
+          setSuggestions(res.data.suggestions.map(tag => { return {id: tag, text: tag}}));
         }
       });
     } catch (err) {
@@ -38,7 +38,7 @@ const TagsInput = (props) => {
 
     props.setTags(newTags);
   }
-  
+
   return (
     <ReactTags
       classNames={{

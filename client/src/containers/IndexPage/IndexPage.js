@@ -26,7 +26,9 @@ const IndexPage = (props) => {
       )
     } else if (view === "myBooks") {
       return (
-        <MyBooks setView={props.setView} />
+        <MyBooks
+          setView={props.setView}
+          createFlashMessage={props.createFlashMessage} />
       )
     } else if (view === "createBook") {
       return (

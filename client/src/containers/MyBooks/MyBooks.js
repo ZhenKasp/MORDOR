@@ -24,6 +24,7 @@ const MyBooks = (props) => {
         </Button>
       </div>
       <CreateBookModal
+        createFlashMessage={props.createFlashMessage}
         modalIsShownHandler={modalIsShownHandler}
         modalIsShownCancelHandler={modalIsShownCancelHandler}
         modalIsShown={modalIsShown} />

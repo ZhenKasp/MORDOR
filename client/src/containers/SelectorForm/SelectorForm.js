@@ -51,7 +51,6 @@ const SelectorForm = () => {
         />
       )
     } else {
-      console.log("IndexPage");
       return (
         <IndexPage
           createFlashMessage={flashMessageHandler}
