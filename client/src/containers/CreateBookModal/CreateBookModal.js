@@ -32,7 +32,6 @@ const CreateBookModal = (props) => {
         props.createFlashMessage(res.data.error, res.data.variant);
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
-        props.setView("myBook");
       }
     })
     .catch((err) => {

@@ -5,7 +5,6 @@ const tags = (app) => {
   app.get('/api/v1/tags', authenticateToken, (req,res) => {
     try {
       Book.findAll({attributes: ['tags']}).then((books => {
-        console.log(books);
         let splittedTags = books.map(book => book.dataValues.tags.split(";"));
         let uniqueTags = Array.from(new Set([].concat(...splittedTags)));
 
