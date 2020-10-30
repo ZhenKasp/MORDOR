@@ -14,7 +14,7 @@ const SignUp = (props) => (
         "signup",
         props.createFlashMessage,
         props.setToken,
-        props.viewHandler)
+        props.setView)
       }
     >
       <Form.Group>

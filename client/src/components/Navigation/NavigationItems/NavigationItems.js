@@ -22,7 +22,7 @@ const navigationItems = (props) => {
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            onClick={()=> logout(props.viewHandler, props.createFlashMessage)}>
+            onClick={()=> logout(props.setView, props.createFlashMessage)}>
             SignOut
           </NavDropdown.Item>
         </NavDropdown>

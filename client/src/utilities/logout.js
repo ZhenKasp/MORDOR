@@ -2,11 +2,11 @@ import axios from 'axios';
 
 const logout = (viewHandler, createFlashMessage) => {
   axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "logout",
-    { headers: 
+    { headers:
       { authorization: localStorage.getItem('token') }
     }, {})
   .then(res => {
-    viewHandler("signIn");
+    viewHandler("index");
     localStorage.clear();
     createFlashMessage(res.data.message, res.data.variant);
   })
