@@ -15,7 +15,8 @@ const MyBooks = (props) => {
 
   useEffect(() => {
     try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "books", { headers: { authorization: localStorage.getItem('token') }})
+      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "myBooks",
+        { headers: { authorization: localStorage.getItem('token') }})
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);

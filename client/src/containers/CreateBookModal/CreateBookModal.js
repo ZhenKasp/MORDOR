@@ -4,6 +4,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Form from 'react-bootstrap/Form';
 import TagsInput from '../../containers/TagsInput/TagsInput';
 import axios from 'axios';
+import getFormData from '../../utilities/getFormData';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
@@ -20,9 +21,7 @@ const CreateBookModal = (props) => {
 
   const submitCreateBook = (event) => {
     event.preventDefault();
-    const data = new FormData(event.target);
-    let object = {};
-    data.forEach((value, key) => {object[key] = value});
+    const object = getFormData(event);
     object["tags"] = tags.map(tag => tag.text).join(";");
 
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + 'book',
@@ -51,7 +50,7 @@ const CreateBookModal = (props) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Short description</Form.Label>
-            <Form.Control name="short_description" required as="textarea" rows={3} placeholder="Short description" />
+            <Form.Control maxLength="255" name="short_description" required as="textarea" rows={3} placeholder="Short description" />
           </Form.Group>
           <Form.Group>
             <Form.Label>Genre</Form.Label>

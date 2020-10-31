@@ -5,6 +5,7 @@ const routes = (app) => {
   require('../controllers/api/v1/tags')(app);
   require('../controllers/api/v1/books')(app);
   require('../controllers/api/v1/chapters')(app);
+  require('../controllers/api/v1/myBooks')(app);
 }
 
 module.exports = routes;

@@ -7,6 +7,7 @@ import LastBooks from '../LastBooks/LastBooks';
 import BestBooks from '../BestBooks/BestBooks';
 import Tags from '../Tags/Tags';
 import Aux from '../../hoc/Auxiliary';
+import AllBooks from '../AllBooks/AllBooks';
 
 const IndexPage = (props) => {
   let view = props.view;
@@ -17,7 +18,9 @@ const IndexPage = (props) => {
         <Aux>
           <LastBooks />
           <BestBooks />
+          <hr />
           <Tags />
+          <AllBooks createFlashMessage={props.createFlashMessage} />
         </Aux>
       )
     } else if (view === "profile") {

@@ -4,7 +4,7 @@ const Chapter = require('../../../models/Chapter');
 const User = require('../../../models/User');
 
 const books = (app) => {
-  app.get('/api/v1/books/', authenticateToken, (req,res) => {
+  app.get('/api/v1/books/', (req,res) => {
     try {
       Book.findAll().then((books => {
         res.json({

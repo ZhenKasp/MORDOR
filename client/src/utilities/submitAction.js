@@ -1,10 +1,9 @@
 import axios from 'axios';
+import getFormData from './getFormData';
 
 const submitAction = (event, path, createFlashMessage, setToken, setView) => {
   event.preventDefault();
-  const data = new FormData(event.target);
-  let object = {};
-  data.forEach((value, key) => {object[key] = value});
+  const object = getFormData(event);
 
   axios.post(process.env.REACT_APP_PATH_TO_SERVER + path, object)
   .then(res => {
