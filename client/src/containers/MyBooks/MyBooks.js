@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import CardDeck from 'react-bootstrap/CardDeck';
 import CreateBookModal from '../CreateBookModal/CreateBookModal';
-import BookCard from '../../components/BookCard/BookCard';
+import CardBook from '../../components/CardBook/CardBook';
 import axios from 'axios';
 import classes from './MyBooks.module.css'
 
@@ -35,19 +35,21 @@ const MyBooks = (props) => {
       <Button onClick={() => modalIsShownHandler()}>
         Create New Book
       </Button>
+      <hr />
       <CreateBookModal
         createFlashMessage={props.createFlashMessage}
         modalIsShownHandler={modalIsShownHandler}
         modalIsShownCancelHandler={modalIsShownCancelHandler}
-        modalIsShown={modalIsShown} />
-
+        modalIsShown={modalIsShown}
+      />
       <CardDeck className={classes.BooksGrid}>
       {books.map(book => (
-        <BookCard book={book} key={book.id}>
-          <Button variant="primary">Edit</Button>
-          <Button variant="success">Read</Button>
-          <Button variant="danger">Delete</Button>
-        </BookCard>
+        <CardBook
+          book={book}
+          key={book.id}
+          clicked={props.clickHandler}
+        >
+        </CardBook>
       ))}
     </CardDeck>
     </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-const CreateBook = (props) => {
+const EditBook = (props) => {
   return (
     <div>
-      <h2>Create Book</h2>
-      <Button></Button>
+      <h2>{props.id}</h2>
+      <Button>Edit</Button>
     </div>
   )
 }
 
-export default CreateBook;
+export default EditBook;

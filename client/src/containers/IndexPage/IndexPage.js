@@ -1,51 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './IndexPage.module.css';
 import MyBooks from '../MyBooks/MyBooks';
 import Profile from '../Profile/Profile';
-import CreateBook from '../CreateBook/CreateBook';
+import EditBook from '../EditBook/EditBook';
 import LastBooks from '../LastBooks/LastBooks';
 import BestBooks from '../BestBooks/BestBooks';
 import Tags from '../Tags/Tags';
 import Aux from '../../hoc/Auxiliary';
 import AllBooks from '../AllBooks/AllBooks';
+import ReadBook from '../ReadBook/ReadBook';
+import BookPreview from '../BookPreview/BookPreview';
 
 const IndexPage = (props) => {
+  const [id, setId] = useState(0);
   let view = props.view;
+
+  const clickHandler = (view, id) => {
+    setId(id);
+    props.setView(view);
+  }
 
   const viewHandler = () => {
     if (view === "index") {
       return (
         <Aux>
-          <LastBooks />
-          <BestBooks />
+          <LastBooks clickHandler={clickHandler}/>
+          <BestBooks clickHandler={clickHandler}/>
           <hr />
           <Tags />
-          <AllBooks createFlashMessage={props.createFlashMessage} />
+          <AllBooks
+            createFlashMessage={props.createFlashMessage}
+            clickHandler={clickHandler}
+            />
         </Aux>
       )
     } else if (view === "profile") {
-      return (
-        <Profile />
-      )
+      return <Profile />
     } else if (view === "myBooks") {
       return (
         <MyBooks
           setView={props.setView}
-          createFlashMessage={props.createFlashMessage} />
+          createFlashMessage={props.createFlashMessage}
+          clickHandler={clickHandler}
+        />
       )
-    } else if (view === "createBook") {
+    } else if (view === "bookPreview") {
       return (
-        <CreateBook />
+        <BookPreview
+          id={id}
+          createFlashMessage={props.createFlashMessage}
+        />
       )
+    } else if (view === "editBook") {
+      return (
+        <EditBook
+          id={id}
+          createFlashMessage={props.createFlashMessage}
+        />
+      )
+    } else if (view === "readBook") {
+      return <ReadBook id={id} />
     } else {
-      return (
-        <div>
-          Not Found
-        </div>
-      )
+      return <div> Not Found </div>
     }
   }
-  const View = viewHandler
+
+  const View = viewHandler;
+
   return (
     <div className={classes.IndexPage}>
       <View />

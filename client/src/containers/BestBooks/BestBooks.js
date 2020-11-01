@@ -3,7 +3,7 @@ import React from 'react';
 const BestBooks = (props) => {
   return (
     <div>
-      Best Books
+      <h2>Best Books</h2>
     </div>
   )
 }

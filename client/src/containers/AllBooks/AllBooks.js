@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CardDeck from 'react-bootstrap/CardDeck';
 import classes from './AllBooks.module.css';
-import BookCard from '../../components/BookCard/BookCard';
+import CardBook from '../../components/CardBook/CardBook';
 
 const AllBooks = (props) => {
   const [allBooks, setAllBooks] = useState([]);
@@ -26,7 +26,12 @@ const AllBooks = (props) => {
     <div>
       <CardDeck className={classes.BooksGrid}>
       {allBooks.map(book => (
-        <BookCard book={book} key={book.id} />
+        <CardBook
+          clicked={props.clickHandler}
+          book={book}
+          key={book.id}
+          clickHandler={props.clickHandler}
+        />
       ))}
       </CardDeck>
     </div>
