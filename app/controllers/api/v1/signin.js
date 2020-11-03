@@ -20,6 +20,7 @@ const signin = (app) => {
                 res.json({
                   token: generateAccessToken(email, user.username, user.id),
                   username: user.username,
+                  id: user.id,
                   message: "Login successful." ,
                   variant: "success"
                 });

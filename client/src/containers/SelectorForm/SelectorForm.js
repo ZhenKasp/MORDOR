@@ -15,7 +15,7 @@ class SelectorForm extends Component {
         <SignIn
           createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
-          setToken={this.props.tokenHandler}
+          setToken={this.props.setToken}
         />
       )
     } else if (this.props.view === "signup") {
@@ -23,7 +23,7 @@ class SelectorForm extends Component {
         <SignUp
           createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
-          setToken={this.props.tokenHandler}
+          setToken={this.props.setToken}
         />
       )
     } else {
@@ -31,7 +31,7 @@ class SelectorForm extends Component {
         <IndexPage
           createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
-          setToken={this.props.tokenHandler}
+          setToken={this.props.setToken}
           view={this.props.view}
         />
       )

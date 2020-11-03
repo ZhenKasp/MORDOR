@@ -46,7 +46,7 @@ class App extends PureComponent {
           flashMessageHandler={this.flashMessageHandler}
           view={this.state.view}
           setView={this.setView}
-          tokenHandler={this.tokenHandler}
+          setToken={this.tokenHandler}
         />
       </Aux>
     )

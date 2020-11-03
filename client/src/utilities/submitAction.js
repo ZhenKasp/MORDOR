@@ -12,6 +12,7 @@ const submitAction = (event, path, createFlashMessage, setToken, setView) => {
     } else {
       setToken(res.data.token);
       localStorage.setItem("username", res.data.username);
+      localStorage.setItem("userId", res.data.id);
       createFlashMessage(res.data.message, res.data.variant);
       setView("index");
     }

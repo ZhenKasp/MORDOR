@@ -19,6 +19,7 @@ const signup = (app) => {
           firstname: firstname,
           lastname: lastname,
           password: hashPass,
+          role: "user",
         });
         await newUser.save();
         const token = generateAccessToken(email, username, newUser.id);
@@ -26,6 +27,7 @@ const signup = (app) => {
         res.json({
           token: token,
           username: username,
+          id: newUser.id,
           message: "Registration successful." ,
           variant: "success"
         });

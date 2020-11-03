@@ -16,6 +16,21 @@ const books = (app) => {
     }
   });
 
+  app.get('/api/v1/book/', (req,res) => {
+    try {
+      Book.findOne({ where: { id: req.query.id },
+        include: [{ model: Chapter, as: Chapter },
+          { model: User, as: User }]}).then(book => {
+        res.json({
+          book: book,
+          isOwner: book.userId == req.query.userId || book.user.role == "admin"
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   app.post('/api/v1/book', authenticateToken, (req,res) => {
     const book = {
       name: req.body.name,
@@ -44,18 +59,6 @@ const books = (app) => {
         }).status(400);
       }
     })();
-  });
-
-  app.get('/api/v1/book/', (req,res) => {
-    try {
-      Book.findOne({ where: { id: req.query.id }, include: [{ model: Chapter, as: Chapter }]}).then(book => {
-        res.json({
-          book: book
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
   });
 }
 

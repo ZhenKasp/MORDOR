@@ -3,11 +3,6 @@ const { DataTypes } = require('sequelize');
 const isUnique = require('../utilities/isUnique');
 
 const User = sequelize.define('user', {
-  username:{
-    type: DataTypes.STRING,
-    isAlphanumeric: true,
-    isUnique: isUnique("User", "username")
-  },
   firstname:{
     type: DataTypes.STRING,
     isAlphanumeric: true
@@ -24,6 +19,17 @@ const User = sequelize.define('user', {
       },
       isUnique: isUnique("User", "email")
     }
+  },
+  username:{
+    type: DataTypes.STRING,
+    isAlphanumeric: true,
+    validate: {
+      isUnique: isUnique("User", "username")
+    }
+  },
+  role:{
+    type: DataTypes.STRING,
+    isAlphanumeric: true
   },
   password:{
     type: DataTypes.STRING
