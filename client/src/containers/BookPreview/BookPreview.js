@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import classes from './BookPreview.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 
 const BookPreview = (props) => {
   const [book, setBook] = useState([]);
@@ -9,12 +12,14 @@ const BookPreview = (props) => {
   useEffect(() => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
-        { params: { id: props.id }, headers: { authorization: localStorage.getItem('token') }}
+        { params: { id: props.id, userId: localStorage.getItem("userId") },
+          headers: { authorization: localStorage.getItem('token') }}
         )
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
+          console.log(res.data.isOwner);
           setBook(res.data.book);
         }
       });
@@ -22,6 +27,13 @@ const BookPreview = (props) => {
       props.createFlashMessage(err.message, "danger");
     }
   }, []);
+
+  let chapters = [
+    {id: 1, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
+    {id: 2, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
+    {id: 3, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
+    {id: 4, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
+  ]
 
   return (
     <div>
@@ -31,16 +43,28 @@ const BookPreview = (props) => {
       <p>{book.short_description}</p>
       <p>{book.genre}</p>
       <p>{book.updatedAt}</p>
-      {book.chapters && book.chapters.length > 0 ? (
+      <h3>Chapters</h3>
+      {chapters && chapters.length > 0 ? (
+      // {book.chapters && book.chapters.length > 0 ? (
         <div>
-          <h3>Chapters</h3>
-          <ul>
-            <li>
-              {book.chapters}
-            </li>
-          </ul>
+          <ol>
+            {chapters.map(chapter => {
+              return (
+                <li
+                  className={classes.Chapter}
+                  key={chapter.id}
+                  onClick={() => console.log(chapter.text)}>
+                  {chapter.text}
+                </li>
+              )
+            })}
+          </ol>
         </div>
-      ): <h2>No chapters</h2>}
+      ) :
+        <div>
+          <p>No chapters</p>
+          <FontAwesomeIcon className={classes.Pluss} icon={faPlusSquare} />
+        </div>}
 
       <div>
         <h2>Comments</h2>

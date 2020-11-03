@@ -5,10 +5,10 @@ const isUnique = (modelName, field) => {
     query[field] = value;
 
     Model.findOne({ where: query, attributes: ["id"] })
-      .then((object) => {
-        if (object) return next(modelName + ' with this '+ field +' already exists.');
-        next();
-      });
+    .then((object) => {
+      if (object) return next(modelName + ' with this '+ field +' already exists.');
+      next();
+    });
   };
 };
 

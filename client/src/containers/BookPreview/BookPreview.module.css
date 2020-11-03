@@ -1,0 +1,21 @@
+.Pluss {
+  font-size: 30px;
+  color: #495057;
+  width: 30px;
+}
+
+.Pluss:hover {
+  cursor: pointer;
+  color: #2a2a2a;
+}
+
+.Chapter {
+  font-size: 20px;
+  color: blue;
+}
+
+.Chapter:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}
