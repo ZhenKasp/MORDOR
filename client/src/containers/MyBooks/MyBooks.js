@@ -41,6 +41,8 @@ const MyBooks = (props) => {
         modalIsShownHandler={modalIsShownHandler}
         modalIsShownCancelHandler={modalIsShownCancelHandler}
         modalIsShown={modalIsShown}
+        books={books}
+        setBooks={setBooks}
       />
       <CardDeck className={classes.BooksGrid}>
       {books.map(book => (

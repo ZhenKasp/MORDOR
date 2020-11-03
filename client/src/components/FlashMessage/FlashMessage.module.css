@@ -9,22 +9,22 @@
   padding: 0 20px;
   visibility: hidden;
   border-radius: 0;
-  z-index: 2;
-  animation: flash 4.5s linear;  
-} 
+  z-index: 5;
+  animation: flash 4.5s linear;
+}
 
 @keyframes flash {
   0% {
     visibility: visible;
-    top: 0;
+    top: -56px;
   }
   5% {
-    top: 56px;
+    top: 0;
   }
   95% {
-    top: 56px;
+    top: 0;
   }
   100% {
-    top: 0;
+    top: -56px;
   }
 }

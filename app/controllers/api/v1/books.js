@@ -46,7 +46,7 @@ const books = (app) => {
     })();
   });
 
-  app.get('/api/v1/book/', authenticateToken, (req,res) => {
+  app.get('/api/v1/book/', (req,res) => {
     try {
       Book.findOne({ where: { id: req.query.id }, include: [{ model: Chapter, as: Chapter }]}).then(book => {
         res.json({

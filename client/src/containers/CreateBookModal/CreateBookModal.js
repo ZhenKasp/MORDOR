@@ -29,28 +29,45 @@ const CreateBookModal = (props) => {
     ).then(res => {
       if (res.data.error) {
         props.createFlashMessage(res.data.error, res.data.variant);
+        props.modalIsShownCancelHandler();
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
+        props.setBooks([...props.books, res.data.book]);
+        props.modalIsShownCancelHandler();
       }
     })
     .catch((err) => {
       props.createFlashMessage(err.message, "danger");
+      props.modalIsShownCancelHandler();
     });
   }
 
   return (
     <div>
-      <Modal show={props.modalIsShown} modalClosed={props.modalIsShownCancelHandler}>
+      <Modal
+        show={props.modalIsShown}
+        modalClosed={props.modalIsShownCancelHandler}
+      >
         <Form
           onSubmit={submitCreateBook}>
           <h3>Create Book</h3>
           <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control required type="text" placeholder="Name" name="name" />
+            <Form.Control
+              required type="text"
+              placeholder="Name"
+              name="name"
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Short description</Form.Label>
-            <Form.Control maxLength="255" name="short_description" required as="textarea" rows={3} placeholder="Short description" />
+            <Form.Control
+              maxLength="255"
+              name="short_description"
+              required as="textarea"
+              rows={3}
+              placeholder="Short description"
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Genre</Form.Label>

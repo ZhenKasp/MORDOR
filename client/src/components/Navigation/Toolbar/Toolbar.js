@@ -11,7 +11,10 @@ const toolbar = (props) => (
     bg="light"
     variant="light"
   >
-    <Navbar.Brand className={classes.Brand} onClick={() => props.setView("index")}>
+    <Navbar.Brand
+      className={classes.Brand}
+      onClick={() => props.setView("index")}
+    >
       <h4>Mordor</h4>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
