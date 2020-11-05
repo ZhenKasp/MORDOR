@@ -3,7 +3,7 @@ import axios from 'axios';
 const logout = (viewHandler, createFlashMessage, deleteUser, token) => {
   axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "logout",
     { headers:
-      { authorization: localStorage.getItem('token') }
+      { authorization: token }
     }, {})
   .then(res => {
     viewHandler("index");

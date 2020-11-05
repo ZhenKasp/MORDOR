@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './NavigationItems.module.css';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../../store/actions';
 
 const navigationItems = (props) => {
   if (props.user.token.length > 0) {
@@ -52,7 +53,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return { deleteUser: () => dispatch({ type: "DELETE_USER" })}
+  return {
+    deleteUser: () => dispatch({ type: "DELETE_USER" }),
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);

@@ -20,6 +20,8 @@ class App extends PureComponent {
   }
 
   render () {
+    const { text, variant } = this.props.flashMessage;
+
     return (
       <Aux>
         <Toolbar
@@ -27,10 +29,9 @@ class App extends PureComponent {
           setView={this.setView}
           active={this.state.view}
         />
-        {this.state.flashMessage &&
-          <FlashMessage variant={this.state.variant}>
-            {this.state.flashMessage}
-          </FlashMessage>}
+      {this.props.flashMessage?.text?.length > 0 &&
+          <FlashMessage text={text} variant={variant} />
+        }
         <SelectorForm
           flashMessageHandler={this.flashMessageHandler}
           view={this.state.view}
@@ -42,7 +43,7 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  return state
+  return { flashMessage: state.flashMessage }
 }
 
 export default connect(mapStateToProps)(App);

@@ -21,7 +21,6 @@ const toolbar = (props) => (
     <Navbar.Collapse>
       <NavigationItems
         setView={props.setView}
-        createFlashMessage={props.createFlashMessage}
       />
     </Navbar.Collapse>
   </Navbar>

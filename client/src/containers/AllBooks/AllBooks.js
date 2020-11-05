@@ -25,14 +25,14 @@ const AllBooks = (props) => {
   return (
     <div>
       <CardDeck className={classes.BooksGrid}>
-      {allBooks.map(book => (
-        <CardBook
-          clicked={props.clickHandler}
-          book={book}
-          key={book.id}
-          clickHandler={props.clickHandler}
-        />
-      ))}
+        {allBooks.map(book => (
+          <CardBook
+            clicked={props.clickHandler}
+            book={book}
+            key={book.id}
+            clickHandler={props.clickHandler}
+          />
+        ))}
       </CardDeck>
     </div>
   )

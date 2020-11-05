@@ -46,14 +46,14 @@ const MyBooks = (props) => {
         setBooks={setBooks}
       />
       <CardDeck className={classes.BooksGrid}>
-      {books.map(book => (
-        <CardBook
-          book={book}
-          key={book.id}
-          clicked={props.clickHandler}
-        >
-        </CardBook>
-      ))}
+        {books.map(book => (
+          <CardBook
+            book={book}
+            key={book.id}
+            clicked={props.clickHandler}
+          >
+          </CardBook>
+        ))}
     </CardDeck>
     </div>
   )
@@ -63,4 +63,12 @@ const mapStateToProps = state => {
   return { user: state.user }
 }
 
-export default connect(mapStateToProps)(MyBooks);
+const mapDispatchToProps = dispatch => {
+  return { createFlashMessage: (text, variant) => dispatch({
+    type: "CREATE_FLASH_MESSAGE",
+    text: text,
+    variant: variant
+  })}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyBooks);

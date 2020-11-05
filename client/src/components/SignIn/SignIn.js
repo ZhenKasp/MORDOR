@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import submitAction from '../../utilities/submitAction';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const SignIn = (props) => (
   <div className={classes.SignIn}>
@@ -43,7 +44,13 @@ const SignIn = (props) => (
 )
 
 const mapDispatchToProps = dispatch => {
-  return { setUser: (value) => dispatch({ type: "SET_USER", value: value })}
+  return {
+    setUser: (value) => dispatch({ type: "SET_USER", value: value }),
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
 }
 
 export default connect(null, mapDispatchToProps)(SignIn);

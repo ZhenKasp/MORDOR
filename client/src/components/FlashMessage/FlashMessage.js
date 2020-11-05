@@ -6,9 +6,9 @@ const flashMessage = (props) => {
   return (
     <Alert
       className={classes.FlashMessage}
-      variant={props.variant ? props.variant : "danger"}
+      variant={props.variant || "danger"}
     >
-      {props.children}
+      {props.text}
     </Alert>
   )
 }

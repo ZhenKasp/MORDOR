@@ -13,21 +13,18 @@ class SelectorForm extends Component {
     if (this.props.view === "signin") {
       return (
         <SignIn
-          createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
         />
       )
     } else if (this.props.view === "signup") {
       return (
         <SignUp
-          createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
         />
       )
     } else {
       return (
         <IndexPage
-          createFlashMessage={this.props.flashMessageHandler}
           setView={this.props.setView}
           view={this.props.view}
         />

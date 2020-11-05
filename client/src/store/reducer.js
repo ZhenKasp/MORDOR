@@ -1,25 +1,44 @@
+const actions = {
+  SET_USER: "SET_USER",
+  DELETE_USER: "DELETE_USER",
+  CREATE_FLASH_MESSAGE: "CREATE_FLASH_MESSAGE"
+}
+
 const initialState = {
   user: {
     id: 0,
     token: "",
     username: ""
+  },
+  flashMessage: {
+    id: 0,
+    text: "",
+    variant: "danger"
   }
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === "SET_USER") {
-    return {
-      ...state,
-      user: { ...action.value }
-    }
+  switch (action.type) {
+    case actions.SET_USER:
+      return {
+        ...state,
+        user: { ...action.value }
+      };
+    case actions.DELETE_USER:
+      return {
+        ...state,
+        user: { ...initialState.user }
+      };
+    case actions.CREATE_FLASH_MESSAGE:
+      const text = typeof action.text === 'string' ? action.text : "Something went wrong";
+
+      return {
+        ...state,
+        flashMessage: { text: text, variant: action.variant }
+      };
+    default:
+      return state;
   }
-  if (action.type === "DELETE_USER") {
-    return {
-      ...state,
-      user: { ...initialState.user }
-    }
-  }
-  return state;
 }
 
 export default reducer;
