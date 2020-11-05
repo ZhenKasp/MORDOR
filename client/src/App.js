@@ -3,6 +3,7 @@ import SelectorForm from './containers/SelectorForm/SelectorForm';
 import Aux from './hoc/Auxiliary';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import Toolbar from './components/Navigation/Toolbar/Toolbar';
+import { connect } from 'react-redux';
 
 class App extends PureComponent {
   state = {
@@ -53,4 +54,8 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStrateToProps = state => {
+  return state
+}
+
+export default connect(mapStrateToProps)(App);

@@ -4,9 +4,10 @@ import logout from '../../../utilities/logout';
 import Nav from 'react-bootstrap/Nav';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './NavigationItems.module.css';
+import { connect } from 'react-redux';
 
 const navigationItems = (props) => {
-  if (props.isAuthenticated()) {
+  if (props.user.token.length > 0) {
     return (
       <Aux>
         <Nav className="mr-auto">
@@ -16,13 +17,13 @@ const navigationItems = (props) => {
         </Nav>
         <NavDropdown
           className={classes.Dropdown}
-          title={localStorage.getItem("username") || "Guest"}
+          title={props.user.username}
         >
           <NavDropdown.Item onClick={() => props.setView("profile")}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            onClick={()=> logout(props.setView, props.createFlashMessage)}>
+            onClick={()=> logout(props.setView, props.createFlashMessage, props.deleteUser)}>
             SignOut
           </NavDropdown.Item>
         </NavDropdown>
@@ -46,4 +47,12 @@ const navigationItems = (props) => {
   }
 }
 
-export default navigationItems;
+const mapStrateToProps = state => {
+  return { user: state.user }
+};
+
+const mapDispatchToProps = dispatch => {
+  return { deleteUser: () => dispatch({ type: "DELETE_USER" })}
+}
+
+export default connect(mapStrateToProps, mapDispatchToProps)(navigationItems);

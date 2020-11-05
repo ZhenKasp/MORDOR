@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
 import submitAction from '../../utilities/submitAction';
+import { connect } from 'react-redux';
 
 const SignUp = (props) => (
   <div className={classes.SignUp}>
@@ -14,7 +15,8 @@ const SignUp = (props) => (
         "signup",
         props.createFlashMessage,
         props.setToken,
-        props.setView)
+        props.setView,
+        props.setUser)
       }
     >
       <Form.Group>
@@ -70,4 +72,9 @@ const SignUp = (props) => (
   </div>
 )
 
-export default SignUp;
+const mapDispatchToProps = dispatch => {
+  return { setUser: (value) => dispatch({ type: "SET_USER", value: value })}
+}
+
+
+export default connect(null, mapDispatchToProps)(SignUp);
