@@ -14,7 +14,6 @@ const SignUp = (props) => (
         (event) => submitAction(event,
         "signup",
         props.createFlashMessage,
-        props.setToken,
         props.setView,
         props.setUser)
       }

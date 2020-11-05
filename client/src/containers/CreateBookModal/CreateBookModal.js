@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import TagsInput from '../../containers/TagsInput/TagsInput';
 import axios from 'axios';
 import getFormData from '../../utilities/getFormData';
+import { connect } from 'react-redux';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
@@ -25,7 +26,7 @@ const CreateBookModal = (props) => {
     object["tags"] = tags.map(tag => tag.text).join(";");
 
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + 'book',
-      object, { headers: { authorization: localStorage.getItem('token') }}
+      object, { headers: { authorization: props.user.token }}
     ).then(res => {
       if (res.data.error) {
         props.createFlashMessage(res.data.error, res.data.variant);
@@ -88,4 +89,8 @@ const CreateBookModal = (props) => {
   )
 }
 
-export default CreateBookModal;
+const mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps)(CreateBookModal);

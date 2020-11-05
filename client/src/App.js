@@ -14,16 +14,6 @@ class App extends PureComponent {
 
   setView = (view) => this.setState({ view: view });
 
-  isAuthenticated = () => localStorage.getItem("token");
-
-  tokenHandler = token => {
-    if (token) {
-      localStorage.setItem('token', token);
-    } else {
-      localStorage.removeItem('token');
-    }
-  };
-
   flashMessageHandler = (message, variant) => {
     this.setState({flashMessage: "", variant: "danger"});
     this.setState({flashMessage: message, variant: variant});
@@ -36,8 +26,6 @@ class App extends PureComponent {
           createFlashMessage={this.flashMessageHandler}
           setView={this.setView}
           active={this.state.view}
-          setToken={this.tokenHandler}
-          isAuthenticated={this.isAuthenticated}
         />
         {this.state.flashMessage &&
           <FlashMessage variant={this.state.variant}>
@@ -47,15 +35,14 @@ class App extends PureComponent {
           flashMessageHandler={this.flashMessageHandler}
           view={this.state.view}
           setView={this.setView}
-          setToken={this.tokenHandler}
         />
       </Aux>
     )
   }
 }
 
-const mapStrateToProps = state => {
+const mapStateToProps = state => {
   return state
 }
 
-export default connect(mapStrateToProps)(App);
+export default connect(mapStateToProps)(App);

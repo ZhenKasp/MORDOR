@@ -2,7 +2,11 @@ import axios from 'axios';
 import getFormData from './getFormData';
 
 const submitAction = (
-  event, path, createFlashMessage, setToken, setView, setUser
+  event,
+  path,
+  createFlashMessage,
+  setView,
+  setUser
 ) => {
   event.preventDefault();
   const object = getFormData(event);
@@ -12,7 +16,6 @@ const submitAction = (
     if (!res.data.token) {
       createFlashMessage(res.data.error, res.data.variant);
     } else {
-      setToken(res.data.token);
       setUser({
         id: res.data.id,
         token: res.data.token,

@@ -4,7 +4,8 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import CreateBookModal from '../CreateBookModal/CreateBookModal';
 import CardBook from '../../components/CardBook/CardBook';
 import axios from 'axios';
-import classes from './MyBooks.module.css'
+import classes from './MyBooks.module.css';
+import { connect } from 'react-redux';
 
 const MyBooks = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
@@ -16,7 +17,7 @@ const MyBooks = (props) => {
   useEffect(() => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "myBooks",
-        { headers: { authorization: localStorage.getItem('token') }})
+        { headers: { authorization: props.user.token }})
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
@@ -58,4 +59,8 @@ const MyBooks = (props) => {
   )
 }
 
-export default MyBooks;
+const mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps)(MyBooks);

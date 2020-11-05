@@ -13,7 +13,6 @@ const SignIn = (props) => (
       onSubmit={(event) => submitAction(event,
         "signin",
         props.createFlashMessage,
-        props.setToken,
         props.setView,
         props.setUser)
       }

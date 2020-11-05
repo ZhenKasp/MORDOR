@@ -21,8 +21,6 @@ const toolbar = (props) => (
     <Navbar.Collapse>
       <NavigationItems
         setView={props.setView}
-        isAuthenticated={props.isAuthenticated}
-        setToken={props.setToken}
         createFlashMessage={props.createFlashMessage}
       />
     </Navbar.Collapse>

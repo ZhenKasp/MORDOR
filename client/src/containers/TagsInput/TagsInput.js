@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classes from './TagsInput.module.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const TagsInput = (props) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -9,7 +10,7 @@ const TagsInput = (props) => {
   useEffect(() => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "tags",
-        { headers: { authorization: localStorage.getItem('token') }})
+        { headers: { authorization: props.user.token }})
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
@@ -60,4 +61,8 @@ const TagsInput = (props) => {
   )
 }
 
-export default TagsInput;
+const mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps)(TagsInput);

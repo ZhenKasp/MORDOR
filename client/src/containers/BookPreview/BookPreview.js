@@ -5,6 +5,7 @@ import axios from 'axios';
 import classes from './BookPreview.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { connect } from 'react-redux';
 
 const BookPreview = (props) => {
   const [book, setBook] = useState([]);
@@ -13,7 +14,7 @@ const BookPreview = (props) => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
         { params: { id: props.id, userId: localStorage.getItem("userId") },
-          headers: { authorization: localStorage.getItem('token') }}
+          headers: { authorization: props.user.token }}
         )
       .then(res => {
         if (res.data.error) {
@@ -88,4 +89,8 @@ const BookPreview = (props) => {
   )
 }
 
-export default BookPreview;
+const mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps)(BookPreview);

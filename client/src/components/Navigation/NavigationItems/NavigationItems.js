@@ -23,7 +23,7 @@ const navigationItems = (props) => {
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            onClick={()=> logout(props.setView, props.createFlashMessage, props.deleteUser)}>
+            onClick={()=> logout(props.setView, props.createFlashMessage, props.deleteUser, props.user.token)}>
             SignOut
           </NavDropdown.Item>
         </NavDropdown>
@@ -47,7 +47,7 @@ const navigationItems = (props) => {
   }
 }
 
-const mapStrateToProps = state => {
+const mapStateToProps = state => {
   return { user: state.user }
 };
 
@@ -55,4 +55,4 @@ const mapDispatchToProps = dispatch => {
   return { deleteUser: () => dispatch({ type: "DELETE_USER" })}
 }
 
-export default connect(mapStrateToProps, mapDispatchToProps)(navigationItems);
+export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);
