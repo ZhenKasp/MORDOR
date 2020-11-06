@@ -74,7 +74,8 @@ const SignUp = (props) => (
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: (value) => dispatch({ type: "SET_USER", value: value }),
+    setView: view => dispatch({ type: "SET_VIEW", view }),
+    setUser: value => dispatch({ type: "SET_USER", value }),
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant

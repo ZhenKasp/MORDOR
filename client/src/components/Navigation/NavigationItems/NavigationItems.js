@@ -58,7 +58,8 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    })
+    }),
+    setView: (view) => dispatch({ type: "SET_VIEW", view }),
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignIn from '../../components/SignIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp';
 import IndexPage from '../IndexPage/IndexPage';
+import { connect } from 'react-redux';
 
 class SelectorForm extends Component {
   shouldComponentUpdate(nextProps) {
@@ -9,28 +10,14 @@ class SelectorForm extends Component {
   }
 
   render () {
-    console.log(this.props.view);
-    if (this.props.view === "signin") {
-      return (
-        <SignIn
-          setView={this.props.setView}
-        />
-      )
-    } else if (this.props.view === "signup") {
-      return (
-        <SignUp
-          setView={this.props.setView}
-        />
-      )
-    } else {
-      return (
-        <IndexPage
-          setView={this.props.setView}
-          view={this.props.view}
-        />
-      )
-    }
+    if (this.props.view === "signin") { return (<SignIn />)
+    } else if (this.props.view === "signup") { return (<SignUp />)
+    } else { return (<IndexPage />) }
   }
 }
 
-export default SelectorForm;
+const mapStateToProps = state => {
+  return { view: state.view }
+}
+
+export default connect(mapStateToProps)(SelectorForm);

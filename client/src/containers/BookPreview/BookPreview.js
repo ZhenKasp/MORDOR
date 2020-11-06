@@ -14,7 +14,7 @@ const BookPreview = (props) => {
   useEffect(() => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
-        { params: { id: props.id, userId: localStorage.getItem("userId") },
+        { params: { id: props.id, userId: props.user.id },
           headers: { authorization: props.user.token }}
         )
       .then(res => {
@@ -90,10 +90,7 @@ const BookPreview = (props) => {
   )
 }
 
-const mapStateToProps = state => {
-  return { user: state.user }
-}
-
+const mapStateToProps = state => ({ user: state.user })
 
 const mapDispatchToProps = dispatch => {
   return {

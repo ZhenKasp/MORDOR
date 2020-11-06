@@ -3,6 +3,7 @@ import classes from './Toolbar.module.css';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import  Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
+import { connect } from 'react-redux';
 
 const toolbar = (props) => (
   <Navbar
@@ -19,11 +20,15 @@ const toolbar = (props) => (
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse>
-      <NavigationItems
-        setView={props.setView}
-      />
+      <NavigationItems />
     </Navbar.Collapse>
   </Navbar>
 );
 
-export default toolbar;
+const mapStateToProps = state => ({ view: state.view })
+
+const mapDispatchToProps = dispatch => (
+  { setView: (view) => dispatch({ type: "SET_VIEW", view }) }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(toolbar);

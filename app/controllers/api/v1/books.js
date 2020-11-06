@@ -19,11 +19,11 @@ const books = (app) => {
   app.get('/api/v1/book/', (req,res) => {
     try {
       Book.findOne({ where: { id: req.query.id },
-        include: [{ model: Chapter, as: Chapter },
-          { model: User, as: User }]}).then(book => {
+        include: [{ model: Chapter, as: Chapter }, { model: User, as: User }]
+      }).then(book => {
         res.json({
           book: book,
-          isOwner: book.userId == req.query.userId || book.user.role == "admin"
+          isOwner: book.userId == req.query.userId
         });
       });
     } catch (error) {
