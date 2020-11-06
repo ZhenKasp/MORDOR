@@ -3,6 +3,8 @@ import axios from 'axios';
 import CardDeck from 'react-bootstrap/CardDeck';
 import classes from './AllBooks.module.css';
 import CardBook from '../../components/CardBook/CardBook';
+import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const AllBooks = (props) => {
   const [allBooks, setAllBooks] = useState([]);
@@ -38,4 +40,13 @@ const AllBooks = (props) => {
   )
 }
 
-export default AllBooks;
+const mapDispatchToProps = dispatch => {
+  return {
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(AllBooks);

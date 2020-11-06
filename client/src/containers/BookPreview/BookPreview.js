@@ -6,6 +6,7 @@ import classes from './BookPreview.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const BookPreview = (props) => {
   const [book, setBook] = useState([]);
@@ -93,4 +94,14 @@ const mapStateToProps = state => {
   return { user: state.user }
 }
 
-export default connect(mapStateToProps)(BookPreview);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookPreview);

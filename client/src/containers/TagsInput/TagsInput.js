@@ -3,6 +3,7 @@ import classes from './TagsInput.module.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const TagsInput = (props) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -65,4 +66,14 @@ const mapStateToProps = state => {
   return { user: state.user }
 }
 
-export default connect(mapStateToProps)(TagsInput);
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: (value) => dispatch({ type: "SET_USER", value: value }),
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TagsInput);

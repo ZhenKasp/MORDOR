@@ -28,10 +28,7 @@ const IndexPage = (props) => {
           <BestBooks clickHandler={clickHandler}/>
           <hr />
           <Tags />
-          <AllBooks
-            createFlashMessage={props.createFlashMessage}
-            clickHandler={clickHandler}
-            />
+          <AllBooks clickHandler={clickHandler} />
         </Aux>
       )
     } else if (view === "profile") {
@@ -40,23 +37,16 @@ const IndexPage = (props) => {
       return (
         <MyBooks
           setView={props.setView}
-          createFlashMessage={props.createFlashMessage}
           clickHandler={clickHandler}
         />
       )
     } else if (view === "bookPreview") {
       return (
-        <BookPreview
-          id={id}
-          createFlashMessage={props.createFlashMessage}
-        />
+        <BookPreview id={id} />
       )
     } else if (view === "editBook") {
       return (
-        <EditBook
-          id={id}
-          createFlashMessage={props.createFlashMessage}
-        />
+        <EditBook id={id} />
       )
     } else if (view === "readBook") {
       return <ReadBook id={id} />

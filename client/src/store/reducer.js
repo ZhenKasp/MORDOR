@@ -1,7 +1,8 @@
 const actions = {
   SET_USER: "SET_USER",
   DELETE_USER: "DELETE_USER",
-  CREATE_FLASH_MESSAGE: "CREATE_FLASH_MESSAGE"
+  CREATE_FLASH_MESSAGE: "CREATE_FLASH_MESSAGE",
+  DESTROY_FLASH_MESSAGE: "DESTROY_FLASH_MESSAGE"
 }
 
 const initialState = {
@@ -11,7 +12,6 @@ const initialState = {
     username: ""
   },
   flashMessage: {
-    id: 0,
     text: "",
     variant: "danger"
   }
@@ -31,10 +31,14 @@ const reducer = (state = initialState, action) => {
       };
     case actions.CREATE_FLASH_MESSAGE:
       const text = typeof action.text === 'string' ? action.text : "Something went wrong";
-
       return {
         ...state,
         flashMessage: { text: text, variant: action.variant }
+      };
+    case actions.DESTROY_FLASH_MESSAGE:
+      return {
+        ...state,
+        flashMessage: { text: "", variant: "danger" }
       };
     default:
       return state;

@@ -6,6 +6,7 @@ import CardBook from '../../components/CardBook/CardBook';
 import axios from 'axios';
 import classes from './MyBooks.module.css';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const MyBooks = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
@@ -38,7 +39,6 @@ const MyBooks = (props) => {
       </Button>
       <hr />
       <CreateBookModal
-        createFlashMessage={props.createFlashMessage}
         modalIsShownHandler={modalIsShownHandler}
         modalIsShownCancelHandler={modalIsShownCancelHandler}
         modalIsShown={modalIsShown}
@@ -64,11 +64,12 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return { createFlashMessage: (text, variant) => dispatch({
-    type: "CREATE_FLASH_MESSAGE",
-    text: text,
-    variant: variant
-  })}
+  return {
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyBooks);

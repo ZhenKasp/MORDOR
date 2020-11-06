@@ -6,6 +6,7 @@ import TagsInput from '../../containers/TagsInput/TagsInput';
 import axios from 'axios';
 import getFormData from '../../utilities/getFormData';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
@@ -93,4 +94,13 @@ const mapStateToProps = state => {
   return { user: state.user }
 }
 
-export default connect(mapStateToProps)(CreateBookModal);
+const mapDispatchToProps = dispatch => {
+  return {
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBookModal);
