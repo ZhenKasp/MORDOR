@@ -1,0 +1,12 @@
+.Wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+button {
+  margin: 0 3px;
+}
+
+select {
+  max-width: 150px;
+}

@@ -6,8 +6,13 @@
   align-items: center;
   height: 100%;
 }
+
+.Dropdown > a {
+  padding-left: 0;
+}
+
 @media (min-width: 768px) {
   .Dropdown div {
-    margin-left: -50px !important;
+    margin-left: -120px !important;
   }
 }
