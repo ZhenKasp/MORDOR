@@ -5,26 +5,19 @@ import Form from 'react-bootstrap/Form';
 import TagsInput from '../../containers/TagsInput/TagsInput';
 import axios from 'axios';
 import getFormData from '../../utilities/getFormData';
+import GenreSelector from '../../components/GenreSelector/GenreSelector';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
-  const GENRES = [
-    "Fantasy",
-    "Sci-Fi",
-    "Mystery",
-    "Thriller",
-    "Romance",
-    "Westerns",
-    "Dystopian",
-    "Erotica",
-  ]
+  const [genre, setGenre] = useState("");
 
   const submitCreateBook = (event) => {
     event.preventDefault();
     const object = getFormData(event);
     object["tags"] = tags.map(tag => tag.text).join(";");
+    object["genre"] = genre;
 
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + 'book',
       object, { headers: { authorization: props.user.token }}
@@ -73,9 +66,9 @@ const CreateBookModal = (props) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Genre</Form.Label>
-            <Form.Control name="genre" required as="select">
-              {GENRES.map(genre => <option key={genre}>{genre}</option>)}
-            </Form.Control>
+            <GenreSelector
+              handleChange={(e) => setGenre(e.target.value)}
+            />
           </Form.Group>
           <Form.Group>
             <TagsInput

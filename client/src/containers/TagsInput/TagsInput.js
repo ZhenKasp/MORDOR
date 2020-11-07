@@ -5,13 +5,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 
-const TagsInput = (props) => {
+const TagsInput = props => {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "tags",
-        { headers: { authorization: props.user.token }})
+      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "tags")
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
@@ -41,7 +40,7 @@ const TagsInput = (props) => {
 
     props.setTags(newTags);
   }
-
+  
   return (
     <ReactTags
       classNames={{
@@ -68,7 +67,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: (value) => dispatch({ type: "SET_USER", value: value }),
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant

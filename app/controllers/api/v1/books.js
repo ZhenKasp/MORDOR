@@ -60,6 +60,37 @@ const books = (app) => {
       }
     })();
   });
+
+  app.patch('/api/v1/book', authenticateToken, (req,res) => {
+    const fields = {
+      id: req.body.id,
+      name: req.body.name,
+      short_description: req.body.short_description,
+      genre: req.body.genre,
+      tags: req.body.tags
+    };
+
+    (async () => {
+      try {
+        Book.findOne({where: { id: req.body.id }}).then(book => {
+          if (book) {
+            book.update(fields).then(() => {
+              res.json({
+                message: "Update book successful",
+                variant: "success",
+                book: book
+              });
+            });
+          }
+        });
+      } catch (error) {
+        res.json({
+          error: error.errors[0].message,
+          variant: "danger"
+        }).status(400);
+      }
+    })();
+  });
 }
 
 module.exports = books;

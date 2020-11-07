@@ -9,7 +9,7 @@ import Tags from '../Tags/Tags';
 import Aux from '../../hoc/Auxiliary';
 import AllBooks from '../AllBooks/AllBooks';
 import ReadBook from '../ReadBook/ReadBook';
-import BookPreview from '../BookPreview/BookPreview';
+import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
 
 class IndexPage extends Component {
@@ -41,7 +41,7 @@ class IndexPage extends Component {
       )
     } else if (view === "bookPreview") {
       return (
-        <BookPreview id={this.state.id} />
+        <Preview id={this.state.id} />
       )
     } else if (view === "editBook") {
       return (
