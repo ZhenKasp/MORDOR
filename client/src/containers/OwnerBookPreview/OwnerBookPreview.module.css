@@ -10,3 +10,14 @@ button {
 select {
   max-width: 150px;
 }
+
+.Chapter {
+  font-size: 18px;
+  color: blue;
+}
+
+.Chapter:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}

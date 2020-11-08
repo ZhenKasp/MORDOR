@@ -33,7 +33,10 @@ const Preview = (props) => {
   return (
     <Aux>
       { isOwner ?
-        <OwnerBookPreview book={book} /> :
+        <OwnerBookPreview
+          book={book}
+          clickHandler={props.clickHandler}
+        /> :
         <BookPreview book={book} />
       }
     </Aux>

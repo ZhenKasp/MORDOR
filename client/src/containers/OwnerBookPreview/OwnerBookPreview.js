@@ -17,7 +17,9 @@ const OwnerBoookPreview = props => {
   const [modalIsShown, setModalIsShown] = useState(false);
 
   useEffect(() => {
-    setTags(props.book.tags ? props.book.tags.split(";").map(tag => ({ id: tag, text: tag })) : []);
+    setTags(props.book.tags ?
+      props.book.tags.split(";").map(tag => ({ id: tag, text: tag })) : []
+    );
     setGenre(props.book.genre);
     setChapters(props.book.chapters);
   }, [props.book]);
@@ -58,7 +60,6 @@ const OwnerBoookPreview = props => {
           <Form.Label><h3>Tags</h3></Form.Label>
           <TagsInput setTags={setTags} tags={tags} />
         </Form.Group>
-
         <Form.Group>
           <Form.Label><h3>Short description</h3></Form.Label>
           <Form.Control
@@ -84,15 +85,17 @@ const OwnerBoookPreview = props => {
       <h3>Chapters</h3>
       {chapters && chapters.length > 0 ? (
         <ol>
-          {chapters.sort((a, b) => (a.id - b.id)).map(chapter => {
-            return (
-              <li
-                key={chapter.id}
-                onClick={() => console.log(chapter.text)}>
-                {chapter.name}
-              </li>
-            )
-          })}
+          {chapters.sort((a, b) => (a.id - b.id)).map(chapter => (
+            <li
+              className={classes.Chapter}
+              key={chapter.id}
+              onClick={() => {
+                props.clickHandler("editChapter", chapter.id, chapters);
+              }}>
+              {chapter.name}
+            </li>
+          )
+        )}
         </ol>
       ) : (
         <p>No chapters</p>
@@ -100,7 +103,6 @@ const OwnerBoookPreview = props => {
       <Button onClick={() => setModalIsShown(true)}>
         Create Chapter
       </Button>
-      <hr />
       <CreateChapterModal
         modalIsShownHandler={() => setModalIsShown(true)}
         modalIsShownCancelHandler={() => setModalIsShown(false)}
@@ -109,6 +111,7 @@ const OwnerBoookPreview = props => {
         chapters={chapters}
         setChapters={setChapters}
       />
+      <hr />
     </div>
   )
 }

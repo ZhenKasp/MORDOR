@@ -52,7 +52,7 @@ const chapters = (app) => {
     })();
   });
 
-  app.patch('/api/v1/chapter', authenticateToken, (req,res) => {
+  app.patch('/api/v1/chapter/', authenticateToken, (req,res) => {
     const fields = {
       name: req.body.name,
       text: req.body.text,
