@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import Aux from '../../hoc/Auxiliary';
-import OwnerBookPreview from '../../components/OwnerBookPreview/OwnerBookPreview';
+import OwnerBookPreview from '../OwnerBookPreview/OwnerBookPreview';
 import BookPreview from '../../components/BookPreview/BookPreview';
 
 const Preview = (props) => {
@@ -29,13 +29,6 @@ const Preview = (props) => {
       props.createFlashMessage(err.message, "danger");
     }
   }, []);
-
-  let chapters = [
-    {id: 1, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
-    {id: 2, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
-    {id: 3, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
-    {id: 4, text: "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop"},
-  ];
 
   return (
     <Aux>

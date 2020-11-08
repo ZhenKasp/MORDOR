@@ -63,7 +63,6 @@ const books = (app) => {
 
   app.patch('/api/v1/book', authenticateToken, (req,res) => {
     const fields = {
-      id: req.body.id,
       name: req.body.name,
       short_description: req.body.short_description,
       genre: req.body.genre,

@@ -41,7 +41,7 @@ class IndexPage extends Component {
       )
     } else if (view === "bookPreview") {
       return (
-        <Preview id={this.state.id} />
+        <Preview id={this.state.id} clickHandler={this.clickHandler} />
       )
     } else if (view === "editBook") {
       return (

@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import TagsInput from '../../containers/TagsInput/TagsInput';
-import GenreSelector from '../GenreSelector/GenreSelector';
+import TagsInput from '../TagsInput/TagsInput';
+import GenreSelector from '../../components/GenreSelector/GenreSelector';
 import classes from './OwnerBookPreview.module.css';
 import getFormData from '../../utilities/getFormData';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import CreateChapterModal from '../CreateChapterModal/CreateChapterModal';
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
   const [genre, setGenre] = useState(props.book.genre);
+  const [chapters, setChapters] = useState(props.book.chapters);
+  const [modalIsShown, setModalIsShown] = useState(false);
 
   useEffect(() => {
     setTags(props.book.tags ? props.book.tags.split(";").map(tag => ({ id: tag, text: tag })) : []);
-  }, [props.book]);
-
-  useEffect(() => {
     setGenre(props.book.genre);
-  }, [props.book.genre]);
+    setChapters(props.book.chapters);
+  }, [props.book]);
 
   const updateBook = (event) => {
     event.preventDefault();
@@ -80,27 +79,36 @@ const OwnerBoookPreview = props => {
         </Form.Group>
         <Button variant="warning" type="submit">Confirm changes</Button>
         <Button>Read</Button>
-        <hr />
-        <h3>Chapters</h3>
-        {props.chapters && props.chapters.length > 0 ? (
-          <ol>
-            {props.chapters.map(chapter => {
-              return (
-                <li
-                  key={chapter.id}
-                  onClick={() => console.log(chapter.text)}>
-                  {chapter.text}
-                </li>
-              )
-            })}
-          </ol>
-        ) : (
-          <div>
-            <p>No chapters</p>
-            <FontAwesomeIcon icon={faPlusSquare} />
-          </div>
-        )}
       </Form>
+      <hr />
+      <h3>Chapters</h3>
+      {chapters && chapters.length > 0 ? (
+        <ol>
+          {chapters.sort((a, b) => (a.id - b.id)).map(chapter => {
+            return (
+              <li
+                key={chapter.id}
+                onClick={() => console.log(chapter.text)}>
+                {chapter.name}
+              </li>
+            )
+          })}
+        </ol>
+      ) : (
+        <p>No chapters</p>
+      )}
+      <Button onClick={() => setModalIsShown(true)}>
+        Create Chapter
+      </Button>
+      <hr />
+      <CreateChapterModal
+        modalIsShownHandler={() => setModalIsShown(true)}
+        modalIsShownCancelHandler={() => setModalIsShown(false)}
+        modalIsShown={modalIsShown}
+        bookId={props.book.id}
+        chapters={chapters}
+        setChapters={setChapters}
+      />
     </div>
   )
 }

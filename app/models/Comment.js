@@ -4,7 +4,7 @@ const User = require('./User');
 const Book = require('./Book');
 
 const Comment = sequelize.define('comment', {
-  comment_text:{
+  text:{
     type: DataTypes.STRING
   },
 }, {

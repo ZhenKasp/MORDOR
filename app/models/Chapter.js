@@ -3,13 +3,13 @@ const { DataTypes } = require('sequelize');
 const Book = require('./Book');
 
 const Chapter = sequelize.define('chapter', {
-  chapter_name:{
+  name:{
     type: DataTypes.STRING
   },
-  chapter_text:{
+  text:{
     type: DataTypes.STRING
   },
-  chapter_image:{
+  image:{
     type: DataTypes.STRING
   },
 }, {
