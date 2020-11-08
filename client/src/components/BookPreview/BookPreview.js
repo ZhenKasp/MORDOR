@@ -1,8 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import classes from './BookPreview.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 
 const bookPreview = props => (
   <div>
@@ -32,7 +30,6 @@ const bookPreview = props => (
     ) :
       <div>
         <p>No chapters</p>
-        <FontAwesomeIcon className={classes.Pluss} icon={faPlusSquare} />
       </div>}
   </div>
 )

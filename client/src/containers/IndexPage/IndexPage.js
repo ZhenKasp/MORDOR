@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classes from './IndexPage.module.css';
 import MyBooks from '../MyBooks/MyBooks';
 import Profile from '../Profile/Profile';
-import EditBook from '../EditBook/EditBook';
+import EditChapter from '../EditChapter/EditChapter';
 import LastBooks from '../LastBooks/LastBooks';
 import BestBooks from '../BestBooks/BestBooks';
 import Tags from '../Tags/Tags';
@@ -13,21 +13,22 @@ import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
 
 class IndexPage extends Component {
-  state = { id: 0 };
+  state = { id: 0, attributes: [] };
 
-  clickHandler = (view, id) => {
-    this.setState({ id: id });
+  clickHandler = (view, id, attributes = []) => {
+    this.setState({ id: id, attributes: attributes });
     this.props.setView(view);
   }
 
   viewHandler = () => {
+    const { id, attributes } = this.state;
     const view = this.props.view;
 
     if (view === "index") {
       return (
         <Aux>
-          <LastBooks clickHandler={this.clickHandler}/>
-          <BestBooks clickHandler={this.clickHandler}/>
+          <LastBooks clickHandler={this.clickHandler} />
+          <BestBooks clickHandler={this.clickHandler} />
           <hr />
           <Tags />
           <AllBooks clickHandler={this.clickHandler} />
@@ -41,14 +42,17 @@ class IndexPage extends Component {
       )
     } else if (view === "bookPreview") {
       return (
-        <Preview id={this.state.id} clickHandler={this.clickHandler} />
+        <Preview id={id} clickHandler={this.clickHandler} />
       )
-    } else if (view === "editBook") {
+    } else if (view === "editChapter") {
       return (
-        <EditBook id={this.state.id} />
+        <EditChapter
+          id={id}
+          chapters={attributes}
+        />
       )
     } else if (view === "readBook") {
-      return <ReadBook id={this.state.id} />
+      return <ReadBook id={id} />
     } else {
       return <div> Not Found </div>
     }
