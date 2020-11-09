@@ -7,7 +7,7 @@ const Chapter = sequelize.define('chapter', {
     type: DataTypes.STRING
   },
   text:{
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   image:{
     type: DataTypes.STRING

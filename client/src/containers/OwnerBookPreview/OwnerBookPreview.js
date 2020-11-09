@@ -9,6 +9,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import CreateChapterModal from '../CreateChapterModal/CreateChapterModal';
+import Aux from '../../hoc/Auxiliary';
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
@@ -79,27 +80,35 @@ const OwnerBoookPreview = props => {
           />
         </Form.Group>
         <Button variant="warning" type="submit">Confirm changes</Button>
-        <Button>Read</Button>
-      </Form>
-      <hr />
-      <h3>Chapters</h3>
+
       {chapters && chapters.length > 0 ? (
-        <ol>
-          {chapters.sort((a, b) => (a.id - b.id)).map(chapter => (
-            <li
-              className={classes.Chapter}
-              key={chapter.id}
-              onClick={() => {
-                props.clickHandler("editChapter", chapter.id, chapters);
-              }}>
-              {chapter.name}
-            </li>
-          )
-        )}
-        </ol>
+        <Aux>
+            <Button onClick={() => {
+              props.clickHandler("readBook", props.book.chapters[0].id, props.book.chapters);
+            }}>Read</Button>
+            <hr />
+            <h3>Chapters</h3>
+          <ol>
+            {chapters.sort((a, b) => (a.id - b.id)).map(chapter => (
+              <li
+                className={classes.Chapter}
+                key={chapter.id}
+                onClick={() => {
+                  props.clickHandler("editChapter", chapter.id, chapters);
+                }}>
+                {chapter.name}
+              </li>
+            )
+          )}
+          </ol>
+        </Aux>
       ) : (
-        <p>No chapters</p>
+        <Aux>
+          <hr />
+          <h4>No chapters</h4>
+        </Aux>
       )}
+      </Form>
       <Button onClick={() => setModalIsShown(true)}>
         Create Chapter
       </Button>

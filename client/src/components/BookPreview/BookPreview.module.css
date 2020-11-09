@@ -1,0 +1,23 @@
+.Wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+button {
+  margin: 0 3px;
+}
+
+select {
+  max-width: 150px;
+}
+
+.Chapter {
+  font-size: 18px;
+  color: blue;
+}
+
+.Chapter:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}

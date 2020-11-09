@@ -1,14 +1,12 @@
 .BooksGrid {
-  margin-top: 10px;
-  margin-left: auto;
+  margin-top:10px;
+  margin-right: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   grid-gap: .5rem;
 }
 
 .BooksGrid > div {
-  margin: 0 auto;
-  margin: 0 auto !important;
   width: 99%;
 }
 

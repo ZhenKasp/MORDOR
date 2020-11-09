@@ -37,7 +37,10 @@ const Preview = (props) => {
           book={book}
           clickHandler={props.clickHandler}
         /> :
-        <BookPreview book={book} />
+        <BookPreview
+          book={book}
+          clickHandler={props.clickHandler}
+        />
       }
     </Aux>
   )

@@ -8,9 +8,10 @@ import BestBooks from '../BestBooks/BestBooks';
 import Tags from '../Tags/Tags';
 import Aux from '../../hoc/Auxiliary';
 import AllBooks from '../AllBooks/AllBooks';
-import ReadBook from '../ReadBook/ReadBook';
+import ReadBook from '../../components/ReadBook/ReadBook';
 import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
+import BookContainer from '../BookContainer/BookContainer';
 
 class IndexPage extends Component {
   state = { id: 0, attributes: [] };
@@ -46,13 +47,16 @@ class IndexPage extends Component {
       )
     } else if (view === "editChapter") {
       return (
-        <EditChapter
-          id={id}
-          chapters={attributes}
-        />
+        <BookContainer id={id} chapters={attributes}>
+          <EditChapter />
+        </BookContainer>
       )
     } else if (view === "readBook") {
-      return <ReadBook id={id} />
+      return (
+        <BookContainer id={id} chapters={attributes}>
+          <ReadBook />
+        </BookContainer>
+      )
     } else {
       return <div> Not Found </div>
     }
