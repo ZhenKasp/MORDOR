@@ -4,9 +4,9 @@ const Chapter = require('./Chapter');
 
 const Like = sequelize.define('like', {}, {underscored: true});
 
+User.hasMany(Like, { onDelete: 'CASCADE', hooks: true }, { onDelete: 'CASCADE', hooks: true });
+Chapter.hasMany(Like, { onDelete: 'CASCADE', hooks: true });
 Like.belongsTo(User);
 Like.belongsTo(Chapter);
-User.hasMany(Like);
-Chapter.hasMany(Like);
 
 module.exports = Like;

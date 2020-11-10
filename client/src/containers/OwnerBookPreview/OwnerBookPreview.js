@@ -46,6 +46,24 @@ const OwnerBoookPreview = props => {
     });
   }
 
+  const deleteBook = id => {
+    console.log(id);
+    axios.delete(process.env.REACT_APP_PATH_TO_SERVER + 'book', {
+      headers: { authorization: props.user.token },
+      data: { id: id }
+    }).then(res => {
+      if (res.data.error) {
+        props.createFlashMessage(res.data.error, res.data.variant);
+      } else {
+        props.createFlashMessage(res.data.message, res.data.variant);
+        props.setView('index');
+      }
+    })
+    .catch((err) => {
+      props.createFlashMessage(err.message, "danger");
+    });
+  }
+
   return (
     <div className={classes.Wrapper}>
       <Form onSubmit={updateBook}>
@@ -80,11 +98,18 @@ const OwnerBoookPreview = props => {
           />
         </Form.Group>
         <Button variant="warning" type="submit">Confirm changes</Button>
-
+        <Button
+          variant="danger"
+          onClick={() => deleteBook(props.book.id)}
+        >Delete Book</Button>
       {chapters && chapters.length > 0 ? (
         <Aux>
             <Button onClick={() => {
-              props.clickHandler("readBook", props.book.chapters[0].id, props.book.chapters);
+              props.clickHandler(
+                "readBook",
+                props.book.chapters[0].id,
+                props.book.chapters
+              );
             }}>Read</Button>
             <hr />
             <h3>Chapters</h3>
@@ -132,7 +157,8 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    })
+    }),
+    setView: (view) => dispatch({ type: "SET_VIEW", view }),
   }
 }
 

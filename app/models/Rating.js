@@ -14,9 +14,9 @@ const Rating = sequelize.define('rating', {
   underscored: true
 });
 
+User.hasMany(Rating, { onDelete: 'CASCADE', hooks: true });
+Book.hasMany(Rating), { onDelete: 'CASCADE', hooks: true };
 Rating.belongsTo(User);
 Rating.belongsTo(Book);
-User.hasMany(Rating);
-Book.hasMany(Rating);
 
 module.exports = Rating;

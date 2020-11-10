@@ -90,6 +90,25 @@ const books = (app) => {
       }
     })();
   });
+
+  app.delete('/api/v1/book', authenticateToken, (req,res) => {
+    (async () => {
+      try {
+        Book.destroy({where: {id: req.body.id}}).then(book => {
+          res.json({
+            message: "Delete book successful",
+            variant: "success",
+            book: book
+          });
+        });
+      } catch (error) {
+        res.json({
+          error: error.errors[0].message,
+          variant: "danger"
+        }).status(400);
+      }
+    })();
+  });
 }
 
 module.exports = books;

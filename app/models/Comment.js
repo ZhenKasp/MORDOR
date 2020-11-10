@@ -14,9 +14,9 @@ const Comment = sequelize.define('comment', {
   underscored: true
 });
 
+Book.hasMany(Comment, { onDelete: 'CASCADE', hooks: true });
+User.hasMany(Comment, { onDelete: 'CASCADE', hooks: true });
 Comment.belongsTo(User);
 Comment.belongsTo(Book);
-Book.hasMany(Comment);
-User.hasMany(Comment);
 
 module.exports = Comment;

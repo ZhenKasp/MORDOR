@@ -22,7 +22,7 @@ const Book = sequelize.define('book', {
   underscored: true
 });
 
-User.hasMany(Book);
+User.hasMany(Book, { onDelete: 'CASCADE', hooks: true });
 Book.belongsTo(User);
 
 module.exports = Book;

@@ -19,7 +19,7 @@ const Chapter = sequelize.define('chapter', {
   underscored: true
 });
 
+Book.hasMany(Chapter, { onDelete: 'CASCADE', hooks: true });
 Chapter.belongsTo(Book);
-Book.hasMany(Chapter);
 
 module.exports = Chapter;
