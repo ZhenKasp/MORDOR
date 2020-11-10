@@ -22,7 +22,7 @@ const EditChapter = (props) => {
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
         const chapters = [...props.chapters];
-        const index = props.chapters.findIndex((chapter) => chapter.id == res.data.chapter.id);
+        const index = props.chapters.findIndex((chapter) => chapter.id === res.data.chapter.id);
         chapters[index] = res.data.chapter;
         props.setChapters(chapters);
       }

@@ -91,14 +91,13 @@ const books = (app) => {
     })();
   });
 
-  app.delete('/api/v1/book', authenticateToken, (req,res) => {
+  app.delete('/api/v1/book/', authenticateToken, (req,res) => {
     (async () => {
       try {
-        Book.destroy({where: {id: req.body.id}}).then(book => {
+        Book.destroy({where: {id: req.body.id}}).then(() => {
           res.json({
             message: "Delete book successful",
             variant: "success",
-            book: book
           });
         });
       } catch (error) {

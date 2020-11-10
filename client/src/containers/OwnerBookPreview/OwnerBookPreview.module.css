@@ -4,7 +4,7 @@
 }
 
 button {
-  margin: 0 3px;
+  margin: 2px !important;
 }
 
 select {
@@ -12,12 +12,26 @@ select {
 }
 
 .Chapter {
-  font-size: 18px;
+  font-size: 15px;
   color: blue;
+  overflow-wrap: anywhere;
+  width: 100%;
+  display: list-item !important;
 }
 
 .Chapter:hover {
   cursor: pointer;
   text-decoration: underline;
   color: blue;
+}
+
+.Chapter p {
+  width: calc(100% - 59px);
+  display: inline-flex;
+  margin-bottom: 0;
+}
+
+.Chapter button {
+  font-size: 13px;
+  padding: 1px 5px;
 }

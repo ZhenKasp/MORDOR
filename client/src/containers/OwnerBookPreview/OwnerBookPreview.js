@@ -47,7 +47,6 @@ const OwnerBoookPreview = props => {
   }
 
   const deleteBook = id => {
-    console.log(id);
     axios.delete(process.env.REACT_APP_PATH_TO_SERVER + 'book', {
       headers: { authorization: props.user.token },
       data: { id: id }
@@ -57,6 +56,29 @@ const OwnerBoookPreview = props => {
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
         props.setView('index');
+      }
+    })
+    .catch((err) => {
+      props.createFlashMessage(err.message, "danger");
+    });
+  }
+
+  const deleteChapter = (e, id) => {
+    e.preventDefault();
+    axios.delete(process.env.REACT_APP_PATH_TO_SERVER + 'chapter', {
+      headers: { authorization: props.user.token },
+      data: { id: id }
+    }).then(res => {
+      if (res.data.error) {
+        props.createFlashMessage(res.data.error, res.data.variant);
+      } else {
+        props.createFlashMessage(res.data.message, res.data.variant);
+        const newChapters = [...chapters]
+        const index = newChapters.findIndex((ch) => ch.id === id);
+        if (index > -1) {
+          newChapters.splice(index, 1);
+        }
+        setChapters(newChapters);
       }
     })
     .catch((err) => {
@@ -118,10 +140,15 @@ const OwnerBoookPreview = props => {
               <li
                 className={classes.Chapter}
                 key={chapter.id}
-                onClick={() => {
+              >
+                <p onClick={() => {
                   props.clickHandler("editChapter", chapter.id, chapters);
-                }}>
-                {chapter.name}
+                }}>{chapter.name}</p>
+                <Button
+                  variant="danger"
+                  onClick={(e) => deleteChapter(e, chapter.id)}
+                >Delete
+                </Button>
               </li>
             )
           )}
@@ -157,8 +184,7 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    }),
-    setView: (view) => dispatch({ type: "SET_VIEW", view }),
+    })
   }
 }
 

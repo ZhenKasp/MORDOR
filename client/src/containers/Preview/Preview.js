@@ -21,7 +21,6 @@ const Preview = (props) => {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
           setIsOwmer(res.data.isOwner);
-          console.log(res.data.isOwner);
           setBook(res.data.book);
         }
       });

@@ -79,6 +79,24 @@ const chapters = (app) => {
       }
     })();
   });
+
+  app.delete('/api/v1/chapter/', authenticateToken, (req,res) => {
+    (async () => {
+      try {
+        Chapter.destroy({where: {id: req.body.id}}).then(() => {
+          res.json({
+            message: "Delete chapter successful",
+            variant: "success",
+          });
+        });
+      } catch (error) {
+        res.json({
+          error: error.errors[0].message,
+          variant: "danger"
+        }).status(400);
+      }
+    })();
+  });
 }
 
 module.exports = chapters;
