@@ -13,7 +13,7 @@ import Aux from '../../hoc/Auxiliary';
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
-  const [genre, setGenre] = useState(props.book.genre);
+  const [genre, setGenre] = useState(props.book.genre || "");
   const [chapters, setChapters] = useState(props.book.chapters);
   const [modalIsShown, setModalIsShown] = useState(false);
 
@@ -29,7 +29,6 @@ const OwnerBoookPreview = props => {
     event.preventDefault();
     const object = getFormData(event);
     object["tags"] = tags.map(tag => tag.text).join(";");
-    object["genre"] = genre;
     object["id"] = props.book.id;
 
     axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'book',
@@ -184,7 +183,8 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    })
+    }),
+    setView: view => dispatch({ type: "SET_VIEW", view })
   }
 }
 

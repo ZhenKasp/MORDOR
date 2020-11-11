@@ -17,18 +17,20 @@ const CreateBookModal = (props) => {
     event.preventDefault();
     const object = getFormData(event);
     object["tags"] = tags.map(tag => tag.text).join(";");
-    object["genre"] = genre;
+    event.persist();
 
     axios.post(process.env.REACT_APP_PATH_TO_SERVER + 'book',
       object, { headers: { authorization: props.user.token }}
     ).then(res => {
       if (res.data.error) {
         props.createFlashMessage(res.data.error, res.data.variant);
-        props.modalIsShownCancelHandler();
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
         props.setBooks([...props.books, res.data.book]);
         props.modalIsShownCancelHandler();
+        event.target.reset();
+        setTags([]);
+        setGenre("");
       }
     })
     .catch((err) => {
@@ -67,6 +69,7 @@ const CreateBookModal = (props) => {
           <Form.Group>
             <Form.Label>Genre</Form.Label>
             <GenreSelector
+              genre={genre}
               handleChange={(e) => setGenre(e.target.value)}
             />
           </Form.Group>
