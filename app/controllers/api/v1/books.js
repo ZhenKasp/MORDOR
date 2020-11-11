@@ -54,7 +54,7 @@ const books = (app) => {
         });
       } catch (error) {
         res.json({
-          error: error.errors[0].message,
+          error: error.original?.sqlMessage || error.errors[0].message,
           variant: "danger"
         }).status(400);
       }

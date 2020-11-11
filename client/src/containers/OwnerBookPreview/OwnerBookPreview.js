@@ -91,6 +91,7 @@ const OwnerBoookPreview = props => {
         <Form.Group>
           <Form.Label><h3>Book name</h3></Form.Label>
           <Form.Control
+            maxLength="255"
             defaultValue={props.book.name}
             name="name"
             placeholder="Book name"

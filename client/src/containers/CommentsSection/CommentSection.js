@@ -9,6 +9,7 @@ const commentSection = props => (
       <Form.Group>
         <Form.Label>Your comment</Form.Label>
         <Form.Control
+          maxLength="255"
           type="text"
           required
           name="text"

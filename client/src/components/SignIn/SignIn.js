@@ -21,6 +21,7 @@ const SignIn = (props) => (
       <Form.Group>
         <Form.Label>Email address</Form.Label>
         <Form.Control
+          maxLength="255"
           autoFocus
           type="email"
           required
@@ -31,6 +32,7 @@ const SignIn = (props) => (
       <Form.Group controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control
+          maxLength="255"
           type="password"
           required name="password"
           placeholder="Password"

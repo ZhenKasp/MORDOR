@@ -22,6 +22,7 @@ const SignUp = (props) => (
       <Form.Group>
         <Form.Label>Email address</Form.Label>
         <Form.Control
+          maxLength="255"
           autoFocus
           type="email"
           required
@@ -32,6 +33,7 @@ const SignUp = (props) => (
       <Form.Group>
         <Form.Label>Username</Form.Label>
         <Form.Control
+          maxLength="255"
           autoFocus
           name="username"
           required
@@ -41,6 +43,7 @@ const SignUp = (props) => (
       <Form.Group>
         <Form.Label>First Name</Form.Label>
         <Form.Control
+          maxLength="255"
           autoFocus
           name="firstname"
           required
@@ -50,6 +53,7 @@ const SignUp = (props) => (
       <Form.Group >
         <Form.Label>Last Name</Form.Label>
         <Form.Control
+          maxLength="255"
           autoFocus
           name="lastname"
           required
@@ -59,6 +63,7 @@ const SignUp = (props) => (
       <Form.Group >
         <Form.Label>Password</Form.Label>
         <Form.Control
+          maxLength="255"
           type="password"
           required
           name="password"

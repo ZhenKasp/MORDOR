@@ -41,6 +41,7 @@ const CreateChapterModal = (props) => {
           <Form.Group>
             <Form.Label>Name</Form.Label>
             <Form.Control
+              maxLength="255"
               required type="text"
               placeholder="Name"
               name="name"

@@ -43,6 +43,7 @@ const EditChapter = (props) => {
       <Form.Group>
         <Form.Label><h3>Chapter name</h3></Form.Label>
         <Form.Control
+          maxLength="255"
           value={props.name}
           onChange={(e) => props.setName(e.target.value)}
           placeholder="Book name"
