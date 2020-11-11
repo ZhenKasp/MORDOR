@@ -10,3 +10,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.Rating {
+  font-size: 10px !important;
+}

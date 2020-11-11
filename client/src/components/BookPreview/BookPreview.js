@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import classes from './BookPreview.module.css';
 import Aux from '../../hoc/Auxiliary';
+import RatingField from '../RatingField/RatingField';
 
 const bookPreview = props => (
   <div className={classes.Wrapper}>
@@ -12,6 +13,9 @@ const bookPreview = props => (
     <p>Genre: {props.book.genre}</p>
     {props.book.chapters && props.book.chapters.length > 0 ? (
       <div>
+        <div>
+          <RatingField initialRating={props.book.rating} bookId={props.book.id} />
+        </div>
         <Button onClick={() => {
           props.clickHandler("readBook", props.book.chapters[0].id, props.book.chapters)
         }}>Read</Button>

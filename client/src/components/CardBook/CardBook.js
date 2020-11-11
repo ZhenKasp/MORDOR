@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import EmptyBook from '../../assets/images/empty-book.jpg';
 import classes from './CardBook.module.css';
+import RatingField from '../RatingField/RatingField';
 
 const cardBook = (props) => {
   return (
@@ -13,6 +14,9 @@ const cardBook = (props) => {
           {props.book.tags &&
             props.book.tags.split(";").map(tag => "#" + tag).join(" ")}
         </Card.Subtitle>
+        <div className={classes.Rating}>
+          <RatingField initialRating={props.rating?.rating} readonly />
+        </div>
         <hr />
         <Card.Text className={classes.Description}>{props.book.short_description}</Card.Text>
       </Card.Body>

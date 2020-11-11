@@ -8,6 +8,7 @@ import { createFlashMessage } from '../../store/actions';
 
 const AllBooks = (props) => {
   const [allBooks, setAllBooks] = useState([]);
+  const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
     try {
@@ -17,6 +18,7 @@ const AllBooks = (props) => {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
           setAllBooks(res.data.books);
+          setRatings(res.data.ratings);
         }
       });
     } catch (err) {
@@ -31,6 +33,7 @@ const AllBooks = (props) => {
           <CardBook
             clicked={props.clickHandler}
             book={book}
+            rating={ratings.find(rating => rating.id === book.id) || 0}
             key={book.id}
             clickHandler={props.clickHandler}
           />

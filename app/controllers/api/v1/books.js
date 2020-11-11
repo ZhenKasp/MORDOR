@@ -2,15 +2,28 @@ const Book = require('../../../models/Book');
 const authenticateToken = require('../../../midlware/authenticateToken');
 const Chapter = require('../../../models/Chapter');
 const User = require('../../../models/User');
+const Rating = require('../../../models/Rating');
+const sequelize = require('../../../models/sequelize');
 
 const books = (app) => {
   app.get('/api/v1/books/', (req,res) => {
     try {
-      Book.findAll().then((books => {
-        res.json({
-          books: books
-        });
-      }));
+      Book.findAll().then(books => {
+        Book.findAll({
+          attributes: {
+            include: [
+              [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
+            ]
+          },
+          include: [{ model: Rating, as: Rating, attributes: [] }],
+          raw: true
+        }).then(ratedBooks => {
+          res.json({
+            books: books,
+            ratings: ratedBooks.map(rated => ({id: rated.id, rating: rated.rating})) 
+          });
+        })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -18,8 +31,18 @@ const books = (app) => {
 
   app.get('/api/v1/book/', (req,res) => {
     try {
-      Book.findOne({ where: { id: req.query.id },
-        include: [{ model: Chapter, as: Chapter }, { model: User, as: User }]
+      Book.findOne({
+        where: { id: req.query.id },
+        attributes: {
+          include: [
+            [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
+          ]
+        },
+        include: [
+          { model: Chapter, as: Chapter },
+          { model: User, as: User },
+          { model: Rating, as: Rating, attributes: [] }
+        ]
       }).then(book => {
         res.json({
           book: book,

@@ -11,9 +11,7 @@ import { createFlashMessage } from '../../store/actions';
 const MyBooks = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [books, setBooks] = useState([]);
-
-  const modalIsShownHandler = () => setModalIsShown(true);
-  const modalIsShownCancelHandler = () => setModalIsShown(false);
+  const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
     try {
@@ -24,6 +22,7 @@ const MyBooks = (props) => {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
           setBooks(res.data.books);
+          setRatings(res.data.ratings);
         }
       });
     } catch (err) {
@@ -34,13 +33,13 @@ const MyBooks = (props) => {
   return (
     <div>
       <h2>My Books</h2>
-      <Button onClick={() => modalIsShownHandler()}>
+      <Button onClick={() => setModalIsShown(true)}>
         Create New Book
       </Button>
       <hr />
       <CreateBookModal
-        modalIsShownHandler={modalIsShownHandler}
-        modalIsShownCancelHandler={modalIsShownCancelHandler}
+        modalIsShownHandler={() => setModalIsShown(true)}
+        modalIsShownCancelHandler={() => setModalIsShown(false)}
         modalIsShown={modalIsShown}
         books={books}
         setBooks={setBooks}
@@ -49,6 +48,7 @@ const MyBooks = (props) => {
         {books.map(book => (
           <CardBook
             book={book}
+            rating={ratings.find(rating => rating.id === book.id) || 0}
             key={book.id}
             clicked={props.clickHandler}
           >
