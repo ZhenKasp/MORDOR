@@ -3,9 +3,23 @@ const Rating = require('../../../models/Rating');
 const returnAverageRatingJson = require('../../../utilities/returnAverageRatingJson');
 
 const rating = (app) => {
+  app.get('/api/v1/rating', (req,res) => {
+    const { book_id } = req.query;
+    (async () => {
+      try {
+        console.log(book_id);
+        returnAverageRatingJson(book_id, "", res);
+      } catch (error) {
+        res.json({
+          error: error.original?.sqlMessage || error.errors[0].message,
+          variant: "danger"
+        }).status(400);
+      }
+    })();
+  });
+
   app.post('/api/v1/rating', authenticateToken, (req,res) => {
     const { value, user_id, book_id } = req.body;
-
     (async () => {
       try {
         Rating.findOne({ where: { user_id: user_id, book_id }}).then(rating => {

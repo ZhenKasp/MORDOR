@@ -10,17 +10,16 @@ const books = (app) => {
     try {
       Book.findAll().then(books => {
         Book.findAll({
-          attributes: {
-            include: [
-              [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
-            ]
-          },
+          attributes: [
+            "id", [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
+          ],
           include: [{ model: Rating, as: Rating, attributes: [] }],
+          group: ["ratings.book_id"],
           raw: true
         }).then(ratedBooks => {
           res.json({
             books: books,
-            ratings: ratedBooks.map(rated => ({id: rated.id, rating: rated.rating})) 
+            ratings: ratedBooks.map(rated => ({id: rated.id, rating: rated.rating}))
           });
         })
       });
@@ -33,15 +32,9 @@ const books = (app) => {
     try {
       Book.findOne({
         where: { id: req.query.id },
-        attributes: {
-          include: [
-            [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
-          ]
-        },
         include: [
           { model: Chapter, as: Chapter },
           { model: User, as: User },
-          { model: Rating, as: Rating, attributes: [] }
         ]
       }).then(book => {
         res.json({
