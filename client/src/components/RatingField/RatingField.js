@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Rating from 'react-rating';
 import './RatingField.css';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 
 const RatingField = props => {
