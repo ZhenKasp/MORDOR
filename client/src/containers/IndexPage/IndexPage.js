@@ -5,9 +5,8 @@ import Profile from '../Profile/Profile';
 import EditChapter from '../EditChapter/EditChapter';
 import LastBooks from '../LastBooks/LastBooks';
 import BestBooks from '../BestBooks/BestBooks';
-import Tags from '../Tags/Tags';
 import Aux from '../../hoc/Auxiliary';
-import AllBooks from '../AllBooks/AllBooks';
+import FilteredBooks from '../FilteredBooks/FilteredBooks';
 import ReadBook from '../../components/ReadBook/ReadBook';
 import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
@@ -31,8 +30,7 @@ class IndexPage extends Component {
           <LastBooks clickHandler={this.clickHandler} />
           <BestBooks clickHandler={this.clickHandler} />
           <hr />
-          <Tags />
-          <AllBooks clickHandler={this.clickHandler} />
+          <FilteredBooks clickHandler={this.clickHandler} currentTags={this.currentTags} />
         </Aux>
       )
     } else if (view === "profile") {

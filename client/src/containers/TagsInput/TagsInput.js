@@ -21,7 +21,7 @@ const TagsInput = props => {
     } catch (err) {
       props.createFlashMessage(err.message, "danger");
     }
-  }, [])
+  }, []);
 
   const handleDelete = (i) => {
     props.setTags(props.tags.filter((_, index) => index !== i));
@@ -40,7 +40,7 @@ const TagsInput = props => {
 
     props.setTags(newTags);
   }
-  
+
   return (
     <ReactTags
       classNames={{
