@@ -24,7 +24,7 @@ const ReadBook = (props) => {
     } catch (err) {
       props.createFlashMessage(err.message, "danger");
     }
-  }, [])
+  }, [props.currentChapter]);
 
   const mdParser = new MarkdownIt();
 

@@ -5,12 +5,12 @@ import { createFlashMessage } from '../../store/actions';
 
 const LikesField = props => {
   const [liked, setLiked] = useState(
-    props.likes.some(like => like.userId == props.user.id));
+    props.likes.some(like => like.userId === props.user.id));
   const [likeClass, setLikeClass] = useState(
     liked ? "fa fa-thumbs-up" : "far fa-thumbs-up");
 
   useEffect(() => {
-    const alreadyLiked = props.likes.some(like => like.userId == props.user.id);
+    const alreadyLiked = props.likes.some(like => like.userId === props.user.id);
     setLiked(alreadyLiked);
     setLikeClass(alreadyLiked ? "fa fa-thumbs-up" : "far fa-thumbs-up");
   }, [props.likes]);

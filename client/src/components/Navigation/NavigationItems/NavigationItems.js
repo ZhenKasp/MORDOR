@@ -48,9 +48,7 @@ const navigationItems = (props) => {
   }
 }
 
-const mapStateToProps = state => {
-  return { user: state.user }
-};
+const mapStateToProps = state => { return { user: state.user } };
 
 const mapDispatchToProps = dispatch => {
   return {
