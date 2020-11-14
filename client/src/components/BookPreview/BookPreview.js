@@ -17,7 +17,11 @@ const bookPreview = props => (
           <RatingField initialRating={props.book.rating} bookId={props.book.id} />
         </div>
         <Button onClick={() => {
-          props.clickHandler("readBook", props.book.chapters[0].id, props.book.chapters)
+          props.clickHandler(
+            "readBook",
+            props.book.chapters[0].id,
+            [...props.book.chapters, props.book.id]
+          )
         }}>Read</Button>
         <hr />
         <h3>Chapters</h3>
@@ -28,7 +32,11 @@ const bookPreview = props => (
                 className={classes.Chapter}
                 key={chapter.id}
                 onClick={() =>
-                  props.clickHandler("readBook", chapter.id, props.book.chapters)
+                  props.clickHandler(
+                    "readBook",
+                    chapter.id,
+                    [...props.book.chapters, props.book.id]
+                  )
                 }>
                 {chapter.name}
               </li>

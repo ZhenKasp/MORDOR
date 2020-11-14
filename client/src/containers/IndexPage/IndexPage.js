@@ -30,7 +30,10 @@ class IndexPage extends Component {
           <LastBooks clickHandler={this.clickHandler} />
           <BestBooks clickHandler={this.clickHandler} />
           <hr />
-          <FilteredBooks clickHandler={this.clickHandler} currentTags={this.currentTags} />
+          <FilteredBooks
+            clickHandler={this.clickHandler}
+            currentTags={this.currentTags}
+          />
         </Aux>
       )
     } else if (view === "profile") {
@@ -51,7 +54,11 @@ class IndexPage extends Component {
       )
     } else if (view === "readBook") {
       return (
-        <BookContainer id={id} chapters={attributes}>
+        <BookContainer
+          id={id}
+          chapters={attributes.slice(0, -1)}
+          book_id={attributes[attributes.length-1]}
+        >
           <ReadBook />
         </BookContainer>
       )

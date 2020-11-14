@@ -45,8 +45,7 @@ const CreateBookModal = (props) => {
         show={props.modalIsShown}
         modalClosed={props.modalIsShownCancelHandler}
       >
-        <Form
-          onSubmit={submitCreateBook}>
+        <Form onSubmit={submitCreateBook}>
           <h3>Create Book</h3>
           <Form.Group>
             <Form.Label>Name</Form.Label>
@@ -60,7 +59,6 @@ const CreateBookModal = (props) => {
           <Form.Group>
             <Form.Label>Short description</Form.Label>
             <Form.Control
-              maxLength="255"
               name="short_description"
               required as="textarea"
               rows={3}

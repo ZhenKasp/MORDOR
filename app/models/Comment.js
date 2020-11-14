@@ -5,7 +5,7 @@ const Book = require('./Book');
 
 const Comment = sequelize.define('comment', {
   text:{
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
 }, {
   timestamps: true,

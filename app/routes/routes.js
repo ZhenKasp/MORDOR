@@ -8,6 +8,7 @@ const routes = (app) => {
   require('../controllers/api/v1/myBooks')(app);
   require('../controllers/api/v1/rating')(app);
   require('../controllers/api/v1/likes')(app);
+  require('../controllers/api/v1/comments')(app);
 }
 
 module.exports = routes;
