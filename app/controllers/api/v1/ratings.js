@@ -2,12 +2,11 @@ const authenticateToken = require('../../../midlware/authenticateToken');
 const Rating = require('../../../models/Rating');
 const returnAverageRatingJson = require('../../../utilities/returnAverageRatingJson');
 
-const rating = (app) => {
+const ratings = (app) => {
   app.get('/api/v1/rating', (req,res) => {
     const { book_id } = req.query;
     (async () => {
       try {
-        console.log(book_id);
         returnAverageRatingJson(book_id, "", res);
       } catch (error) {
         res.json({
@@ -45,4 +44,4 @@ const rating = (app) => {
   });
 }
 
-module.exports = rating;
+module.exports = ratings;

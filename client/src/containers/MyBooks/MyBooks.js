@@ -48,7 +48,7 @@ const MyBooks = (props) => {
         {books.map(book => (
           <CardBook
             book={book}
-            rating={ratings.find(rating => rating.id === book.id) || 0}
+            rating={ratings.find(rating => rating.id === book.id)?.rating || 0}
             key={book.id}
             clicked={props.clickHandler}
           >

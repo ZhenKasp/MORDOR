@@ -15,7 +15,7 @@ const cardBook = (props) => {
             props.book.tags.split(";").map(tag => "#" + tag).join(" ")}
         </Card.Subtitle>
         <div className={classes.Rating}>
-          <RatingField initialRating={props.rating?.rating} readonly />
+          <RatingField initialRating={props.rating} readonly />
         </div>
         <hr />
         <Card.Text className={classes.Description}>{props.book.short_description}</Card.Text>

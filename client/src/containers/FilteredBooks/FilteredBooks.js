@@ -39,7 +39,7 @@ const FilteredBooks = (props) => {
               <CardBook
                 clicked={props.clickHandler}
                 book={book}
-                rating={ratings.find(rating => rating.id === book.id) || 0}
+                rating={ratings.find(rating => rating.id === book.id)?.rating || 0}
                 key={book.id}
                 clickHandler={props.clickHandler}
               />

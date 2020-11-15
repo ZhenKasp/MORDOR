@@ -124,6 +124,29 @@ const books = (app) => {
       }
     })();
   });
+
+  app.get('/api/v1/books/bestBooks/', (req,res) => {
+    try {
+      Book.findAll({
+        attributes: {
+          include: [
+            [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
+          ]
+        },
+        order: [[sequelize.fn('AVG', sequelize.col('ratings.value')), 'DESC']],
+        include: [{ model: Rating, as: Rating, attributes: [], right: true }],
+        group: ["ratings.book_id"]
+      }).then(ratedBooks => {
+        console.log(ratedBooks);
+        res.json({ books: ratedBooks });
+      })
+    } catch (error) {
+      res.json({
+        error: error.errors[0].message,
+        variant: "danger"
+      }).status(400);
+    }
+  });
 }
 
 module.exports = books;

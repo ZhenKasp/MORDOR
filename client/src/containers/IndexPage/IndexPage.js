@@ -3,14 +3,16 @@ import classes from './IndexPage.module.css';
 import MyBooks from '../MyBooks/MyBooks';
 import Profile from '../Profile/Profile';
 import EditChapter from '../EditChapter/EditChapter';
-import LastBooks from '../LastBooks/LastBooks';
+import LastUpdatedBooks from '../LastUpdatedBooks/LastUpdatedBooks';
 import BestBooks from '../BestBooks/BestBooks';
 import Aux from '../../hoc/Auxiliary';
 import FilteredBooks from '../FilteredBooks/FilteredBooks';
 import ReadBook from '../../components/ReadBook/ReadBook';
 import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
+import { createFlashMessage } from '../../store/actions';
 import BookContainer from '../BookContainer/BookContainer';
+
 
 class IndexPage extends Component {
   state = { id: 0, attributes: [] };
@@ -27,13 +29,11 @@ class IndexPage extends Component {
     if (view === "index") {
       return (
         <Aux>
-          <LastBooks clickHandler={this.clickHandler} />
           <BestBooks clickHandler={this.clickHandler} />
           <hr />
-          <FilteredBooks
-            clickHandler={this.clickHandler}
-            currentTags={this.currentTags}
-          />
+          <LastUpdatedBooks clickHandler={this.clickHandler} />
+          <hr />
+          <FilteredBooks clickHandler={this.clickHandler} />
         </Aux>
       )
     } else if (view === "profile") {
@@ -81,7 +81,13 @@ class IndexPage extends Component {
 const mapStateToProps = state => ({ view: state.view })
 
 const mapDispatchToProps = dispatch => (
-  { setView: (view) => dispatch({ type: "SET_VIEW", view }) }
+  {
+    setView: (view) => dispatch({ type: "SET_VIEW", view }),
+    createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
+      text: text,
+      variant: variant
+    })
+  }
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);
