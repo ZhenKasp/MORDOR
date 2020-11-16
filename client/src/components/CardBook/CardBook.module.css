@@ -1,6 +1,7 @@
 .CardBook {
   cursor: pointer;
-  max-width: 360px;
+  max-width: 100%;
+  text-align: center;
 }
 
 .Description {

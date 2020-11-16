@@ -33,6 +33,7 @@ class IndexPage extends Component {
           <hr />
           <LastUpdatedBooks clickHandler={this.clickHandler} />
           <hr />
+          <h2>Books</h2>
           <FilteredBooks clickHandler={this.clickHandler} />
         </Aux>
       )

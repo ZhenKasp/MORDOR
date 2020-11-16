@@ -1,15 +1,23 @@
 .BooksGrid {
-  margin-top:10px;
   margin-right: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(7, minmax(200px, 1fr));
   grid-gap: .5rem;
+}
+
+@media (max-width: 1500px) {
+  .BooksGrid {
+    margin-right: 0px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+@media (max-width: 500px) {
+  .BooksGrid {
+    margin-right: 0px;
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
 }
 
 .BooksGrid > div {
   width: 99%;
-}
-
-.CardBook {
-  cursor: pointer;
 }
