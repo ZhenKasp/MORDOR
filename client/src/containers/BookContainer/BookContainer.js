@@ -28,12 +28,13 @@ const BookContainer = (props) => {
       setText(chapters[currentChapter - 1].text || "");
     }
   }
-
+  
   return (
     <div className={classes.Wrapper}>
       {React.cloneElement(
         props.children,
         {
+          book_id: props.book_id,
           name,
           setName,
           text,

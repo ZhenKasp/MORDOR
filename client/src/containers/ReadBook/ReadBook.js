@@ -48,7 +48,7 @@ const ReadBook = (props) => {
         chapterId={props.id}
         createFlashMessage={createFlashMessage}
       />
-    {props.user.token.length > 0 ?<CommentsSection id={props.book_id} /> : null}
+      {props.user.token.length > 0 ?<CommentsSection id={props.book_id} /> : null}
     </div>
   )
 }

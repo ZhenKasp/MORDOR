@@ -10,7 +10,7 @@ import classes from './CommentsSection.module.css'
 const CommentsSection = props => {
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
+  const getComments = () => {
     try {
       axios.get(process.env.REACT_APP_PATH_TO_SERVER + "comments",
         {
@@ -23,11 +23,19 @@ const CommentsSection = props => {
         } else {
           setComments(res.data.comments);
         }
-      });
+      })
     } catch (err) {
       props.createFlashMessage(err.message, "danger");
     }
-  }, []);
+  }
+
+useEffect(() => {
+  getComments();
+  const interval = setInterval(() => {
+    getComments();
+  }, 5000);
+  return () => clearInterval(interval);
+}, []);
 
   const submitCreateComment = (event) => {
     event.preventDefault();
