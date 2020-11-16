@@ -30,7 +30,7 @@ const BestBooks = (props) => {
     <Aux>
       <h2>Best Books</h2>
       <CardDeck className={classes.BooksGrid}>
-        {bestBooks?.map((book) => {
+        {bestBooks?.map(book => {
             return (
               <CardBook
                 clicked={props.clickHandler}

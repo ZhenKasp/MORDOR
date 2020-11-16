@@ -7,7 +7,7 @@ import LastUpdatedBooks from '../LastUpdatedBooks/LastUpdatedBooks';
 import BestBooks from '../BestBooks/BestBooks';
 import Aux from '../../hoc/Auxiliary';
 import FilteredBooks from '../FilteredBooks/FilteredBooks';
-import ReadBook from '../../components/ReadBook/ReadBook';
+import ReadBook from '../ReadBook/ReadBook';
 import Preview from '../Preview/Preview';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
@@ -48,7 +48,10 @@ class IndexPage extends Component {
       )
     } else if (view === "editChapter") {
       return (
-        <BookContainer id={id} chapters={attributes}>
+        <BookContainer
+          id={id}
+          chapters={attributes}
+          book_id={attributes[attributes.length-1]}>
           <EditChapter />
         </BookContainer>
       )

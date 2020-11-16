@@ -1,6 +1,6 @@
 .NavigationItems {
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   list-style: none;
   display: flex;
   align-items: center;
@@ -13,6 +13,6 @@
 
 @media (min-width: 768px) {
   .Dropdown div {
-    margin-left: -70px !important;
+    margin-left: -130px !important;
   }
 }

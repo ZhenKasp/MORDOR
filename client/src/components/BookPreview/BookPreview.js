@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import classes from './BookPreview.module.css';
 import Aux from '../../hoc/Auxiliary';
-import RatingField from '../RatingField/RatingField';
+import RatingField from '../../containers/RatingField/RatingField';
 
 const bookPreview = props => (
   <div className={classes.Wrapper}>

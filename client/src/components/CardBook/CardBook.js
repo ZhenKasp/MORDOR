@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import EmptyBook from '../../assets/images/empty-book.jpg';
 import classes from './CardBook.module.css';
-import RatingField from '../RatingField/RatingField';
+import RatingField from '../../containers/RatingField/RatingField';
 
 const cardBook = (props) => {
   return (

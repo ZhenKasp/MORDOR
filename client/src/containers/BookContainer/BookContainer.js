@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import classes from "./BookContainer.module.css";
-import CommentsSection from '../CommentsSection/CommentsSection';
 
 const BookContainer = (props) => {
   const [currentChapter, setCurrentChapter] = useState(
@@ -37,7 +36,8 @@ const BookContainer = (props) => {
         {
           name,
           setName,
-          text, setText,
+          text,
+          setText,
           chapters,
           setChapters,
           id: chapter.id,
@@ -55,7 +55,6 @@ const BookContainer = (props) => {
           onClick={nextChapter}>Next Chapter
         </Button>
       </div>
-      {props.user.token.length > 0 ?<CommentsSection id={props.book_id} /> : null}
     </div>
   )
 }

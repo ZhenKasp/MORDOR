@@ -6,6 +6,7 @@ import axios from 'axios';
 import 'react-markdown-editor-lite/lib/index.css';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import CommentsSection from '../CommentsSection/CommentsSection';
 
 const ReadBook = (props) => {
   const [likes, setLikes] = useState([]);
@@ -47,6 +48,7 @@ const ReadBook = (props) => {
         chapterId={props.id}
         createFlashMessage={createFlashMessage}
       />
+    {props.user.token.length > 0 ?<CommentsSection id={props.book_id} /> : null}
     </div>
   )
 }
