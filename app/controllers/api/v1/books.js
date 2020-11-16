@@ -135,11 +135,33 @@ const books = (app) => {
         },
         order: [[sequelize.fn('AVG', sequelize.col('ratings.value')), 'DESC']],
         include: [{ model: Rating, as: Rating, attributes: [], right: true }],
-        group: ["ratings.book_id"]
+        group: ["ratings.book_id"],
       }).then(ratedBooks => {
-        console.log(ratedBooks);
-        res.json({ books: ratedBooks });
+        res.json({ books: ratedBooks.slice(0, 5) });
       })
+    } catch (error) {
+      res.json({
+        error: error.errors[0].message,
+        variant: "danger"
+      }).status(400);
+    }
+  });
+
+  app.get('/api/v1/books/lastUpdatedBooks/', (req,res) => {
+    try {
+      Book.findAll({
+        include: [
+          { model: Chapter, as: Chapter, attributes: ['updatedAt'] },
+          { model: Rating, as: Rating, attributes: ['value']},
+        ],
+        order: [
+          [Chapter, 'updatedAt', 'DESC']
+        ]
+      }).then(lastUpdatedBooks => {
+          res.json({
+            books: lastUpdatedBooks.slice(0, 5),
+          });
+        })
     } catch (error) {
       res.json({
         error: error.errors[0].message,
