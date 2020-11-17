@@ -5,6 +5,13 @@
   grid-gap: .5rem;
 }
 
+@media (min-width: 576px) {
+  .BooksGrid {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+
 @media (max-width: 1500px) {
   .BooksGrid {
     margin-right: 0px;
@@ -12,7 +19,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 525px) {
   .BooksGrid {
     margin-right: 0px;
     grid-template-columns: repeat(auto-fit, 100%);

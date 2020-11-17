@@ -12,7 +12,8 @@
 }
 
 @media (min-width: 768px) {
-  .Dropdown div {
-    margin-left: -130px !important;
+  .Dropdown > div {
+    right: 0;
+    left: auto;
   }
 }
