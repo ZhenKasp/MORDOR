@@ -48,24 +48,18 @@ const books = (app) => {
   });
 
   app.post('/api/v1/book', authenticateToken, (req,res) => {
-    const book = {
-      name: req.body.name,
-      short_description: req.body.short_description,
-      genre: req.body.genre,
-      tags: req.body.tags
-    };
+    const { name, short_description, genre, tags, user_id } = req.body;
 
     (async () => {
       try {
-        const newBook = await Book.create(book);
-        await newBook.save();
-        User.findOne({where: { id: req.body.user_id }}).then(user => {
-          newBook.setUser(user).then(() => {
-            res.json({
-              message: "Create book successful",
-              variant: "success",
-              book: newBook
-            });
+        const newBook = await Book.create({
+          name, short_description, genre, tags
+        });
+        newBook.setUser(user_id).then(() => {
+          res.json({
+            message: "Create book successful",
+            variant: "success",
+            book: newBook
           });
         });
       } catch (error) {

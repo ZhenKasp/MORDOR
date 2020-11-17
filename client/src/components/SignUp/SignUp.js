@@ -12,11 +12,13 @@ const SignUp = (props) => (
     <h1>Please Sign Up</h1>
     <Form
       onSubmit={
-        (event) => submitAction(event,
-        "signup",
-        props.createFlashMessage,
-        props.setView,
-        props.setUser)
+        (event) => submitAction(
+          event,
+          "signup",
+          props.createFlashMessage,
+          props.setView,
+          props.setUser
+        )
       }
     >
       <Form.Group>

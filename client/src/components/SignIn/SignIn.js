@@ -11,12 +11,13 @@ const SignIn = (props) => (
   <div className={classes.SignIn}>
     <h1>Please Sign In</h1>
     <Form
-      onSubmit={(event) => submitAction(event,
+      onSubmit={(event) => submitAction(
+        event,
         "signin",
         props.createFlashMessage,
         props.setView,
-        props.setUser)
-      }
+        props.setUser
+      )}
     >
       <Form.Group>
         <Form.Label>Email address</Form.Label>

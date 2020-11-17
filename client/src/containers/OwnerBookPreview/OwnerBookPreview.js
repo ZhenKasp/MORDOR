@@ -31,18 +31,19 @@ const OwnerBoookPreview = props => {
     object["tags"] = tags.map(tag => tag.text).join(";");
     object["id"] = props.book.id;
 
-    axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'book',
-      object, { headers: { authorization: props.user.token }}
-    ).then(res => {
-      if (res.data.error) {
-        props.createFlashMessage(res.data.error, res.data.variant);
-      } else {
-        props.createFlashMessage(res.data.message, res.data.variant);
-      }
-    })
-    .catch((err) => {
+    try {
+      axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'book',
+        object, { headers: { authorization: props.user.token }}
+      ).then(res => {
+        if (res.data.error) {
+          props.createFlashMessage(res.data.error, res.data.variant);
+        } else {
+          props.createFlashMessage(res.data.message, res.data.variant);
+        }
+      })
+    } catch(err) {
       props.createFlashMessage(err.message, "danger");
-    });
+    }
   }
 
   const deleteBook = id => {

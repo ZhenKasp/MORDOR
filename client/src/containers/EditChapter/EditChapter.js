@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import MarkdownIt from 'markdown-it';
@@ -14,29 +14,30 @@ const EditChapter = (props) => {
     const { name, text, id } = props;
     const object = { name, text, id };
 
-    axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'chapter',
-      object, { headers: { authorization: props.user.token }}
-    ).then(res => {
-      if (res.data.error) {
-        props.createFlashMessage(res.data.error, res.data.variant);
-      } else {
-        props.createFlashMessage(res.data.message, res.data.variant);
-        const chapters = [...props.chapters];
-        const index = props.chapters.findIndex((chapter) => chapter.id === res.data.chapter.id);
-        chapters[index] = res.data.chapter;
-        props.setChapters(chapters);
-      }
-    })
-    .catch((err) => {
+    try {
+      axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'chapter',
+        object, { headers: { authorization: props.user.token }}
+      ).then(res => {
+        if (res.data.error) {
+          props.createFlashMessage(res.data.error, res.data.variant);
+        } else {
+          props.createFlashMessage(res.data.message, res.data.variant);
+          const chapters = [...props.chapters];
+          const index = props.chapters.findIndex((chapter) => chapter.id === res.data.chapter.id);
+          chapters[index] = res.data.chapter;
+          props.setChapters(chapters);
+        }
+      })
+    } catch(err) {
       props.createFlashMessage(err.message, "danger");
-    });
+    }
   }
 
   const mdParser = new MarkdownIt();
 
   const handleEditorChange = ({html, text}) => {
     props.setText(text);
-}
+  }
 
   return (
     <Form onSubmit={updateChapter}>

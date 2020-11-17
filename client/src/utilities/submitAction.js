@@ -11,7 +11,7 @@ const submitAction = (
   event.preventDefault();
   const object = getFormData(event);
 
-  axios.post(process.env.REACT_APP_PATH_TO_SERVER + path, object)
+  axios.post(process.env.REACT_APP_PATH_TO_SERVER + "users/" + path, object)
   .then(res => {
     if (!res.data.token) {
       createFlashMessage(res.data.error, res.data.variant);

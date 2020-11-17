@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const logout = (viewHandler, createFlashMessage, deleteUser, token) => {
-  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "logout",
+  axios.delete(process.env.REACT_APP_PATH_TO_SERVER + "users/logout",
     { headers:
       { authorization: token }
     }, {})
