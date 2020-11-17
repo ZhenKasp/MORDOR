@@ -1,23 +1,20 @@
 .BooksGrid {
-  margin-right: 10px;
+  margin-right: 20px;
   display: grid;
-  grid-template-columns: repeat(7, minmax(200px, 1fr));
+  grid-template-columns: repeat(5, minmax(220px, 1fr));
   grid-gap: .5rem;
 }
 
 @media (max-width: 1500px) {
   .BooksGrid {
     margin-right: 0px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.2fr));
   }
 }
+
 @media (max-width: 500px) {
   .BooksGrid {
     margin-right: 0px;
     grid-template-columns: repeat(auto-fit, 100%);
   }
-}
-
-.BooksGrid > div {
-  width: 99%;
 }

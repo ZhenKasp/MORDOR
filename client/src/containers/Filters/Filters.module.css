@@ -1,0 +1,14 @@
+.Filters {
+  margin-bottom: 10px;
+}
+
+.TagsInput {
+  margin-right: 3px;
+}
+
+@media (max-width: 500px) {
+  .Filters {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+}

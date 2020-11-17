@@ -18,6 +18,7 @@
 
 .TagInput {
   display: inline-block;
+  margin: 5px 7px 5px 0px;
 }
 
 input {
@@ -27,7 +28,7 @@ input {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 input:focus {

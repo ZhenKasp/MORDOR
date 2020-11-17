@@ -18,7 +18,3 @@
     grid-template-columns: repeat(auto-fit, 100%);
   }
 }
-
-.BooksGrid > div {
-  width: 99%;
-}
