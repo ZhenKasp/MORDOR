@@ -22,7 +22,7 @@ const submitAction = (
         username: res.data.username
       })
       createFlashMessage(res.data.message, res.data.variant);
-      setView("index");
+      setView("/");
     }
   })
   .catch((err) => {

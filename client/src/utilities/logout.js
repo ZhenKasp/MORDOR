@@ -6,7 +6,7 @@ const logout = (viewHandler, createFlashMessage, deleteUser, token) => {
       { authorization: token }
     }, {})
   .then(res => {
-    viewHandler("index");
+    viewHandler("/");
     deleteUser();
     localStorage.clear();
     createFlashMessage(res.data.message, res.data.variant);

@@ -1,22 +1,24 @@
 import React, { PureComponent } from 'react';
-import SelectorForm from './containers/SelectorForm/SelectorForm';
-import Aux from './hoc/Auxiliary';
+import IndexPage from './containers/IndexPage/IndexPage';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import Toolbar from './components/Navigation/Toolbar/Toolbar';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 class App extends PureComponent {
   render () {
     const { text, variant } = this.props.flashMessage;
+    const history = createBrowserHistory();
 
     return (
-      <Aux>
+      <Router history={history} >
         <Toolbar />
         {this.props.flashMessage?.text?.length > 0 &&
           <FlashMessage text={text} variant={variant} />
         }
-        <SelectorForm />
-      </Aux>
+        <IndexPage />
+      </Router>
     )
   }
 }

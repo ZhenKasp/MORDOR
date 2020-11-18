@@ -6,13 +6,16 @@ import Aux from '../../../hoc/Auxiliary';
 import classes from './NavigationItems.module.css';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../../store/actions';
+import { useHistory } from "react-router-dom";
 
-const navigationItems = (props) => {
+const NavigationItems = (props) => {
+  let history = useHistory();
+
   if (props.user.token.length > 0) {
     return (
       <Aux>
         <Nav className="mr-auto">
-          <Nav.Link onClick={() => props.setView("myBooks")}>
+          <Nav.Link onClick={() => history.push("myBooks")}>
             My Books
           </Nav.Link>
         </Nav>
@@ -20,11 +23,11 @@ const navigationItems = (props) => {
           className={classes.Dropdown}
           title={props.user.username}
         >
-          <NavDropdown.Item onClick={() => props.setView("profile")}>
+          <NavDropdown.Item onClick={() => history.push("profile")}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            onClick={()=> logout(props.setView, props.createFlashMessage, props.deleteUser, props.user.token)}>
+            onClick={()=> logout(history.push, props.createFlashMessage, props.deleteUser, props.user.token)}>
             SignOut
           </NavDropdown.Item>
         </NavDropdown>
@@ -36,10 +39,10 @@ const navigationItems = (props) => {
         <Nav className="mr-auto">
           </Nav>
         <NavDropdown className={classes.Dropdown} title="Guest" >
-          <NavDropdown.Item onClick={() => props.setView("signin")}>
+          <NavDropdown.Item onClick={() => history.push("signin")}>
             SignIn
           </NavDropdown.Item>
-          <NavDropdown.Item onClick={() => props.setView("signup")}>
+          <NavDropdown.Item onClick={() => history.push("signup")}>
             SignUp
           </NavDropdown.Item>
         </NavDropdown>
@@ -56,9 +59,8 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    }),
-    setView: (view) => dispatch({ type: "SET_VIEW", view }),
+    })
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationItems);

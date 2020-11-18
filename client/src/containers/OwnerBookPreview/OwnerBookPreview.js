@@ -10,12 +10,14 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import CreateChapterModal from '../CreateChapterModal/CreateChapterModal';
 import Aux from '../../hoc/Auxiliary';
+import { useHistory } from "react-router-dom";
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
   const [genre, setGenre] = useState(props.book.genre || "");
   const [chapters, setChapters] = useState(props.book.chapters);
   const [modalIsShown, setModalIsShown] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     setTags(props.book.tags ?
@@ -55,7 +57,7 @@ const OwnerBoookPreview = props => {
         props.createFlashMessage(res.data.error, res.data.variant);
       } else {
         props.createFlashMessage(res.data.message, res.data.variant);
-        props.setView('index');
+        history.push('/');
       }
     })
     .catch((err) => {
@@ -189,8 +191,7 @@ const mapDispatchToProps = dispatch => {
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant
-    }),
-    setView: view => dispatch({ type: "SET_VIEW", view })
+    })
   }
 }
 

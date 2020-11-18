@@ -67,13 +67,13 @@ const users = (app) => {
             bcrypt.compare(password, user.password, (err, data) => {
               if (err) throw err;
               if (user.is_verified == false) {
-                res.json({
+                return res.json({
                   error: "You need to verify your account first.",
                   variant: "danger"
                 });
               }
               if (data) {
-                res.json({
+                return res.json({
                   token: generateAccessToken(email, user.username, user.id),
                   username: user.username,
                   id: user.id,
@@ -135,7 +135,7 @@ const users = (app) => {
   });
 
   app.delete('/api/v1/users/logout', authenticateToken, (req, res) => {
-    res.json({ view: 'login', message: "Logout successful." , variant: "success"});
+    res.json({ message: "Logout successful." , variant: "success"});
   });
 
   app.get('/api/v1/users/verification', verify, (req,res) => {
@@ -156,9 +156,6 @@ const users = (app) => {
             }).status(400);
           });
         }
-        res.json({
-          user: user
-        })
       })
     } catch (error) {
       console.log(error);
