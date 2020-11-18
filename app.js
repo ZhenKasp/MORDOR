@@ -3,7 +3,6 @@ const logger = require('morgan');
 const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
-const socketIo = require("socket.io");
 const http = require("http");
 const cookieParser = require('cookie-parser');
 
@@ -30,10 +29,9 @@ app.use(cookieParser());
 
 const server = http.createServer(app);
 const port = process.env.PORT;
-const io = socketIo(server);
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-require('./app/routes/routes')(app, io);
+require('./app/routes/routes')(app);
 
 module.exports = app;

@@ -3,18 +3,10 @@ const { DataTypes } = require('sequelize');
 const User = require('./User');
 
 const Book = sequelize.define('book', {
-  name:{
-    type: DataTypes.STRING
-  },
-  short_description:{
-    type: DataTypes.STRING
-  },
-  genre:{
-    type: DataTypes.STRING
-  },
-  tags:{
-    type: DataTypes.STRING
-  },
+  name:{ type: DataTypes.STRING },
+  short_description:{ type: DataTypes.TEXT },
+  genre:{ type: DataTypes.STRING },
+  tags:{ type: DataTypes.STRING },
 }, {
   timestamps: true,
   createdAt: true,

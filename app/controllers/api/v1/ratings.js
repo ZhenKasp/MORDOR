@@ -10,7 +10,7 @@ const ratings = (app) => {
         returnAverageRatingJson(book_id, "", res);
       } catch (error) {
         res.json({
-          error: error.original?.sqlMessage || error.errors[0].message,
+          error: error.original?.sqlMessage || (error.errors && error.errors[0].message),
           variant: "danger"
         }).status(400);
       }

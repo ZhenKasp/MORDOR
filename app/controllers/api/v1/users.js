@@ -1,7 +1,10 @@
 const authenticateToken = require('../../../midlware/authenticateToken');
 const generateAccessToken = require('../../../midlware/generateAccessToken');
+const verify = require('../../../midlware/verify');
 const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
+const mailer = require('../../../mailer/mailerConfig');
+const createMail = require('../../../mailer/createMail');
 
 const users = (app) => {
   app.get('/api/v1/user/', authenticateToken, (req,res) => {
@@ -63,6 +66,12 @@ const users = (app) => {
             }).status(400);
             bcrypt.compare(password, user.password, (err, data) => {
               if (err) throw err;
+              if (user.is_verified == false) {
+                res.json({
+                  error: "You need to verify your account first.",
+                  variant: "danger"
+                });
+              }
               if (data) {
                 res.json({
                   token: generateAccessToken(email, user.username, user.id),
@@ -94,7 +103,6 @@ const users = (app) => {
       firstname = req.body.firstname,
       lastname = req.body.lastname,
       password = req.body.password;
-
     const hashPass = require('bcryptjs').hashSync(password, 9);
 
     (async () => {
@@ -110,6 +118,8 @@ const users = (app) => {
         await newUser.save();
         const token = generateAccessToken(email, username, newUser.id);
 
+        await createMail(mailer, email, token);
+
         res.json({
           token: token,
           username: username,
@@ -118,6 +128,7 @@ const users = (app) => {
           variant: "success"
         });
       } catch (error) {
+        console.log(error);
         res.json({ error: error.errors[0].message, variant: "danger"}).status(400);
       }
     })();
@@ -125,6 +136,33 @@ const users = (app) => {
 
   app.delete('/api/v1/users/logout', authenticateToken, (req, res) => {
     res.json({ view: 'login', message: "Logout successful." , variant: "success"});
+  });
+
+  app.get('/api/v1/users/verification', verify, (req,res) => {
+    try {
+      User.findOne({ where: { id: req.body.user_id} }).then(user => {
+        if (user) {
+          user.update({ is_verified: true }).then(() => {
+            res.json({
+              message: "Verified user successful",
+              variant: "success",
+              user: user
+            });
+          }).catch(err => {
+            console.log(err, err.message);
+            res.json({
+              message: err.original?.sqlMessage || err.message || err.errors[0].message,
+              variant: "danger",
+            }).status(400);
+          });
+        }
+        res.json({
+          user: user
+        })
+      })
+    } catch (error) {
+      console.log(error);
+    }
   });
 };
 
