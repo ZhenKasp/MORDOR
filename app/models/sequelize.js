@@ -11,7 +11,6 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.LOGIN, process
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
