@@ -8,38 +8,43 @@ import BookPreview from '../../components/BookPreview/BookPreview';
 
 const Preview = (props) => {
   const [book, setBook] = useState([]);
-  const [isOwner, setIsOwmer] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
 
   useEffect(() => {
-    try {
-      let thisBook = {};
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
-        { params: { id: props.id, userId: props.user.id },
-          headers: { authorization: props.user.token }}
-        )
-      .then(res => {
-        if (res.data.error) {
-          props.createFlashMessage(res.data.error, res.data.variant);
-        } else {
-          setIsOwmer(res.data.isOwner);
-          thisBook = res.data.book;
-        }
-      }).then(
-        axios.get(process.env.REACT_APP_PATH_TO_SERVER + "rating",
-          { params: { book_id: props.id },
+    (async () => {
+      try {
+        let owner = false;
+        await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
+          { params: { id: props.id, userId: props.user.id },
             headers: { authorization: props.user.token }}
           )
         .then(res => {
           if (res.data.error) {
             props.createFlashMessage(res.data.error, res.data.variant);
           } else {
-            setBook({...thisBook, rating: res.data.averageRating });
+            owner = res.data.isOwner;
           }
-        })
-      );
-    } catch (err) {
-      props.createFlashMessage(err.message, "danger");
-    }
+          return res.data.book
+        }).then(book => {
+          (async () => {
+            await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "rating",
+              { params: { book_id: props.id },
+                headers: { authorization: props.user.token }}
+              )
+            .then(res => {
+              if (res.data.error) {
+                props.createFlashMessage(res.data.error, res.data.variant);
+              } else {
+                setIsOwner(owner);
+                setBook({...book, rating: res.data.averageRating });
+              }
+            })
+          })();
+        });
+      } catch (err) {
+        props.createFlashMessage(err.message, "danger");
+      }
+    })();
   }, []);
 
   return (
