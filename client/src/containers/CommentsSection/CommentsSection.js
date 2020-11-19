@@ -89,7 +89,7 @@ useEffect(() => {
             </div>
 
           )}):
-          <p>No comments yet</p>
+          <h5>No comments yet</h5>
         }
       </div>
     </div>

@@ -4,6 +4,7 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import  Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useHistory } from "react-router-dom";
+import eye from '../../../assets/images/eye.png';
 
 const Toolbar = (props) => {
   let history = useHistory();
@@ -19,7 +20,7 @@ const Toolbar = (props) => {
         className={classes.Brand}
         onClick={() => history.push("/")}
       >
-        <h4>Mordor</h4>
+        <h4>M<img src={eye} style={{width: '15px'}} alt="" />rdor</h4>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse>
