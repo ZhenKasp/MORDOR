@@ -108,7 +108,6 @@ const OwnerBoookPreview = props => {
           <Form.Label><h3>Short description</h3></Form.Label>
           <Form.Control
             defaultValue={props.book.short_description}
-            maxLength="255"
             name="short_description"
             required as="textarea"
             rows={3}
@@ -131,7 +130,7 @@ const OwnerBoookPreview = props => {
         <Aux>
             <Button onClick={() => {
               props.clickHandler(
-                "readBook",
+                `/bookPreview/${props.book.id}/readBook`,
                 props.book.chapters[0].id,
                 [...chapters, props.book.id]
               );
@@ -146,7 +145,7 @@ const OwnerBoookPreview = props => {
               >
                 <p onClick={() => {
                   props.clickHandler(
-                    "editChapter",
+                    `/bookPreview/${props.book.id}/editChapter`,
                     chapter.id,
                     [...chapters, props.book.id]
                   );

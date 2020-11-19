@@ -7,6 +7,8 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import CommentsSection from '../CommentsSection/CommentsSection';
+import ChaptersNavigationMenu from '../ChaptersNavigationMenu/ChaptersNavigationMenu';
+import Aux from '../../hoc/Auxiliary';
 
 const ReadBook = (props) => {
   const [likes, setLikes] = useState([]);
@@ -25,20 +27,28 @@ const ReadBook = (props) => {
     } catch (err) {
       props.createFlashMessage(err.message, "danger");
     }
-  }, [props.currentChapter]);
+  }, [props.currentChapterIndex]);
 
   const mdParser = new MarkdownIt();
 
   return (
     <div>
       <div className="custom-html-style">
-        <h2>{props.name}</h2>
-        <hr />
-          {props.text ?
-            <p
-              className={classes.ChapterText}
-              dangerouslySetInnerHTML={{__html: mdParser.render(props.text)}}
-            /> : "No text yet"
+        <h2>{props.currentChapter?.name}</h2>
+
+          {props.currentChapter.text ?
+            <Aux>
+              <ChaptersNavigationMenu
+                chapters={props.chapters}
+                currentChapterIndex={props.currentChapterIndex}
+                setCurrentChapterIndex={props.setCurrentChapterIndex}
+                setCurrentChapter={props.setCurrentChapter}
+              />
+              <p
+                className={classes.ChapterText}
+                dangerouslySetInnerHTML={{__html: mdParser.render(props.currentChapter.text)}}
+              />
+            </Aux> : <h5>No text yet</h5>
           }
       </div>
       <LikesField
@@ -47,6 +57,12 @@ const ReadBook = (props) => {
         user={props.user}
         chapterId={props.id}
         createFlashMessage={createFlashMessage}
+      />
+      <ChaptersNavigationMenu
+        chapters={props.chapters}
+        currentChapterIndex={props.currentChapterIndex}
+        setCurrentChapterIndex={props.setCurrentChapterIndex}
+        setCurrentChapter={props.setCurrentChapter}
       />
       {props.user.token.length > 0 ?<CommentsSection id={props.book_id} /> : null}
     </div>

@@ -1,61 +1,63 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { createFlashMessage } from '../../store/actions';
 import classes from "./BookContainer.module.css";
+import { useParams } from 'react-router-dom';
 
 const BookContainer = (props) => {
-  const [currentChapter, setCurrentChapter] = useState(
-    props.chapters.findIndex((chapter) => chapter.id === props.id)
-  );
+  let { book_id, id } = useParams();
   const [chapters, setChapters] = useState(props.chapters);
-  const chapter = props.chapters[currentChapter];
-  const [name, setName] = useState(chapter.name || "");
-  const [text, setText] = useState(chapter.text || "");
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(
+    props.chapters.findIndex((chapter) => chapter.id === Number(id))
+  );
+  const chapter = props.chapters[currentChapterIndex];
+  const [currentChapter, setCurrentChapter] = useState({
+    name: chapter?.name || "",
+    text: chapter?.text || ""
+  });
 
-  const nextChapter = () => {
-    if (currentChapter + 1 < chapters.length) {
-      setCurrentChapter(currentChapter + 1);
-      setName(chapters[currentChapter + 1].name || "");
-      setText(chapters[currentChapter + 1].text || "");
+  useEffect(() => {
+    if (props.chapters.length === 0) {
+      (async () => {
+        try {
+          await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "chapters",
+            { params: { id: book_id }}
+          ).then(res => {
+            if (res.data.error) {
+              props.createFlashMessage(res.data.error, res.data.variant);
+            } else {
+              const currentIndex = res.data.chapters.findIndex((chapter) => chapter.id === Number(id));
+              setChapters(res.data.chapters);
+              setCurrentChapterIndex(currentIndex);
+              setCurrentChapter({
+                name: res.data.chapters[currentIndex].name || "",
+                text: res.data.chapters[currentIndex].text || ""
+              })
+            }
+          });
+        } catch (err) {
+          props.createFlashMessage(err.message, "danger");
+        }
+      })();
     }
-  }
+  }, []);
 
-  const previousChapter = () => {
-    if (currentChapter - 1 >= 0) {
-      setCurrentChapter(currentChapter - 1);
-      setName(chapters[currentChapter - 1].name || "");
-      setText(chapters[currentChapter - 1].text || "");
-    }
-  }
-  
   return (
     <div className={classes.Wrapper}>
       {React.cloneElement(
         props.children,
         {
-          book_id: props.book_id,
-          name,
-          setName,
-          text,
-          setText,
+          id,
+          book_id,
           chapters,
           setChapters,
-          id: chapter.id,
-          currentChapter
+          currentChapter,
+          setCurrentChapter,
+          currentChapterIndex,
+          setCurrentChapterIndex
         }
       )}
-      <hr />
-      <div>
-        <Button
-          disabled={currentChapter - 1 < 0}
-          onClick={previousChapter}>Previous Chapter
-        </Button>
-        <Button
-          disabled={currentChapter + 1 >= chapters.length}
-          onClick={nextChapter}>Next Chapter
-        </Button>
-      </div>
     </div>
   )
 }

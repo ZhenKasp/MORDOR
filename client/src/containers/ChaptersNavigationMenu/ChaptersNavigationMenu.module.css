@@ -1,0 +1,23 @@
+.ChaptersNavigationMenu {
+  overflow: hidden;
+}
+
+.ChaptersNavigationMenu button {
+  background: #fff;
+  width: 110px;
+  float: left;
+}
+
+.ChaptersNavigationMenu button:hover {
+  color: white;
+}
+
+.ChaptersNavigationMenu button:last-child {
+  float: right;
+}
+
+.ChaptersNavigationMenu button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

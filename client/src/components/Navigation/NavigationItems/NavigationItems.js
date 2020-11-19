@@ -15,7 +15,7 @@ const NavigationItems = (props) => {
     return (
       <Aux>
         <Nav className="mr-auto">
-          <Nav.Link onClick={() => history.push("myBooks")}>
+          <Nav.Link onClick={() => history.push("/myBooks")}>
             My Books
           </Nav.Link>
         </Nav>
@@ -23,7 +23,7 @@ const NavigationItems = (props) => {
           className={classes.Dropdown}
           title={props.user.username}
         >
-          <NavDropdown.Item onClick={() => history.push("profile")}>
+          <NavDropdown.Item onClick={() => history.push("/profile")}>
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
@@ -39,10 +39,10 @@ const NavigationItems = (props) => {
         <Nav className="mr-auto">
           </Nav>
         <NavDropdown className={classes.Dropdown} title="Guest" >
-          <NavDropdown.Item onClick={() => history.push("signin")}>
+          <NavDropdown.Item onClick={() => history.push("/signin")}>
             SignIn
           </NavDropdown.Item>
-          <NavDropdown.Item onClick={() => history.push("signup")}>
+          <NavDropdown.Item onClick={() => history.push("/signup")}>
             SignUp
           </NavDropdown.Item>
         </NavDropdown>

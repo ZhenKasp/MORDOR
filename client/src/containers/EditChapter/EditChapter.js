@@ -7,12 +7,13 @@ import 'react-markdown-editor-lite/lib/index.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import ChaptersNavigationMenu from '../ChaptersNavigationMenu/ChaptersNavigationMenu';
 
 const EditChapter = (props) => {
   const updateChapter = (event) => {
     event.preventDefault();
-    const { name, text, id } = props;
-    const object = { name, text, id };
+    const { name, text } = props.currentChapter;
+    const object = { name, text, id: props.id };
 
     try {
       axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'chapter',
@@ -23,7 +24,9 @@ const EditChapter = (props) => {
         } else {
           props.createFlashMessage(res.data.message, res.data.variant);
           const chapters = [...props.chapters];
-          const index = props.chapters.findIndex((chapter) => chapter.id === res.data.chapter.id);
+          const index = props.chapters.findIndex(
+            (chapter) => chapter.id === res.data.chapter.id
+          );
           chapters[index] = res.data.chapter;
           props.setChapters(chapters);
         }
@@ -45,15 +48,20 @@ const EditChapter = (props) => {
         <Form.Label><h3>Chapter name</h3></Form.Label>
         <Form.Control
           maxLength="255"
-          value={props.name}
+          value={props.currentChapter.name}
           onChange={(e) => props.setName(e.target.value)}
           placeholder="Book name"
         />
       </Form.Group>
+      <ChaptersNavigationMenu
+        chapters={props.chapters}
+        currentChapterIndex={props.currentChapterIndex}
+        setCurrentChapterIndex={props.setCurrentChapterIndex}
+        setCurrentChapter={props.setCurrentChapter}
+      />
       <Form.Group>
-        <Form.Label><h3>Text</h3></Form.Label>
         <MdEditor
-          value={props.text}
+          value={props.currentChapter.text}
           style={{ height: "500px" }}
           renderHTML={(t) => mdParser.render(t)}
           onChange={handleEditorChange}
@@ -61,6 +69,15 @@ const EditChapter = (props) => {
         </MdEditor>
       </Form.Group>
       <Button variant="warning" type="submit">Confirm changes</Button>
+      <hr />
+      <div>
+        <ChaptersNavigationMenu
+          chapters={props.chapters}
+          currentChapterIndex={props.currentChapterIndex}
+          setCurrentChapterIndex={props.setCurrentChapterIndex}
+          setCurrentChapter={props.setCurrentChapter}
+        />
+      </div>
     </Form>
   )
 }

@@ -3,6 +3,18 @@ const Book = require('../../../models/Book');
 const authenticateToken = require('../../../midlware/authenticateToken');
 
 const chapters = (app) => {
+  app.get('/api/v1/chapters/', (req,res) => {
+    try {
+      Chapter.findAll({ where: { book_id: req.query.id }}).then(chapters => {
+        res.json({
+          chapters: chapters
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   app.post('/api/v1/chapter/', authenticateToken, (req,res) => {
     const chapter = { name: req.body.name };
     (async () => {

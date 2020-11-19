@@ -11,6 +11,7 @@ const bookPreview = props => (
       props.book.tags.split(";").map(tag => "#" + tag).join(" ")}</p>
     <p>Short Description: {props.book.short_description}</p>
     <p>Genre: {props.book.genre}</p>
+    <p>Author: {props.book.user?.firstname + " " + props.book.user?.lastname}</p>
     {props.book.chapters && props.book.chapters.length > 0 ? (
       <div>
         <div>
@@ -18,7 +19,7 @@ const bookPreview = props => (
         </div>
         <Button onClick={() => {
           props.clickHandler(
-            "readBook",
+            `/bookPreview/${props.book.id}/readBook`,
             props.book.chapters[0].id,
             [...props.book.chapters, props.book.id]
           )
@@ -33,7 +34,7 @@ const bookPreview = props => (
                 key={chapter.id}
                 onClick={() =>
                   props.clickHandler(
-                    "readBook",
+                    `/bookPreview/${props.book.id}/readBook`,
                     chapter.id,
                     [...props.book.chapters, props.book.id]
                   )

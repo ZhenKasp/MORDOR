@@ -39,7 +39,7 @@ const books = (app) => {
       }).then(book => {
         res.json({
           book: book,
-          isOwner: book.userId == req.query.userId
+          isOwner: book?.userId == req.query.userId
         });
       });
     } catch (error) {
