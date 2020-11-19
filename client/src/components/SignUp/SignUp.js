@@ -3,7 +3,7 @@ import classes from './SignUp.module.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
-import submitAction from '../../utilities/submitAction';
+import signup from '../../utilities/signup';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import { useHistory } from "react-router-dom";
@@ -16,12 +16,12 @@ const SignUp = (props) => {
       <h1>Please Sign Up</h1>
       <Form
         onSubmit={
-          (event) => submitAction(
+          (event) => signup(
             event,
             "signup",
             props.createFlashMessage,
             history.push,
-            props.setUser
+            props.setEmail
           )
         }
       >

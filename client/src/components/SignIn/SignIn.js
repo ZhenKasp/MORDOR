@@ -3,7 +3,7 @@ import classes from './SignIn.module.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
-import submitAction from '../../utilities/submitAction';
+import signin from '../../utilities/signin';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import { useHistory } from "react-router-dom";
@@ -15,7 +15,7 @@ const SignIn = (props) => {
     <div className={classes.SignIn}>
       <h1>Please Sign In</h1>
       <Form
-        onSubmit={(event) => submitAction(
+        onSubmit={(event) => signin(
           event,
           "signin",
           props.createFlashMessage,

@@ -11,15 +11,18 @@ import Preview from '../Preview/Preview';
 import BookContainer from '../BookContainer/BookContainer';
 import SignIn from '../../components/SignIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp';
+import Varification from '../../components/Varification/Varification';
 import { Switch, Route, withRouter } from "react-router-dom";
 
 class IndexPage extends Component {
-  state = { id: 0, attributes: [] };
+  state = { id: 0, attributes: [], email: "" };
 
   clickHandler = (view, id, attributes = []) => {
     this.props.history.push(view);
     this.setState({ id: id, attributes: attributes });
   }
+
+  setEmail = email => this.setState({ email: email });
 
   render () {
     const { id, attributes } = this.state;
@@ -41,7 +44,7 @@ class IndexPage extends Component {
             <SignIn />
           </Route>
           <Route path="/signup">
-            <SignUp />
+            <SignUp setEmail={this.setEmail} />
           </Route>
           <Route path="/myBooks">
             <MyBooks clickHandler={this.clickHandler} />
@@ -66,6 +69,11 @@ class IndexPage extends Component {
               <ReadBook />
             </BookContainer>
           </Route>
+          {this.state.email &&
+            <Route path="/varification">
+              <Varification email={this.state.email} />
+            </Route>
+          }
           <Route>
             <div>Not Found</div>
           </Route>

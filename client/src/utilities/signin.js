@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getFormData from './getFormData';
 
-const submitAction = (
+const signin = (
   event,
   path,
   createFlashMessage,
@@ -30,4 +30,4 @@ const submitAction = (
   });
 }
 
-export default submitAction;
+export default signin;

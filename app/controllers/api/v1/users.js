@@ -108,27 +108,19 @@ const users = (app) => {
     (async () => {
       try {
         const newUser = await User.create({
-          email: email,
-          username: username,
-          firstname: firstname,
-          lastname: lastname,
-          password: hashPass,
-          role: "user",
-        });
+          email, username, firstname, lastname, password: hashPass
+        })
         await newUser.save();
         const token = generateAccessToken(email, username, newUser.id);
-
         await createMail(mailer, email, token);
 
-        res.json({
-          token: token,
-          username: username,
-          id: newUser.id,
+        return res.json({
+          email: email,
           message: "Registration successful." ,
           variant: "success"
         });
+
       } catch (error) {
-        console.log(error);
         res.json({ error: error.errors[0].message, variant: "danger"}).status(400);
       }
     })();
@@ -149,7 +141,7 @@ const users = (app) => {
               user: user
             });
           }).catch(err => {
-            console.log(err, err.message);
+            console.log(err.message);
             res.json({
               message: err.original?.sqlMessage || err.message || err.errors[0].message,
               variant: "danger",
