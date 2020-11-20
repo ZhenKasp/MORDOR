@@ -113,15 +113,14 @@ const users = (app) => {
         await newUser.save();
         const token = generateAccessToken(email, username, newUser.id);
         await createMail(mailer, email, token);
-
         return res.json({
           email: email,
           message: "Registration successful." ,
           variant: "success"
         });
-
       } catch (error) {
-        res.json({ error: error.errors[0].message, variant: "danger"}).status(400);
+        console.log(error.message);
+        res.json({ error: error.original?.sqlMessage || error.errors[0].message, variant: "danger"}).status(400);
       }
     })();
   });
@@ -137,7 +136,6 @@ const users = (app) => {
           user.update({ is_verified: true }).then(() => {
             res.redirect(process.env.CORS + '/signin');
           }).catch(err => {
-            console.log(err.message);
             res.json({
               message: err.original?.sqlMessage || err.message || err.errors[0].message,
               variant: "danger",
