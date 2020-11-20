@@ -70,7 +70,7 @@ const users = (app) => {
                 return res.json({
                   error: "You need to verify your account first.",
                   variant: "danger"
-                });
+                }).status(401);
               }
               if (data) {
                 return res.json({
@@ -135,11 +135,7 @@ const users = (app) => {
       User.findOne({ where: { id: req.body.user_id} }).then(user => {
         if (user) {
           user.update({ is_verified: true }).then(() => {
-            res.json({
-              message: "Verified user successful",
-              variant: "success",
-              user: user
-            });
+            res.redirect(process.env.CORS + '/signin');
           }).catch(err => {
             console.log(err.message);
             res.json({
