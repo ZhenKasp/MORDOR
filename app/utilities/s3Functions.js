@@ -38,15 +38,26 @@ const getSignedUrl = async (key, expires = 3600) => {
   });
 }
 
-const getSignedUrls = async (objects) => {
+const getSignedBooksUrls = async (objects) => {
   const urls = await Promise.all(objects.map(async ({key, book_id}) => {
     const url = await getSignedUrl(key);
     return { url, book_id }
   }));
-  
+
   return new Promise((resolve) => {
     resolve(urls);
   });
 }
 
-module.exports = { uploadToS3, getSignedUrl, getSignedUrls };
+const getSignedChaptersUrls = async (objects) => {
+  const urls = await Promise.all(objects.map(async ({key, chapter_id}) => {
+    const url = await getSignedUrl(key);
+    return { url, chapter_id }
+  }));
+
+  return new Promise((resolve) => {
+    resolve(urls);
+  });
+}
+
+module.exports = { uploadToS3, getSignedUrl, getSignedBooksUrls, getSignedChaptersUrls };

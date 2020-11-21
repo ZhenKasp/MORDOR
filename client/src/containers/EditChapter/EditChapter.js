@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import MarkdownIt from 'markdown-it';
@@ -8,26 +8,38 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import ChaptersNavigationMenu from '../ChaptersNavigationMenu/ChaptersNavigationMenu';
+import { useDropzone } from 'react-dropzone';
+import classes from './EditChapter.module.css';
 
 const EditChapter = (props) => {
+  const [image, setImage] = useState(props.currentChapter?.image);
+  const onDrop = useCallback(acceptedFiles => {
+    setImage(acceptedFiles[0]);
+  }, [])
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+
+  useEffect(() => {
+    setImage(props.currentChapter.image);
+  }, [props.currentChapter?.image]);
+
   const updateChapter = (event) => {
     event.preventDefault();
-    const { name, text } = props.currentChapter;
-    const object = { name, text, id: props.id };
+    const object = new FormData(event.target);
+    object.append('image', image);
+    object.append('name', props.currentChapter.name);
+    object.append('text', props.currentChapter.text);
+    object.append('id', props.id);
 
     try {
       axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'chapter',
-        object, { headers: { authorization: props.user.token }}
+        object, { headers: { authorization: props.user.token, 'Content-Type': 'multipart/form-data' }}
       ).then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
           props.createFlashMessage(res.data.message, res.data.variant);
           const chapters = [...props.chapters];
-          const index = props.chapters.findIndex(
-            (chapter) => chapter.id === res.data.chapter.id
-          );
-          chapters[index] = res.data.chapter;
+          chapters[props.currentChapterIndex] = res.data.chapter;
           props.setChapters(chapters);
         }
       })
@@ -49,9 +61,29 @@ const EditChapter = (props) => {
         <Form.Control
           maxLength="255"
           value={props.currentChapter.name}
-          onChange={(e) => props.setName(e.target.value)}
+          onChange={(e) => props.setCurrentChapter({
+            ...props.currentChapter,
+            name: e.target.value}
+          )}
           placeholder="Book name"
         />
+      </Form.Group>
+      <Form.Group>
+        <div {...getRootProps()} className={classes.Dropzone}>
+          <input {...getInputProps()} />
+          {
+            isDragActive ?
+              <p>Drop the image here ...</p> :
+              <p>Drag 'n' drop some image here, or click to select image</p>
+          }
+          {image &&
+            <img
+              src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+              alt={image.path}
+              className={classes.Image}
+            />
+          }
+        </div>
       </Form.Group>
       <ChaptersNavigationMenu
         chapters={props.chapters}

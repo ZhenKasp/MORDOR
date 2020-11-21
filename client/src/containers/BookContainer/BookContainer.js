@@ -14,7 +14,8 @@ const BookContainer = (props) => {
   const chapter = props.chapters[currentChapterIndex];
   const [currentChapter, setCurrentChapter] = useState({
     name: chapter?.name || "",
-    text: chapter?.text || ""
+    text: chapter?.text || "",
+    image: chapter?.image
   });
 
   useEffect(() => {
@@ -32,7 +33,8 @@ const BookContainer = (props) => {
               setCurrentChapterIndex(currentIndex);
               setCurrentChapter({
                 name: res.data.chapters[currentIndex].name || "",
-                text: res.data.chapters[currentIndex].text || ""
+                text: res.data.chapters[currentIndex].text || "",
+                image: res.data.chapters[currentIndex].image
               })
             }
           });

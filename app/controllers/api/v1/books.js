@@ -9,7 +9,7 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const { v4: uuidv4 } = require('uuid');
-const { uploadToS3, getSignedUrl, getSignedUrls } = require('../../../utilities/s3Functions');
+const { uploadToS3, getSignedUrl, getSignedBooksUrls } = require('../../../utilities/s3Functions');
 
 const books = (app) => {
   app.get('/api/v1/books/', (req,res) => {
@@ -24,9 +24,9 @@ const books = (app) => {
           raw: true
         }).then(ratedBooks => {
           (async () => {
-            const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+            const urls = await getSignedBooksUrls(books.filter(book => !!book.image).map(
               book => ({ key: book.image.key, book_id: book.id })
-            ))
+            ));
 
             const fullBooks = books.map(book => {
               return {
@@ -63,7 +63,7 @@ const books = (app) => {
           raw: true
         }).then(ratedBooks => {
           (async () => {
-            const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+            const urls = await getSignedBooksUrls(books.filter(book => !!book.image).map(
               book => ({ key: book.image.key, book_id: book.id })
             ))
 
@@ -126,10 +126,10 @@ const books = (app) => {
             uploadToS3(key, req.file.buffer, req.file.mimetype),
             Image.create({ file_name: req.file.originalname, key: key }),
             getSignedUrl(key)
-          ])
+          ]);
+          await newBook.setImage(image.id);
         }
 
-        await newBook.setImage(image.id),
         newBook.setUser(user_id).then(() => {
           res.json({
             message: "Create book successful",
@@ -235,7 +235,7 @@ const books = (app) => {
       }).then(ratedBooks => {
         const books = ratedBooks.slice(0, 5);
         (async () => {
-          const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+          const urls = await getSignedBooksUrls(books.filter(book => !!book.image).map(
             book => ({ key: book.image.key, book_id: book.id })
           ))
 
@@ -273,7 +273,7 @@ const books = (app) => {
       }).then(lastUpdatedBooks => {
         (async () => {
           const books = lastUpdatedBooks.slice(0, 5);
-          const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+          const urls = await getSignedBooksUrls(books.filter(book => !!book.image).map(
             book => ({ key: book.image.key, book_id: book.id })
           ))
           let avg = books.map(b => {

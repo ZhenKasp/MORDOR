@@ -35,21 +35,28 @@ const ReadBook = (props) => {
     <div>
       <div className="custom-html-style">
         <h2>{props.currentChapter?.name}</h2>
+        {props.currentChapter.image &&
+          <img
+            src={props.currentChapter?.image}
+            alt={props.currentChapter?.name || "image"}
+            className={classes.Image}
+          />
+        }
 
-          {props.currentChapter.text ?
-            <Aux>
-              <ChaptersNavigationMenu
-                chapters={props.chapters}
-                currentChapterIndex={props.currentChapterIndex}
-                setCurrentChapterIndex={props.setCurrentChapterIndex}
-                setCurrentChapter={props.setCurrentChapter}
-              />
-              <p
-                className={classes.ChapterText}
-                dangerouslySetInnerHTML={{__html: mdParser.render(props.currentChapter.text)}}
-              />
-            </Aux> : <h5>No text yet</h5>
-          }
+        {props.currentChapter.text ?
+          <Aux>
+            <ChaptersNavigationMenu
+              chapters={props.chapters}
+              currentChapterIndex={props.currentChapterIndex}
+              setCurrentChapterIndex={props.setCurrentChapterIndex}
+              setCurrentChapter={props.setCurrentChapter}
+            />
+            <p
+              className={classes.ChapterText}
+              dangerouslySetInnerHTML={{__html: mdParser.render(props.currentChapter.text)}}
+            />
+          </Aux> : <h5>No text yet</h5>
+        }
       </div>
       <LikesField
         likes={likes}
