@@ -7,10 +7,21 @@
   border-radius: 7px;
   padding: 16px;
   left: calc(50% - 349px /2);
-  top: 25%;
+  top: 3%;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
   color: black;
+  max-height: calc(100vh - 6%);
+  overflow-y: auto;
+}
+
+@media (max-height: 820px) {
+  .Modal {
+    top: 8%;
+    max-height: calc(100vh - 16%);
+    width: 319px;
+    left: calc(50% - 319px /2);
+  }
 }
 
 .Close {

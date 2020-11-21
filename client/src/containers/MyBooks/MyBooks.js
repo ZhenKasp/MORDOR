@@ -13,20 +13,18 @@ import Aux from '../../hoc/Auxiliary';
 const MyBooks = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [books, setBooks] = useState([]);
-  const [ratings, setRatings] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   const [currentGenre, setCurrentGenre] = useState("All");
 
   useEffect(() => {
     try {
-      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "myBooks",
+      axios.get(process.env.REACT_APP_PATH_TO_SERVER + "books/myBooks",
         { headers: { authorization: props.user.token }})
       .then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
           setBooks(res.data.books);
-          setRatings(res.data.ratings);
         }
       });
     } catch (err) {
@@ -53,7 +51,6 @@ const MyBooks = (props) => {
                 <CardBook
                   clicked={props.clickHandler}
                   book={book}
-                  rating={ratings.find(rating => rating.id === book.id)?.rating || 0}
                   key={book.id}
                   clickHandler={props.clickHandler}
                 />

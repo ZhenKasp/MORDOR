@@ -39,7 +39,7 @@ const EditChapter = (props) => {
   const mdParser = new MarkdownIt();
 
   const handleEditorChange = ({html, text}) => {
-    props.setText(text);
+    props.setCurrentChapter({...props.currentChapter, text});
   }
 
   return (

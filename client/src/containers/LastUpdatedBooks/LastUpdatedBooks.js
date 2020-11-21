@@ -30,18 +30,14 @@ const LastUpdatedBooks = (props) => {
     <Aux>
       <h2>Last Updated Books</h2>
         <CardDeck className={classes.BooksGrid}>
-
-          {lastUpdatedBooks?.map(book => {
-            return (
-              <CardBook
-                clicked={props.clickHandler}
-                book={book}
-                rating={(book.ratings.reduce((p,c) => p + c.value, 0) / book.ratings.length)}
-                key={book.id}
-                clickHandler={props.clickHandler}
-              />
-            )
-          })}
+          {lastUpdatedBooks?.map(book =>
+            <CardBook
+              clicked={props.clickHandler}
+              book={book}
+              key={book.id}
+              clickHandler={props.clickHandler}
+            />
+          )}
         </CardDeck>
     </Aux>
   )

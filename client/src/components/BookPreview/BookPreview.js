@@ -7,8 +7,10 @@ import RatingField from '../../containers/RatingField/RatingField';
 const bookPreview = props => (
   <div className={classes.Wrapper}>
     <h1>{props.book.name}</h1>
-    <p>Tegs: {props.book.tags &&
-      props.book.tags.split(";").map(tag => "#" + tag).join(" ")}</p>
+    {props.book.image &&
+      <img className={classes.Image} src={props.book.image} alt={props.book.name} />}
+    {props.book.tags &&
+      <p>Tegs: props.book.tags.split(";").map(tag => "#" + tag).join(" ")</p>}
     <p>Short Description: {props.book.short_description}</p>
     <p>Genre: {props.book.genre}</p>
     <p>Author: {props.book.user?.firstname + " " + props.book.user?.lastname}</p>

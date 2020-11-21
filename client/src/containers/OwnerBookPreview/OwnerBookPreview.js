@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import TagsInput from '../TagsInput/TagsInput';
@@ -11,31 +11,41 @@ import { createFlashMessage } from '../../store/actions';
 import CreateChapterModal from '../CreateChapterModal/CreateChapterModal';
 import Aux from '../../hoc/Auxiliary';
 import { useHistory } from "react-router-dom";
+import { useDropzone } from 'react-dropzone';
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
   const [genre, setGenre] = useState(props.book.genre || "");
+  const [image, setImage] = useState(props.book.image);
   const [chapters, setChapters] = useState(props.book.chapters);
   const [modalIsShown, setModalIsShown] = useState(false);
   let history = useHistory();
+  const onDrop = useCallback(acceptedFiles => {
+    setImage(acceptedFiles[0]);
+  }, [])
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
   useEffect(() => {
     setTags(props.book.tags ?
       props.book.tags.split(";").map(tag => ({ id: tag, text: tag })) : []
     );
     setGenre(props.book.genre);
+    setImage(props.book.image);
     setChapters(props.book.chapters);
   }, [props.book]);
 
   const updateBook = (event) => {
     event.preventDefault();
-    const object = getFormData(event);
-    object["tags"] = tags.map(tag => tag.text).join(";");
-    object["id"] = props.book.id;
+    const bookTags = tags.map(tag => tag.text).join(";");
+
+    const object = new FormData(event.target);
+    object.append('tags', bookTags);
+    object.append('image', image);
+    object.append("id", props.book.id);
 
     try {
       axios.patch(process.env.REACT_APP_PATH_TO_SERVER + 'book',
-        object, { headers: { authorization: props.user.token }}
+        object, { headers: { authorization: props.user.token, 'Content-Type': 'multipart/form-data' }}
       ).then(res => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
@@ -99,6 +109,23 @@ const OwnerBoookPreview = props => {
             name="name"
             placeholder="Book name"
           />
+        </Form.Group>
+        <Form.Group>
+          <div {...getRootProps()} className={classes.Dropzone}>
+            <input {...getInputProps()} />
+            {
+              isDragActive ?
+                <p>Drop the image here ...</p> :
+                <p>Drag 'n' drop some image here, or click to select image</p>
+            }
+            {image &&
+              <img
+                src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                alt={image.path}
+                className={classes.Image}
+              />
+            }
+          </div>
         </Form.Group>
         <Form.Group>
           <Form.Label><h3>Tags</h3></Form.Label>

@@ -43,7 +43,7 @@ const getSignedUrls = async (objects) => {
     const url = await getSignedUrl(key);
     return { url, book_id }
   }));
-  console.log(urls);
+  
   return new Promise((resolve) => {
     resolve(urls);
   });

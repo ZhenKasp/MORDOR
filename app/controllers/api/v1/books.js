@@ -32,7 +32,7 @@ const books = (app) => {
               return {
                 ...book.dataValues,
                 rating: ratedBooks.filter(b => b.id === book.id)[0]?.rating || 0,
-                image: urls.filter(b => b.book_id === book.id)[0]?.url
+                image: urls.filter(b => b.book_id === book.id)[0]?.url || ''
               }
             })
             res.json({
@@ -46,6 +46,45 @@ const books = (app) => {
     }
   });
 
+  app.get('/api/v1/books/myBooks/', authenticateToken, (req,res) => {
+    try {
+      Book.findAll({
+        where: { user_id: req.body.user_id },
+        include: [{ model: Image, as: Image }]
+      }).then((books => {
+        Book.findAll({
+          where: { user_id: req.body.user_id },
+          attributes: {
+            include: [
+              [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
+            ]
+          },
+          include: [{ model: Rating, as: Rating, attributes: [] }],
+          raw: true
+        }).then(ratedBooks => {
+          (async () => {
+            const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+              book => ({ key: book.image.key, book_id: book.id })
+            ))
+
+            const fullBooks = books.map(book => {
+              return {
+                ...book.dataValues,
+                rating: ratedBooks.filter(b => b.id === book.id)[0]?.rating || 0,
+                image: urls.filter(b => b.book_id === book.id)[0]?.url || ''
+              }
+            })
+            res.json({
+              books: fullBooks
+            });
+          })();
+        })
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   app.get('/api/v1/book/', (req,res) => {
     try {
       Book.findOne({
@@ -53,12 +92,17 @@ const books = (app) => {
         include: [
           { model: Chapter, as: Chapter },
           { model: User, as: User },
+          { model: Image, as: Image }
         ]
       }).then(book => {
-        res.json({
-          book: book,
-          isOwner: book?.userId == req.query.userId
-        });
+        (async () => {
+          const url = book.image ? await getSignedUrl(book.image.key) : '';
+
+          res.json({
+            book: {...book.dataValues, image: url},
+            isOwner: book?.userId == req.query.userId
+          });
+        })();
       });
     } catch (error) {
       console.log(error);
@@ -103,7 +147,7 @@ const books = (app) => {
     })();
   });
 
-  app.patch('/api/v1/book', authenticateToken, (req,res) => {
+  app.patch('/api/v1/book', upload.single('image'), authenticateToken, (req,res) => {
     const fields = {
       name: req.body.name,
       short_description: req.body.short_description,
@@ -113,14 +157,37 @@ const books = (app) => {
 
     (async () => {
       try {
-        Book.findOne({where: { id: req.body.id }}).then(book => {
+        Book.findOne({
+          where: { id: req.body.id },
+          include: [{ model: Image, as: Image }]
+        }).then(book => {
           if (book) {
+            const key = book.image ? book.image.key : `images/${uuidv4()}`;
             book.update(fields).then(() => {
-              res.json({
-                message: "Update book successful",
-                variant: "success",
-                book: book
-              });
+              (async () => {
+                if (req.file) {
+                  let image = {};
+
+                  if (book.image) {
+                    Image.destroy({ where: { id: book.image.id }});
+                  }
+
+                  [,image] = await Promise.all([
+                    uploadToS3(key, req.file.buffer, req.file.mimetype),
+                    Image.create({ file_name: req.file.originalname, key: key })
+                  ])
+
+                  await book.setImage(image.id)
+                }
+
+                const imageUrl = await getSignedUrl(key);
+
+                res.json({
+                  message: "Create book successful",
+                  variant: "success",
+                  book: {...book.dataValues, image: imageUrl},
+                });
+              })();
             });
           }
         });
@@ -160,10 +227,29 @@ const books = (app) => {
           ]
         },
         order: [[sequelize.fn('AVG', sequelize.col('ratings.value')), 'DESC']],
-        include: [{ model: Rating, as: Rating, attributes: [], right: true }],
+        include: [
+          { model: Rating, as: Rating, attributes: [], right: true },
+          { model: Image, as: Image }
+        ],
         group: ["ratings.book_id"],
       }).then(ratedBooks => {
-        res.json({ books: ratedBooks.slice(0, 5) });
+        const books = ratedBooks.slice(0, 5);
+        (async () => {
+          const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+            book => ({ key: book.image.key, book_id: book.id })
+          ))
+
+          const fullBooks = books.map(book => {
+            return {
+              ...book.dataValues,
+              rating: book.dataValues.rating || 0,
+              image: urls.filter(b => b.book_id === book.id)[0]?.url || ''
+            }
+          })
+          res.json({
+            books: fullBooks
+          });
+        })();
       })
     } catch (error) {
       res.json({
@@ -179,15 +265,44 @@ const books = (app) => {
         include: [
           { model: Chapter, as: Chapter, attributes: ['updatedAt'] },
           { model: Rating, as: Rating, attributes: ['value']},
+          { model: Image, as: Image }
         ],
         order: [
           [Chapter, 'updatedAt', 'DESC']
         ]
       }).then(lastUpdatedBooks => {
+        (async () => {
+          const books = lastUpdatedBooks.slice(0, 5);
+          const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+            book => ({ key: book.image.key, book_id: book.id })
+          ))
+          let avg = books.map(b => {
+            const ratings = b.dataValues.ratings
+            if (ratings.length > 0) {
+              let summ = 0;
+              ratings.map(a =>  summ += a.dataValues.value );
+
+              return {
+                id: b.id,
+                rating: summ / ratings.length
+              }
+            } else {
+              return { id: b.id, rating: 0 }
+            }
+          })
+
+          const fullBooks = books.map(book => {
+            return {
+              ...book.dataValues,
+              rating: avg.filter(a => a.id === book.id)[0].rating,
+              image: urls.filter(b => b.book_id === book.id)[0]?.url || ''
+            }
+          })
           res.json({
-            books: lastUpdatedBooks.slice(0, 5),
+            books: fullBooks
           });
-        })
+        })();
+      })
     } catch (error) {
       res.json({
         error: error.errors[0].message,

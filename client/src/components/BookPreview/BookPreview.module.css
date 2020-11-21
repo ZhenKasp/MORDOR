@@ -21,3 +21,9 @@ select {
   text-decoration: underline;
   color: blue;
 }
+
+.Image {
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  max-height: 300px;
+}

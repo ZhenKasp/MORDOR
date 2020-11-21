@@ -8,20 +8,20 @@ import GenreSelector from '../../components/GenreSelector/GenreSelector';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import { useDropzone } from 'react-dropzone';
+import classes from './CreateBookModal.module.css';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
   const [genre, setGenre] = useState("");
   const [image, setImage] = useState("");
   const onDrop = useCallback(acceptedFiles => {
-    setImage(acceptedFiles[0])
+    setImage(acceptedFiles[0]);
   }, [])
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
   const submitCreateBook = (event) => {
     event.preventDefault();
     const bookTags = tags.map(tag => tag.text).join(";");
-    console.log(bookTags);
 
     const object = new FormData(event.target);
     object.append('tags', bookTags);
@@ -34,7 +34,6 @@ const CreateBookModal = (props) => {
       if (res.data.error) {
         props.createFlashMessage(res.data.error, res.data.variant);
       } else {
-        console.log(res.data);
         props.createFlashMessage(res.data.message, res.data.variant);
         props.setBooks([...props.books, res.data.book]);
         props.modalIsShownCancelHandler();
@@ -68,12 +67,19 @@ const CreateBookModal = (props) => {
             />
           </Form.Group>
           <Form.Group>
-            <div {...getRootProps()}>
+            <div {...getRootProps()} className={classes.Dropzone}>
               <input {...getInputProps()} />
               {
                 isDragActive ?
-                  <p>Drop the files here ...</p> :
-                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  <p>Drop the image here ...</p> :
+                  <p>Drag 'n' drop some image here, or click to select image</p>
+              }
+              {image &&
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={image.path}
+                  className={classes.Image}
+                />
               }
             </div>
           </Form.Group>

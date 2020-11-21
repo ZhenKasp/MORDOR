@@ -16,3 +16,14 @@
 .Rating {
   font-size: 10px !important;
 }
+
+.CardBook > div:first-child {
+  min-height: 63%;
+  background-color: white;
+}
+
+.OneLined {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
