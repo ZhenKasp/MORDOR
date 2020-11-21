@@ -10,7 +10,7 @@ import Aux from "../../hoc/Auxiliary";
 
 const AllBooks = (props) => {
   const [allBooks, setAllBooks] = useState([]);
-  const [ratings, setRatings] = useState([]);
+  // const [ratings, setRatings] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   const [currentGenre, setCurrentGenre] = useState("All");
 
@@ -21,8 +21,9 @@ const AllBooks = (props) => {
         if (res.data.error) {
           props.createFlashMessage(res.data.error, res.data.variant);
         } else {
+          console.log(res.data);
           setAllBooks(res.data.books);
-          setRatings(res.data.ratings);
+          // setRatings(res.data.ratings);
         }
       });
     } catch (err) {
@@ -48,7 +49,7 @@ const AllBooks = (props) => {
                 <CardBook
                   clicked={props.clickHandler}
                   book={book}
-                  rating={ratings.find(rating => rating.id === book.id)?.rating || 0}
+                  rating={book.rating || 0}
                   key={book.id}
                   clickHandler={props.clickHandler}
                 />

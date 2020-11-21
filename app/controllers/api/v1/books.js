@@ -2,13 +2,19 @@ const Book = require('../../../models/Book');
 const authenticateToken = require('../../../midlware/authenticateToken');
 const Chapter = require('../../../models/Chapter');
 const User = require('../../../models/User');
+const Image = require('../../../models/Image');
 const Rating = require('../../../models/Rating');
 const sequelize = require('../../../models/sequelize');
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+const { v4: uuidv4 } = require('uuid');
+const { uploadToS3, getSignedUrl, getSignedUrls } = require('../../../utilities/s3Functions');
 
 const books = (app) => {
   app.get('/api/v1/books/', (req,res) => {
     try {
-      Book.findAll().then(books => {
+      Book.findAll({ include: [{ model: Image, as: Image }]}).then(books => {
         Book.findAll({
           attributes: [
             "id", [sequelize.fn('AVG', sequelize.col('ratings.value')), 'rating'],
@@ -17,10 +23,22 @@ const books = (app) => {
           group: ["ratings.book_id"],
           raw: true
         }).then(ratedBooks => {
-          res.json({
-            books: books,
-            ratings: ratedBooks.map(rated => ({id: rated.id, rating: rated.rating}))
-          });
+          (async () => {
+            const urls = await getSignedUrls(books.filter(book => !!book.image).map(
+              book => ({ key: book.image.key, book_id: book.id })
+            ))
+
+            const fullBooks = books.map(book => {
+              return {
+                ...book.dataValues,
+                rating: ratedBooks.filter(b => b.id === book.id)[0]?.rating || 0,
+                image: urls.filter(b => b.book_id === book.id)[0]?.url
+              }
+            })
+            res.json({
+              books: fullBooks
+            });
+          })();
         })
       });
     } catch (error) {
@@ -47,22 +65,36 @@ const books = (app) => {
     }
   });
 
-  app.post('/api/v1/book', authenticateToken, (req,res) => {
+  app.post('/api/v1/book', upload.single('image'), authenticateToken, (req,res) => {
     const { name, short_description, genre, tags, user_id } = req.body;
+    const key = `images/${uuidv4()}`;
+    let imageUrl = "";
+    let image = {};
 
     (async () => {
       try {
         const newBook = await Book.create({
           name, short_description, genre, tags
         });
+
+        if (req.file) {
+          [,image,imageUrl] = await Promise.all([
+            uploadToS3(key, req.file.buffer, req.file.mimetype),
+            Image.create({ file_name: req.file.originalname, key: key }),
+            getSignedUrl(key)
+          ])
+        }
+
+        await newBook.setImage(image.id),
         newBook.setUser(user_id).then(() => {
           res.json({
             message: "Create book successful",
             variant: "success",
-            book: newBook
+            book: {...newBook.dataValues, image: imageUrl},
           });
         });
       } catch (error) {
+        console.log(error.message);
         res.json({
           error: error.original?.sqlMessage || error.errors[0].message,
           variant: "danger"

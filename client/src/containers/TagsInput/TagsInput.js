@@ -52,7 +52,6 @@ const TagsInput = props => {
       }}
       suggestions={suggestions}
       tags={props.tags}
-      name="tags"
       handleDelete={handleDelete}
       handleAddition={handleAddition}
       handleDrag={handleDrag}
