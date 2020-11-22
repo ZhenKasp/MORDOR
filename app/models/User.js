@@ -25,6 +25,10 @@ const User = sequelize.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
+  is_blocked:{
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   is_verified:{
     type: DataTypes.BOOLEAN,
     defaultValue: false

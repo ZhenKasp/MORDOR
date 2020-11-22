@@ -58,7 +58,7 @@ const users = (app) => {
     const password = req.body.password;
     (async () => {
       try {
-        await User.findOne({ where: {email: email} })
+        await User.findOne({ where: {email: email}, raw: true })
           .then(user => {
             if (!user) return res.json({
               error: "User doesn't exist.",
@@ -66,13 +66,17 @@ const users = (app) => {
             }).status(400);
             bcrypt.compare(password, user.password, (err, data) => {
               if (err) throw err;
-              if (user.is_verified == false) {
+              if (!user.is_verified) {
                 return res.json({
                   error: "You need to verify your account first.",
+                  variant: "warning"
+                }).status(401);
+              } else if (user.is_blocked) {
+                return res.json({
+                  error: "You are bloked.",
                   variant: "danger"
                 }).status(401);
-              }
-              if (data) {
+              } else if (data) {
                 return res.json({
                   token: generateAccessToken(email, user.username, user.id),
                   username: user.username,
@@ -146,6 +150,105 @@ const users = (app) => {
     } catch (error) {
       console.log(error);
     }
+  });
+
+  app.get('/api/v1/users', authenticateToken, (req, res) => {
+    if (req.body.is_admin) {
+      User.findAll().then((users => {
+        res.json({
+          users: users
+        });
+      }))
+    } else {
+      res.json({
+        error: "Current user is not admin",
+        variant: "danger",
+      });
+    }
+  });
+
+  app.patch('/api/v1/users/unblock', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.update({ is_blocked: false }, {where: { id: userIDs }});
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Unblock successful.",
+          variant: "success"
+        });
+      });
+    })();
+  });
+
+  app.patch('/api/v1/users/block', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.update({ is_blocked: true }, {where: { id: userIDs }});
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Block successful.",
+          variant: "success"
+        });
+      })
+    })();
+  });
+
+  app.patch('/api/v1/users/verify', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.update({ is_verified: true }, {where: { id: userIDs }})
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Verify successful.",
+          variant: "success"
+        });
+      });
+    })();
+  });
+
+  app.patch('/api/v1/users/makeAdmin', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.update({ is_admin: true }, {where: { id: userIDs }});
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Make Admin successful.",
+          variant: "success"
+        });
+      })
+    })();
+  });
+
+  app.patch('/api/v1/users/removeAdmin', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.update({ is_admin: false }, { where: { id: userIDs }});
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Remove Admin successful.",
+          variant: "success"
+        });
+      })
+    })();
+  });
+
+  app.patch('/api/v1/users/remove', authenticateToken, (req,res) => {
+    (async () => {
+      const userIDs = req.body.ids.split(";");
+      await User.destroy({ where: { id: userIDs }});
+      await User.findAll().then(users => {
+        res.json({
+          users: users,
+          message: "Remove successful.",
+          variant: "success"
+        });
+      });
+    })();
   });
 };
 

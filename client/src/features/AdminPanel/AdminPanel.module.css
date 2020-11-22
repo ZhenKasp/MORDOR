@@ -1,0 +1,18 @@
+.UsersTable {
+  margin-top: 112px;
+}
+
+.UsersTable table {
+  margin-top: 0;
+}
+
+.Table {
+  overflow-x: auto;
+}
+
+.Tools {
+  height: 56px;
+  padding: 7px 0;
+  background-color: #40A4C8;
+  text-align: center;
+}

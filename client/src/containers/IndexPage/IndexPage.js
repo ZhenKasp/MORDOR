@@ -13,6 +13,7 @@ import BookContainer from '../BookContainer/BookContainer';
 import SignIn from '../../components/SignIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp';
 import Varification from '../../components/Varification/Varification';
+import AdminPanel from '../../features/AdminPanel/AdminPanel';
 import NotFound from '../../components/NotFound/NotFound';
 
 class IndexPage extends Component {
@@ -56,16 +57,14 @@ class IndexPage extends Component {
           <Route exact path="/bookPreview/:book_id/editChapter/:id">
             <BookContainer
               id={id}
-              chapters={attributes.slice(0, -1)}
-              book_id={attributes[attributes.length-1]}>
+              chapters={attributes}>
               <EditChapter />
             </BookContainer>
           </Route>
           <Route exact path="/bookPreview/:book_id/readBook/:id">
             <BookContainer
               id={id}
-              chapters={attributes.slice(0, -1)}
-              book_id={attributes[attributes.length-1]}
+              chapters={attributes}
             >
               <ReadBook />
             </BookContainer>
@@ -75,6 +74,9 @@ class IndexPage extends Component {
               <Varification email={this.state.email} />
             </Route>
           }
+          <Route path="/admin">
+            <AdminPanel />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
