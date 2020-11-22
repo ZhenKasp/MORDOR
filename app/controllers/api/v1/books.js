@@ -97,10 +97,9 @@ const books = (app) => {
       }).then(book => {
         (async () => {
           const url = book.image ? await getSignedUrl(book.image.key) : '';
-
           res.json({
             book: {...book.dataValues, image: url},
-            isOwner: book?.userId == req.query.userId
+            isOwner: req.body.is_admin || book?.userId == req.query.userId
           });
         })();
       });

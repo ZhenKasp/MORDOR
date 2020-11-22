@@ -2,6 +2,7 @@ const authenticateToken = require('../../../midlware/authenticateToken');
 const generateAccessToken = require('../../../midlware/generateAccessToken');
 const verify = require('../../../midlware/verify');
 const User = require('../../../models/User');
+const Book = require('../../../models/Book');
 const bcrypt = require('bcryptjs');
 const mailer = require('../../../mailer/mailerConfig');
 const createMail = require('../../../mailer/createMail');
@@ -165,6 +166,18 @@ const users = (app) => {
         variant: "danger",
       });
     }
+  });
+
+  app.get('/api/v1/users/isOwner', (req, res) => {
+      Book.findOne({ where: { id: req.query.book_id }, attributes: ["user_id"]}).then((book => {
+        (async () => {
+          const user = await User.findOne({ where: { id: req.query.user_id }})
+
+          res.json({
+            isOwner: book.dataValues.user_id == req.query.user_id || user.dataValues.is_admin
+          });
+        })();
+      }))
   });
 
   app.patch('/api/v1/users/unblock', authenticateToken, (req,res) => {

@@ -159,7 +159,7 @@ const OwnerBoookPreview = props => {
               props.clickHandler(
                 `/bookPreview/${props.book.id}/readBook`,
                 props.book.chapters[0].id,
-                [...chapters, props.book.id]
+                chapters
               );
             }}>Read</Button>
             <hr />
@@ -174,7 +174,7 @@ const OwnerBoookPreview = props => {
                   props.clickHandler(
                     `/bookPreview/${props.book.id}/editChapter`,
                     chapter.id,
-                    [...chapters, props.book.id]
+                    chapters
                   );
                 }}>{chapter.name}</p>
                 <Button

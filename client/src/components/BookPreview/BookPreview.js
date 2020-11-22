@@ -38,7 +38,7 @@ const bookPreview = props => (
                   props.clickHandler(
                     `/bookPreview/${props.book.id}/readBook`,
                     chapter.id,
-                    [...props.book.chapters, props.book.id]
+                    props.book.chapters
                   )
                 }>
                 {chapter.name}

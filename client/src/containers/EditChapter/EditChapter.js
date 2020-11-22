@@ -10,13 +10,25 @@ import { createFlashMessage } from '../../store/actions';
 import ChaptersNavigationMenu from '../ChaptersNavigationMenu/ChaptersNavigationMenu';
 import { useDropzone } from 'react-dropzone';
 import classes from './EditChapter.module.css';
+import { useParams, useHistory } from 'react-router-dom';
+import checkIsOwner from '../../utilities/checkIsOwner';
 
 const EditChapter = (props) => {
   const [image, setImage] = useState(props.currentChapter?.image);
+  let history = useHistory();
+  let { book_id } = useParams();
   const onDrop = useCallback(acceptedFiles => {
     setImage(acceptedFiles[0]);
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+
+  useEffect(() => {
+    (async () => {
+      const checked = await checkIsOwner(book_id, props.user.id);
+      console.log(checked);
+      if (!checked) history.replace('/notFound');
+    })();
+  }, []);
 
   useEffect(() => {
     setImage(props.currentChapter.image);

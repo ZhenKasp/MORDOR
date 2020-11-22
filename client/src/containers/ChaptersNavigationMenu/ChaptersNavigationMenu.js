@@ -9,7 +9,6 @@ const ChaptersNavigationMenu = props => {
     const nextChapter = () => {
       if (props.currentChapterIndex + 1 < props.chapters.length) {
         props.setCurrentChapterIndex(props.currentChapterIndex + 1);
-        console.log(props.chapters);
         props.setCurrentChapter({
           name: props.chapters[props.currentChapterIndex + 1].name || "",
           text: props.chapters[props.currentChapterIndex + 1].text || "",
@@ -22,7 +21,6 @@ const ChaptersNavigationMenu = props => {
     const previousChapter = () => {
       if (props.currentChapterIndex - 1 >= 0) {
         props.setCurrentChapterIndex(props.currentChapterIndex - 1);
-        console.log(props.chapters);
         props.setCurrentChapter({
           name: props.chapters[props.currentChapterIndex - 1].name || "",
           text: props.chapters[props.currentChapterIndex - 1].text || "",

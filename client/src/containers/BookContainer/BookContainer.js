@@ -19,30 +19,28 @@ const BookContainer = (props) => {
   });
 
   useEffect(() => {
-    if (props.chapters.length === 0) {
-      (async () => {
-        try {
-          await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "chapters",
-            { params: { id: book_id }}
-          ).then(res => {
-            if (res.data.error) {
-              props.createFlashMessage(res.data.error, res.data.variant);
-            } else {
-              const currentIndex = res.data.chapters.findIndex((chapter) => chapter.id === Number(id));
-              setChapters(res.data.chapters);
-              setCurrentChapterIndex(currentIndex);
-              setCurrentChapter({
-                name: res.data.chapters[currentIndex].name || "",
-                text: res.data.chapters[currentIndex].text || "",
-                image: res.data.chapters[currentIndex].image
-              })
-            }
-          });
-        } catch (err) {
-          props.createFlashMessage(err.message, "danger");
-        }
-      })();
-    }
+    (async () => {
+      try {
+        await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "chapters",
+          { params: { id: book_id }}
+        ).then(res => {
+          if (res.data.error) {
+            props.createFlashMessage(res.data.error, res.data.variant);
+          } else {
+            const currentIndex = res.data.chapters.findIndex((chapter) => chapter.id === Number(id));
+            setChapters(res.data.chapters);
+            setCurrentChapterIndex(currentIndex);
+            setCurrentChapter({
+              name: res.data.chapters[currentIndex].name || "",
+              text: res.data.chapters[currentIndex].text || "",
+              image: res.data.chapters[currentIndex].image
+            })
+          }
+        });
+      } catch (err) {
+        props.createFlashMessage(err.message, "danger");
+      }
+    })();
   }, []);
 
   return (

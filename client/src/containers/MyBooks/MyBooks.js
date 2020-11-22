@@ -52,7 +52,6 @@ const MyBooks = (props) => {
                   clicked={props.clickHandler}
                   book={book}
                   key={book.id}
-                  clickHandler={props.clickHandler}
                 />
               );
             } else {

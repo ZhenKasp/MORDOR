@@ -6,6 +6,7 @@ import Aux from '../../hoc/Auxiliary';
 import OwnerBookPreview from '../OwnerBookPreview/OwnerBookPreview';
 import BookPreview from '../../components/BookPreview/BookPreview';
 import { useParams, useHistory } from 'react-router-dom';
+import checkIsOwner from '../../utilities/checkIsOwner';
 
 const Preview = (props) => {
   const [book, setBook] = useState([]);
@@ -16,7 +17,9 @@ const Preview = (props) => {
   useEffect(() => {
     (async () => {
       try {
-        let owner = false;
+        const checked = await checkIsOwner(id, props.user.id, props.createFlashMessage)
+        setIsOwner(checked);
+        console.log(checked);
         await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
           { params: { id: id, userId: props.user.id },
             headers: { authorization: props.user.token }}
@@ -28,7 +31,6 @@ const Preview = (props) => {
             if (!res.data.book) {
               history.replace('/notFound');
             }
-            owner = res.data.isOwner;
           }
           return res.data.book
         }).then(book => {
@@ -41,7 +43,6 @@ const Preview = (props) => {
               if (res.data.error) {
                 props.createFlashMessage(res.data.error, res.data.variant);
               } else {
-                setIsOwner(owner);
                 setBook({...book, rating: res.data.averageRating });
               }
             })
@@ -52,6 +53,8 @@ const Preview = (props) => {
       }
     })();
   }, []);
+
+console.log(isOwner);
 
   return (
     <Aux>
