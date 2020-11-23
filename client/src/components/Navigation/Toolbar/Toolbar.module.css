@@ -4,4 +4,25 @@
 
 .Brand {
   cursor: pointer;
+  margin-right: 10px;
+}
+
+.Search {
+  margin-right: 3px;
+  max-width: 320px;
+}
+
+.Search input {
+  min-width: 75px;
+  margin: 2px;
+  display: inline;
+  max-width: calc(100% - 84px);
+  margin-right: 3px;
+}
+
+@media (max-width: 766px) {
+  .Search {
+    display: inline-flex;
+    width: calc(100% - (85px + 20px + 20px + 90px));
+  }
 }

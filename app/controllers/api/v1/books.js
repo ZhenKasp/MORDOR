@@ -4,6 +4,7 @@ const Chapter = require('../../../models/Chapter');
 const User = require('../../../models/User');
 const Image = require('../../../models/Image');
 const Rating = require('../../../models/Rating');
+const Comment = require('../../../models/Comment');
 const sequelize = require('../../../models/sequelize');
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -303,6 +304,60 @@ const books = (app) => {
         })();
       })
     } catch (error) {
+      res.json({
+        error: error.errors[0].message,
+        variant: "danger"
+      }).status(400);
+    }
+  });
+
+  app.get('/api/v1/books/search/', (req,res) => {
+    try {
+      Book.findAll({
+        where: sequelize.literal("MATCH (book.name, short_description) AGAINST (:against) OR MATCH ( chapters.name, chapters.text) AGAINST (:against) OR MATCH (comments.text) AGAINST (:against)"),
+        replacements: {
+          against: req.query.against
+        },
+        include: [
+          { model: Image, as: Image },
+          { model: Rating, as: Rating, attributes: ['value']},
+          { model: Chapter, as: Chapter },
+          { model: Comment, as: Comment },
+        ]
+      }).then(books => {
+        (async () => {
+          const urls = await getSignedBooksUrls(books.filter(book => !!book.image).map(
+            book => ({ key: book.image.key, book_id: book.id })
+          ))
+
+          let avg = books.map(b => {
+            const ratings = b.dataValues.ratings
+            if (ratings.length > 0) {
+              let summ = 0;
+              ratings.map(a =>  summ += a.dataValues.value );
+
+              return {
+                id: b.id,
+                rating: summ / ratings.length
+              }
+            } else {
+              return { id: b.id, rating: 0 }
+            }
+          })
+
+          const fullBooks = books.map(book => {
+            return {
+              ...book.dataValues,
+              rating: avg.filter(a => a.id === book.id)[0].rating,
+              image: urls.filter(b => b.book_id === book.id)[0]?.url || ''
+            }
+          })
+
+          res.json({ books: fullBooks });
+        })();
+      })
+    } catch (error) {
+      console.log(error);
       res.json({
         error: error.errors[0].message,
         variant: "danger"

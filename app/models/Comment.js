@@ -11,7 +11,10 @@ const Comment = sequelize.define('comment', {
   timestamps: true,
   createdAt: true,
   updatedAt: true,
-  underscored: true
+  underscored: true,
+  indexes: [
+    { type: 'FULLTEXT', name: 'comment_idx', fields: ['text'] }
+  ]
 });
 
 Book.hasMany(Comment, { onDelete: 'CASCADE', hooks: true });

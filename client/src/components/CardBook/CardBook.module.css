@@ -24,7 +24,7 @@
 }
 
 .ImagePlaceholder {
-  background: var(--primary-color)
+  background: black;
 }
 
 .Image {

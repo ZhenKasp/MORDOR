@@ -11,7 +11,10 @@ const Book = sequelize.define('book', {
   timestamps: true,
   createdAt: true,
   updatedAt: true,
-  underscored: true
+  underscored: true,
+  indexes: [
+    { type: 'FULLTEXT', name: 'book_idx', fields: ['name', 'short_description'] }
+  ]
 });
 
 User.hasMany(Book, { onDelete: 'CASCADE', hooks: true });

@@ -15,6 +15,7 @@ import SignUp from '../../components/SignUp/SignUp';
 import Varification from '../../components/Varification/Varification';
 import AdminPanel from '../../features/AdminPanel/AdminPanel';
 import NotFound from '../../components/NotFound/NotFound';
+import SearchResults from '../../features/SearchResults/SearchResults';
 
 class IndexPage extends Component {
   state = { id: 0, attributes: [], email: "" };
@@ -76,6 +77,9 @@ class IndexPage extends Component {
           }
           <Route path="/admin">
             <AdminPanel />
+          </Route>
+          <Route path="/search">
+            <SearchResults clickHandler={this.clickHandler} />
           </Route>
           <Route path="*">
             <NotFound />

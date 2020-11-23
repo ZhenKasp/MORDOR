@@ -9,7 +9,10 @@ const Chapter = sequelize.define('chapter', {
   timestamps: true,
   createdAt: true,
   updatedAt: true,
-  underscored: true
+  underscored: true,
+  indexes: [
+    { type: 'FULLTEXT', name: 'chapter_idx', fields: ['name', 'text'] }
+  ]
 });
 
 Book.hasMany(Chapter, { onDelete: 'CASCADE', hooks: true });
