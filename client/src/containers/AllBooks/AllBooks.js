@@ -7,11 +7,13 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import Filters from '../Filters/Filters';
 import Aux from "../../hoc/Auxiliary";
+import { useTranslation } from 'react-i18next';
 
 const AllBooks = (props) => {
   const [allBooks, setAllBooks] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   const [currentGenre, setCurrentGenre] = useState("All");
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -61,7 +63,7 @@ const AllBooks = (props) => {
 
   return (
     <div>
-      <h2>Books</h2>
+      <h2>{t("Books")}</h2>
       <Filters
         tags={currentTags}
         setTags={setCurrentTags}

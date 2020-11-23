@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import { useDropzone } from 'react-dropzone';
 import classes from './CreateBookModal.module.css';
+import { useTranslation } from 'react-i18next';
 
 const CreateBookModal = (props) => {
   const [tags, setTags] = useState([]);
@@ -18,6 +19,7 @@ const CreateBookModal = (props) => {
     setImage(acceptedFiles[0]);
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+  const { t } = useTranslation();
 
   const submitCreateBook = (event) => {
     event.preventDefault();
@@ -56,13 +58,13 @@ const CreateBookModal = (props) => {
         modalClosed={props.modalIsShownCancelHandler}
       >
         <Form onSubmit={submitCreateBook}>
-          <h3>Create Book</h3>
+          <h3>{t("Create Book")}</h3>
           <Form.Group>
-            <Form.Label>Name</Form.Label>
+            <Form.Label>{t("Name")}</Form.Label>
             <Form.Control
               maxLength="255"
               required type="text"
-              placeholder="Name"
+              placeholder={t("Name")}
               name="name"
             />
           </Form.Group>
@@ -71,8 +73,8 @@ const CreateBookModal = (props) => {
               <input {...getInputProps()} />
               {
                 isDragActive ?
-                  <p>Drop the image here ...</p> :
-                  <p>Drag 'n' drop some image here, or click to select image</p>
+                  <p>{t("Drop the image")}</p> :
+                  <p>{t("Drag 'n' drop")}</p>
               }
               {image &&
                 <img
@@ -84,16 +86,16 @@ const CreateBookModal = (props) => {
             </div>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Short description</Form.Label>
+            <Form.Label>{t("Short description")}</Form.Label>
             <Form.Control
               name="short_description"
               required as="textarea"
               rows={3}
-              placeholder="Short description"
+              placeholder={t("Short description")}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Genre</Form.Label>
+            <Form.Label>{t("Genre")}</Form.Label>
             <GenreSelector
               genre={genre}
               handleChange={(e) => setGenre(e.target.value)}
@@ -105,7 +107,7 @@ const CreateBookModal = (props) => {
               setTags={setTags}
             />
           </Form.Group>
-          <Button type="submit">Confirm</Button>
+          <Button type="submit">{t("Confirm")}</Button>
         </Form>
       </Modal>
     </div>

@@ -4,9 +4,11 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import { useTranslation } from 'react-i18next';
 
 const TagsInput = props => {
   const [suggestions, setSuggestions] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -56,6 +58,7 @@ const TagsInput = props => {
       handleAddition={handleAddition}
       handleDrag={handleDrag}
       inputFieldPosition="inline"
+      placeholder={t("Add new tag")}
     />
   )
 }

@@ -2,9 +2,11 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import classes from './ChaptersNavigationMenu.module.css';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ChaptersNavigationMenu = props => {
     let history = useHistory();
+    const { t } = useTranslation();
 
     const nextChapter = () => {
       if (props.currentChapterIndex + 1 < props.chapters.length) {
@@ -35,12 +37,12 @@ const ChaptersNavigationMenu = props => {
       <Button
         variant="outline-primary"
         disabled={props.currentChapterIndex - 1 < 0}
-        onClick={previousChapter}>Previous
+        onClick={previousChapter}>{t("Previous")}
       </Button>
       <Button
         variant="outline-primary"
         disabled={props.currentChapterIndex + 1 >= props.chapters.length}
-        onClick={nextChapter}>Next
+        onClick={nextChapter}>{t("Next")}
       </Button>
     </div>
   );

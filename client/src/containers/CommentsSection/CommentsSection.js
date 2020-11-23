@@ -5,10 +5,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import getFormData from '../../utilities/getFormData';
-import classes from './CommentsSection.module.css'
+import classes from './CommentsSection.module.css';
+import { useTranslation } from 'react-i18next';
 
 const CommentsSection = props => {
   const [comments, setComments] = useState([]);
+  const { t } = useTranslation();
 
   const getComments = () => {
     try {
@@ -64,20 +66,20 @@ useEffect(() => {
   return (
     <div>
       <hr />
-      <h2>Comments</h2>
+      <h2>{t("Comments")}</h2>
       <Form onSubmit={submitCreateComment}>
         <Form.Group>
-          <Form.Label>Your comment</Form.Label>
+          <Form.Label>{t("Your comment")}</Form.Label>
           <Form.Control
             required
             as="textarea"
             name="text"
-            placeholder="Comment"
+            placeholder={t("Comment")}
             rows={1}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Submit comment
+          {t("Submit comment")}
         </Button>
       </Form>
       <div className={classes.AllComments}>
@@ -89,7 +91,7 @@ useEffect(() => {
             </div>
 
           )}):
-          <h5>No comments yet</h5>
+          <h5>{t("No comments yet")}</h5>
         }
       </div>
     </div>

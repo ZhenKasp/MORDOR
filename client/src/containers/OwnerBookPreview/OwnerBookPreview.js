@@ -12,6 +12,7 @@ import CreateChapterModal from '../CreateChapterModal/CreateChapterModal';
 import Aux from '../../hoc/Auxiliary';
 import { useHistory } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 const OwnerBoookPreview = props => {
   const [tags, setTags] = useState([]);
@@ -24,6 +25,7 @@ const OwnerBoookPreview = props => {
     setImage(acceptedFiles[0]);
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+  const { t } = useTranslation();
 
   useEffect(() => {
     setTags(props.book.tags ?
@@ -102,12 +104,12 @@ const OwnerBoookPreview = props => {
     <div className={classes.Wrapper}>
       <Form onSubmit={updateBook}>
         <Form.Group>
-          <Form.Label><h3>Book name</h3></Form.Label>
+          <Form.Label><h3>{t("Book name")}</h3></Form.Label>
           <Form.Control
             maxLength="255"
             defaultValue={props.book.name}
             name="name"
-            placeholder="Book name"
+            placeholder={t("Book name")}
           />
         </Form.Group>
         <Form.Group>
@@ -115,8 +117,8 @@ const OwnerBoookPreview = props => {
             <input {...getInputProps()} />
             {
               isDragActive ?
-                <p>Drop the image here ...</p> :
-                <p>Drag 'n' drop some image here, or click to select image</p>
+                <p>{t("Drop the image")}</p> :
+                <p>{t("Drag 'n' drop")}</p>
             }
             {image &&
               <img
@@ -128,31 +130,31 @@ const OwnerBoookPreview = props => {
           </div>
         </Form.Group>
         <Form.Group>
-          <Form.Label><h3>Tags</h3></Form.Label>
+          <Form.Label><h3>{t("Tags")}</h3></Form.Label>
           <TagsInput setTags={setTags} tags={tags} />
         </Form.Group>
         <Form.Group>
-          <Form.Label><h3>Short description</h3></Form.Label>
+          <Form.Label><h3>{t("Short description")}</h3></Form.Label>
           <Form.Control
             defaultValue={props.book.short_description}
             name="short_description"
             required as="textarea"
             rows={3}
-            placeholder="Short description"
+            placeholder={t("Short description")}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label><h3>Genre</h3></Form.Label>
+          <Form.Label><h3>{t("Genre")}</h3></Form.Label>
           <GenreSelector
             genre={genre}
             handleChange={(e) => setGenre(e.target.value)}
           />
         </Form.Group>
-        <Button variant="warning" type="submit">Confirm changes</Button>
+        <Button variant="warning" type="submit">{t("Confirm changes")}</Button>
         <Button
           variant="danger"
           onClick={() => deleteBook(props.book.id)}
-        >Delete Book</Button>
+        >{t("Delete Book")}</Button>
       {chapters && chapters.length > 0 ? (
         <Aux>
             <Button onClick={() => {
@@ -161,9 +163,9 @@ const OwnerBoookPreview = props => {
                 props.book.chapters[0].id,
                 chapters
               );
-            }}>Read</Button>
+            }}>{t("Read")}</Button>
             <hr />
-            <h3>Chapters</h3>
+            <h3>{t("Chapters")}</h3>
           <ol>
             {chapters.sort((a, b) => (a.id - b.id)).map(chapter => (
               <li
@@ -180,7 +182,7 @@ const OwnerBoookPreview = props => {
                 <Button
                   variant="danger"
                   onClick={(e) => deleteChapter(e, chapter.id)}
-                >Delete
+                >{t("Delete")}
                 </Button>
               </li>
             )
@@ -190,12 +192,12 @@ const OwnerBoookPreview = props => {
       ) : (
         <Aux>
           <hr />
-          <h4>No chapters</h4>
+          <h4>{t("No chapters")}</h4>
         </Aux>
       )}
       </Form>
       <Button onClick={() => setModalIsShown(true)}>
-        Create Chapter
+        {t("Create Chapter")}
       </Button>
       <CreateChapterModal
         modalIsShownHandler={() => setModalIsShown(true)}

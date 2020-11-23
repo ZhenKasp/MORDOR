@@ -6,9 +6,11 @@ import Aux from '../../hoc/Auxiliary';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import { useTranslation } from 'react-i18next';
 
 const BestBooks = (props) => {
   const [bestBooks, setbestBooks] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(()=> {
     try {
@@ -28,7 +30,7 @@ const BestBooks = (props) => {
 
   return (
     <Aux>
-      <h2>Best Books</h2>
+      <h2>{t("Best Books")}</h2>
       <CardDeck className={classes.BooksGrid}>
         {bestBooks?.map(book =>
           <CardBook

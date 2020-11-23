@@ -8,16 +8,18 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../../store/actions';
 import { useHistory } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 
 const NavigationItems = (props) => {
   let history = useHistory();
+  const { t } = useTranslation();
 
   if (props.user.token.length > 0) {
     return (
       <Aux>
         <Nav className="mr-auto">
           <Nav.Link onClick={() => history.push("/myBooks")}>
-            My Books
+            {t("My Books")}
           </Nav.Link>
         </Nav>
         <Button
@@ -25,18 +27,18 @@ const NavigationItems = (props) => {
           className={classes.Theme}
           onClick={props.changeTheme}
         >
-          Change theme
+          {t("Change theme")}
         </Button>
         <NavDropdown
           className={classes.Dropdown}
           title={props.user.username}
         >
           <NavDropdown.Item onClick={() => history.push("/profile")}>
-            Profile
+            {t("Profile")}
           </NavDropdown.Item>
           <NavDropdown.Item
             onClick={()=> logout(history.push, props.createFlashMessage, props.deleteUser, props.user.token)}>
-            SignOut
+            {t("SignOut")}
           </NavDropdown.Item>
         </NavDropdown>
       </Aux>
@@ -50,14 +52,14 @@ const NavigationItems = (props) => {
           className={classes.Theme}
           onClick={props.changeTheme}
         >
-          Change theme
+          {t("Change theme")}
         </Button>
-        <NavDropdown className={classes.Dropdown} title="Guest" >
+        <NavDropdown className={classes.Dropdown} title={t("Guest")} >
           <NavDropdown.Item onClick={() => history.push("/signin")}>
-            SignIn
+            {t("SignIn")}
           </NavDropdown.Item>
           <NavDropdown.Item onClick={() => history.push("/signup")}>
-            SignUp
+            {t("SignUp")}
           </NavDropdown.Item>
         </NavDropdown>
       </Aux>

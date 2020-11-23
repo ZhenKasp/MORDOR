@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const checkIsOwner = async (book_id, user_id) => {
-  if (!user_id) return false;
+  if (!user_id) return [false, null];
   let isOwner = null;
   let error = null;
 

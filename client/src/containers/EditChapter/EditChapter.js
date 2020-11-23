@@ -12,6 +12,7 @@ import { useDropzone } from 'react-dropzone';
 import classes from './EditChapter.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import checkIsOwner from '../../utilities/checkIsOwner';
+import { useTranslation } from 'react-i18next';
 
 const EditChapter = (props) => {
   const [image, setImage] = useState(props.currentChapter?.image);
@@ -21,6 +22,7 @@ const EditChapter = (props) => {
     setImage(acceptedFiles[0]);
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+  const { t } = useTranslation();
 
   useEffect(() => {
     (async () => {
@@ -69,7 +71,7 @@ const EditChapter = (props) => {
   return (
     <Form onSubmit={updateChapter}>
       <Form.Group>
-        <Form.Label><h3>Chapter name</h3></Form.Label>
+        <Form.Label><h3>{t("Chapter name")}</h3></Form.Label>
         <Form.Control
           maxLength="255"
           value={props.currentChapter.name}
@@ -77,7 +79,7 @@ const EditChapter = (props) => {
             ...props.currentChapter,
             name: e.target.value}
           )}
-          placeholder="Book name"
+          placeholder="Chapter name"
         />
       </Form.Group>
       <Form.Group>
@@ -85,8 +87,8 @@ const EditChapter = (props) => {
           <input {...getInputProps()} />
           {
             isDragActive ?
-              <p>Drop the image here ...</p> :
-              <p>Drag 'n' drop some image here, or click to select image</p>
+              <p>{t("Drop the image")}</p> :
+              <p>{t("Drag 'n' drop")}</p>
           }
           {image &&
             <img
@@ -112,7 +114,7 @@ const EditChapter = (props) => {
         >
         </MdEditor>
       </Form.Group>
-      <Button variant="warning" type="submit">Confirm changes</Button>
+      <Button variant="warning" type="submit">{t("Confirm changes")}</Button>
       <hr />
       <div>
         <ChaptersNavigationMenu

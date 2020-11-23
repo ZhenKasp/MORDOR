@@ -6,9 +6,11 @@ import Aux from '../../hoc/Auxiliary';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
+import { useTranslation } from 'react-i18next';
 
 const LastUpdatedBooks = (props) => {
   const [lastUpdatedBooks, setLastUpdatedBooks] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(()=> {
     try {
@@ -28,7 +30,7 @@ const LastUpdatedBooks = (props) => {
 
   return (
     <Aux>
-      <h2>Last Updated Books</h2>
+      <h2>{t("Last Updated Books")}</h2>
         <CardDeck className={classes.BooksGrid}>
           {lastUpdatedBooks?.map(book =>
             <CardBook

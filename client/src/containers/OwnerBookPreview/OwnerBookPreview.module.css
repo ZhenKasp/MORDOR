@@ -26,7 +26,7 @@ select {
 }
 
 .Chapter p {
-  width: calc(100% - 59px);
+  width: calc(100% - 66px);
   display: inline-flex;
   margin-bottom: 0;
 }

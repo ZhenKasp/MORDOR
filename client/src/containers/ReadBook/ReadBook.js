@@ -9,9 +9,11 @@ import { createFlashMessage } from '../../store/actions';
 import CommentsSection from '../CommentsSection/CommentsSection';
 import ChaptersNavigationMenu from '../ChaptersNavigationMenu/ChaptersNavigationMenu';
 import Aux from '../../hoc/Auxiliary';
+import { useTranslation } from 'react-i18next';
 
 const ReadBook = (props) => {
   const [likes, setLikes] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -55,7 +57,7 @@ const ReadBook = (props) => {
               className={classes.ChapterText}
               dangerouslySetInnerHTML={{__html: mdParser.render(props.currentChapter.text)}}
             />
-          </Aux> : <h5>No text yet</h5>
+        </Aux> : <h5>{t("No text yet")}</h5>
         }
       </div>
       <LikesField

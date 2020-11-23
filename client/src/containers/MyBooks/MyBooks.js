@@ -9,12 +9,14 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import Filters from '../Filters/Filters';
 import Aux from '../../hoc/Auxiliary';
+import { useTranslation } from 'react-i18next';
 
 const MyBooks = (props) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [books, setBooks] = useState([]);
   const [currentTags, setCurrentTags] = useState([]);
   const [currentGenre, setCurrentGenre] = useState("All");
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -66,9 +68,9 @@ const MyBooks = (props) => {
 
   return (
     <div>
-      <h2>My Books</h2>
+      <h2>{t("My Books")}</h2>
       <Button onClick={() => setModalIsShown(true)}>
-        Create New Book
+        {t("Create New Book")}
       </Button>
       <hr />
       <Filters

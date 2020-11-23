@@ -6,9 +6,11 @@ import classes from './Profile.module.css';
 import axios from 'axios';
 import getFormData from '../../utilities/getFormData';
 import { createFlashMessage } from '../../store/actions';
+import { useTranslation } from 'react-i18next';
 
 const Profile = (props) => {
   const [user, setUser] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -54,48 +56,48 @@ const Profile = (props) => {
 
   return (
     <div className={classes.SignIn}>
-      <h1>Profile</h1>
+      <h1>{t("Profile")}</h1>
       <Form
         onSubmit={(event) => confirmChanges(event)}
       >
         <Form.Group>
-          <Form.Label>First name</Form.Label>
+          <Form.Label>{t("First Name")}</Form.Label>
           <Form.Control
             maxLength="255"
             autoFocus
             type="text"
             required
             name="firstName"
-            placeholder="Enter first name"
+            placeholder={t("First Name")}
             defaultValue={user.firstname}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last name</Form.Label>
+          <Form.Label>{t("Last Name")}</Form.Label>
           <Form.Control
             maxLength="255"
             autoFocus
             type="text"
             required
             name="lastName"
-            placeholder="Enter last name"
+            placeholder={t("Last Name")}
             defaultValue={user.lastname}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Username</Form.Label>
+          <Form.Label>{t("Username")}</Form.Label>
           <Form.Control
             maxLength="255"
             autoFocus
             type="text"
             required
             name="userName"
-            placeholder="Enter username"
+            placeholder={t("Username")}
             defaultValue={user.username}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Confirm changes
+          {t("Confirm changes")}
         </Button>
       </Form>
     </div>

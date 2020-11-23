@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { createFlashMessage } from '../../store/actions';
 import { useDropzone } from 'react-dropzone';
 import classes from './CreateChapterModal.module.css';
+import { useTranslation } from 'react-i18next';
 
 const CreateChapterModal = (props) => {
   const [image, setImage] = useState("");
@@ -14,6 +15,7 @@ const CreateChapterModal = (props) => {
     setImage(acceptedFiles[0]);
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+  const { t } = useTranslation();
 
   const submitCreateChapter = (event) => {
     event.preventDefault();
@@ -46,13 +48,13 @@ const CreateChapterModal = (props) => {
       >
         <Form
           onSubmit={submitCreateChapter}>
-          <h3>Create chapter</h3>
+          <h3>{t("Create Chapter")}</h3>
           <Form.Group>
-            <Form.Label>Name</Form.Label>
+            <Form.Label>{t("Name")}</Form.Label>
             <Form.Control
               maxLength="255"
               required type="text"
-              placeholder="Name"
+              placeholder={t("Name")}
               name="name"
             />
           </Form.Group>
@@ -61,8 +63,8 @@ const CreateChapterModal = (props) => {
               <input {...getInputProps()} />
               {
                 isDragActive ?
-                  <p>Drop the image here ...</p> :
-                  <p>Drag 'n' drop some image here, or click to select image</p>
+                  <p>{t("Drop the image")}.</p> :
+                  <p>{t("Drag 'n' drop")}</p>
               }
               {image &&
                 <img
@@ -73,7 +75,7 @@ const CreateChapterModal = (props) => {
               }
             </div>
           </Form.Group>
-          <Button type="submit">Confirm</Button>
+          <Button type="submit">{t("Confirm")}</Button>
         </Form>
       </Modal>
     </div>
