@@ -11,6 +11,7 @@ class App extends PureComponent {
     const { text, variant } = this.props.flashMessage;
     const history = createBrowserHistory();
 
+    document.getElementById('root').className = this.props.theme;
     return (
       <Router history={history} >
         <Toolbar />
@@ -24,7 +25,7 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  return { flashMessage: state.flashMessage }
+  return { flashMessage: state.flashMessage, theme: state.theme }
 }
 
 export default connect(mapStateToProps)(App);

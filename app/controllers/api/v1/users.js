@@ -171,11 +171,18 @@ const users = (app) => {
   app.get('/api/v1/users/isOwner', (req, res) => {
       Book.findOne({ where: { id: req.query.book_id }, attributes: ["user_id"]}).then((book => {
         (async () => {
-          const user = await User.findOne({ where: { id: req.query.user_id }})
-
-          res.json({
-            isOwner: book.dataValues.user_id == req.query.user_id || user.dataValues.is_admin
-          });
+          if (book) {
+            const user = await User.findOne({ where: { id: req.query.user_id }})
+            res.json({
+              isOwner: book.dataValues.user_id == req.query.user_id || user.dataValues.is_admin
+            });
+          } else {
+            res.json({
+              isOwner: false,
+              error: "Not found",
+              variant: "danger"
+            }).status(404);
+          }
         })();
       }))
   });

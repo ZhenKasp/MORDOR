@@ -5,6 +5,7 @@ import  Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useHistory } from "react-router-dom";
 import eye from '../../../assets/images/eye.png';
+import { connect } from 'react-redux';
 
 const Toolbar = (props) => {
   let history = useHistory();
@@ -13,8 +14,8 @@ const Toolbar = (props) => {
     <Navbar
       className={classes.Toolbar}
       expand="md"
-      bg="light"
-      variant="light"
+      bg={props.theme === "dark" ? "light" : "dark"}
+      variant={props.theme === "dark" ? "light" : "dark"}
     >
       <Navbar.Brand
         className={classes.Brand}
@@ -29,5 +30,6 @@ const Toolbar = (props) => {
     </Navbar>
   );
 }
+const mapStateToProps = state => ({ theme: state.theme})
 
-export default Toolbar;
+export default connect(mapStateToProps)(Toolbar);

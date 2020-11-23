@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { createFlashMessage } from '../../store/actions';
 import classes from "./BookContainer.module.css";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const BookContainer = (props) => {
   let { book_id, id } = useParams();
@@ -17,6 +17,7 @@ const BookContainer = (props) => {
     text: chapter?.text || "",
     image: chapter?.image
   });
+  let history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -30,11 +31,15 @@ const BookContainer = (props) => {
             const currentIndex = res.data.chapters.findIndex((chapter) => chapter.id === Number(id));
             setChapters(res.data.chapters);
             setCurrentChapterIndex(currentIndex);
-            setCurrentChapter({
-              name: res.data.chapters[currentIndex].name || "",
-              text: res.data.chapters[currentIndex].text || "",
-              image: res.data.chapters[currentIndex].image
-            })
+            if (res.data.chapters.length === 0 || !res.data.chapters[currentIndex]) {
+              history.replace('/notFound');
+            } else {
+              setCurrentChapter({
+                name: res.data.chapters[currentIndex].name || "",
+                text: res.data.chapters[currentIndex].text || "",
+                image: res.data.chapters[currentIndex].image
+              })
+            }
           }
         });
       } catch (err) {

@@ -2,7 +2,8 @@ const actions = {
   SET_USER: "SET_USER",
   DELETE_USER: "DELETE_USER",
   CREATE_FLASH_MESSAGE: "CREATE_FLASH_MESSAGE",
-  DESTROY_FLASH_MESSAGE: "DESTROY_FLASH_MESSAGE"
+  DESTROY_FLASH_MESSAGE: "DESTROY_FLASH_MESSAGE",
+  CHANGE_THEME: "CHANGE_THEME"
 }
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   flashMessage: {
     text: "",
     variant: "danger"
-  }
+  },
+  theme: "light"
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,6 +41,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         flashMessage: { text: "", variant: "danger" }
+      };
+    case actions.CHANGE_THEME:
+      return {
+        ...state,
+        theme: state.theme === "light" ? "dark" : "light"
       };
     default:
       return state;

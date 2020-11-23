@@ -9,6 +9,12 @@
 
 .Dropdown > a {
   padding-left: 0;
+  color: var(--toolbar-link-color);
+}
+
+.Theme {
+  margin-right: 10px !important;
+  padding: 3px 6px;
 }
 
 @media (min-width: 768px) {

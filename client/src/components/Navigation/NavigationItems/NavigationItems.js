@@ -7,6 +7,7 @@ import classes from './NavigationItems.module.css';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../../store/actions';
 import { useHistory } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 const NavigationItems = (props) => {
   let history = useHistory();
@@ -19,6 +20,13 @@ const NavigationItems = (props) => {
             My Books
           </Nav.Link>
         </Nav>
+        <Button
+          variant={props.theme}
+          className={classes.Theme}
+          onClick={props.changeTheme}
+        >
+          Change theme
+        </Button>
         <NavDropdown
           className={classes.Dropdown}
           title={props.user.username}
@@ -36,8 +44,14 @@ const NavigationItems = (props) => {
   } else {
     return (
       <Aux>
-        <Nav className="mr-auto">
-          </Nav>
+        <Nav className="mr-auto" />
+        <Button
+          variant={props.theme}
+          className={classes.Theme}
+          onClick={props.changeTheme}
+        >
+          Change theme
+        </Button>
         <NavDropdown className={classes.Dropdown} title="Guest" >
           <NavDropdown.Item onClick={() => history.push("/signin")}>
             SignIn
@@ -51,11 +65,12 @@ const NavigationItems = (props) => {
   }
 }
 
-const mapStateToProps = state => { return { user: state.user } };
+const mapStateToProps = state => ({ user: state.user, theme: state.theme });
 
 const mapDispatchToProps = dispatch => {
   return {
     deleteUser: () => dispatch({ type: "DELETE_USER" }),
+    changeTheme: () => dispatch({ type: "CHANGE_THEME" }),
     createFlashMessage: (text, variant) => createFlashMessage(dispatch, {
       text: text,
       variant: variant

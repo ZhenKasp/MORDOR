@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import classes from './ControlButtons.module.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { createFlashMessage } from '../../../store/actions';
@@ -38,7 +37,6 @@ const ControlButtons = props => {
       {buttons.map(button => (
         <Button
           key={button.action}
-          className={classes.Button}
           variant={button.variant}
           onClick={() => clickAction(button.action)}
         >

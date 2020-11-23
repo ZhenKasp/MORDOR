@@ -5,21 +5,22 @@ import { createFlashMessage } from '../../store/actions';
 import Aux from '../../hoc/Auxiliary';
 import OwnerBookPreview from '../OwnerBookPreview/OwnerBookPreview';
 import BookPreview from '../../components/BookPreview/BookPreview';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 import checkIsOwner from '../../utilities/checkIsOwner';
 
 const Preview = (props) => {
   const [book, setBook] = useState([]);
   const [isOwner, setIsOwner] = useState(false);
+  const [error, setError] = useState(null);
   let history = useHistory();
   let { id } = useParams();
 
   useEffect(() => {
     (async () => {
       try {
-        const checked = await checkIsOwner(id, props.user.id, props.createFlashMessage)
+        const [checked, err] = await checkIsOwner(id, props.user.id);
         setIsOwner(checked);
-        console.log(checked);
+        setError(err);
         await axios.get(process.env.REACT_APP_PATH_TO_SERVER + "book",
           { params: { id: id, userId: props.user.id },
             headers: { authorization: props.user.token }}
@@ -54,10 +55,9 @@ const Preview = (props) => {
     })();
   }, []);
 
-console.log(isOwner);
-
   return (
     <Aux>
+      { error && <Redirect to='/notFound' /> }
       { isOwner ?
         <OwnerBookPreview
           book={book}

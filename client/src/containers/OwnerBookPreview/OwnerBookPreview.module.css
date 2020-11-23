@@ -13,7 +13,7 @@ select {
 
 .Chapter {
   font-size: 15px;
-  color: blue;
+  color: var(--link-color);
   overflow-wrap: anywhere;
   width: 100%;
   display: list-item !important;
@@ -22,7 +22,7 @@ select {
 .Chapter:hover {
   cursor: pointer;
   text-decoration: underline;
-  color: blue;
+  color: var(--link-color);
 }
 
 .Chapter p {

@@ -3,11 +3,12 @@ import { Card } from 'react-bootstrap';
 import EmptyBook from '../../assets/images/empty-book.jpg';
 import classes from './CardBook.module.css';
 import RatingField from '../../containers/RatingField/RatingField';
+import { connect } from 'react-redux';
 
 const cardBook = (props) => (
   <Card
-    bg='light'
-    text="dark"
+    bg={props.theme}
+    text={props.theme === "dark" ? "light" : "dark"}
     className={classes.CardBook}
     onClick={() => props.clicked("bookPreview", props.book.id)}
   >
@@ -32,6 +33,8 @@ const cardBook = (props) => (
       </div>
     </Card.Body>
   </Card>
-)
+);
 
-export default cardBook;
+const mapStateToProps = state => ({ theme: state.theme });
+
+export default connect(mapStateToProps)(cardBook);

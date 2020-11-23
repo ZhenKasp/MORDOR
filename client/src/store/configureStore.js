@@ -6,7 +6,7 @@ import reducer from './reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user']
+  whitelist: ['user', 'theme']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

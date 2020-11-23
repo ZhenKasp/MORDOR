@@ -10,10 +10,10 @@ const bookPreview = props => (
     {props.book.image &&
       <img className={classes.Image} src={props.book.image} alt={props.book.name} />}
     {props.book.tags &&
-      <p>Tegs: {props.book.tags.split(";").map(tag => "#" + tag).join(" ")}</p>}
-    <p>Short Description: {props.book.short_description}</p>
-    <p>Genre: {props.book.genre}</p>
-    <p>Author: {props.book.user?.firstname + " " + props.book.user?.lastname}</p>
+      <p><b>Tegs:</b> {props.book.tags.split(";").map(tag => "#" + tag).join(" ")}</p>}
+    <p><b>Short Description:</b> {props.book.short_description}</p>
+    <p><b>Genre:</b> {props.book.genre}</p>
+    <p><b>Author:</b> {props.book.user?.firstname + " " + props.book.user?.lastname}</p>
     {props.book.chapters && props.book.chapters.length > 0 ? (
       <div>
         <div>
